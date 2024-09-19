@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isstrchr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:10:59 by ulysse            #+#    #+#             */
-/*   Updated: 2024/05/23 01:11:00 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:39:09 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isstrchr(char c, const char *str)
+int	ft_isstrchr(const char *str, char c)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] != '\0')
+	i = -1;
+	while (str[++i] != '\0')
 	{
 		if (c == str[i])
 			return (1);
-		i++;
 	}
 	return (0);
 }

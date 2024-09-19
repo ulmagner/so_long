@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:14:20 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/19 15:29:43 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:15:30 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 int	main(int ac, char **av)
 {
-	t_map map;
+	t_info	info;
+	t_map	*map;
 
-	if (!error_handling(ac, av))
+	info.map = NULL;
+	if (!error_handling(ac, av, &info))
 		return (EXIT_FAILURE);
-	if (!map_handling(&map))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (!map_handling(&info, &map, -1))
+		return (ft_freeall(&info, &map), EXIT_FAILURE);
+	if (close(info.fd) == -1)
+		return (ft_freeall(&info, &map), EXIT_FAILURE);
+	return (ft_freeall(&info, &map), EXIT_SUCCESS);
 }

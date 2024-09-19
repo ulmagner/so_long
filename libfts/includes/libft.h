@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:17:42 by ulysse            #+#    #+#             */
-/*   Updated: 2024/09/18 21:00:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:03:31 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_list
 
 bool	is_flag(char c, const char *str);
 void	ft_putchar(char c, int *nbr);
+int		ft_isstrchr(const char *str, char c);
 void	ft_putstr(const char *s, int *nbr, int *blank);
 void	ft_putnbr_basep(unsigned long long n, char *base, int *nbr, int output);
 void	print_blank(int blank, int *nbr);

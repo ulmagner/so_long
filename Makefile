@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/19 15:28:45 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/19 19:04:50 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ BONUS_NAME	= so_long_bonus
 
 LIB_NAME	= libft.a
 
-SRCS		= main.c error_handling.c map_handling.c \
+MLX_NAME	= libmlx.a
+
+SRCS		= main.c error_handling.c map_handling.c  free.c \
 
 SRCS_LIB	= ft_strcat.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strdup.c \
 ft_strlcat.c ft_strlen.c ft_strncat.c ft_strncmp.c ft_strncpy.c	ft_strrchr.c \
@@ -34,27 +36,34 @@ SRCS_B		= main_bonus.c \
 INCS		= solong.h
 INCS_B		= solongb.h
 INCS_LIB	= libft.h
-
+INCS_MLX	= mlx.h
 SDIRS		= srcs
 SDIRS_B		= srcsb
 SDIRS_LIB	= libfts/srcs
+SDIRS_MLX	= minilibx-linux
 IDIRS		= includes
 IDIRS_B		= includesb
 IDIRS_LIB	= libfts/includes
+IDIRS_MLX	= minilibx-linux/
 ODIRS		= $(SDIRS)
 ODIRS_B		= $(SDIRS_B)
 ODIRS_LIB	= libobj
+ODIRS_MLX	= mlxobj
 
 IFILES		= $(addprefix $(IDIRS)/,$(INCS))
 IFILES_B	= $(addprefix $(IDIRS)/,$(INCS))
-IFILES_LIB	= $(addprefix $(IDIRS_LIB)/,$(INCS))
+IFILES_LIB	= $(addprefix $(IDIRS_LIB)/,$(INCS_LIB))
+IFILES_MLX	= $(addprefix $(IDIRS_MLX)/,$(INCS_MLX))
 SFILES		= $(addprefix $(SDIRS)/,$(SRCS))
 SFILES_B	= $(addprefix $(SDIRS_B)/,$(SRCS_B))
 SFILES_LIB	= $(addprefix $(SDIRS_LIB)/,$(SRCS_LIB))
+SFILES_MLX	= $(addprefix $(SDIRS_MLX)/,$(SRCS_MLX))
 OFILES		= $(patsubst %.c,%.o,$(SFILES))
 OFILES_B	= $(patsubst %.c,%.o,$(SFILES_B))
 OFILES_LIB	= $(addprefix $(ODIRS_LIB)/,$(patsubst %.c,%.o,$(SRCS_LIB)))
+OFILES_MLX	= $(addprefix $(ODIRS_MLX)/,$(patsubst %.c,%.o,$(SRCS_MLX)))
 
+MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
 CFLAGS		= -Wall -Wextra -Werror -ggdb -std=c99 -I$(IDIRS) -I$(IDIRS_LIB)
 MAKEFLAGS 	+= -s
 
@@ -62,7 +71,7 @@ all: $(NAME)
 
 $(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) $(IFILES_LIB)
 	@mkdir -p $(ODIRS)
-	$(CC) $(CFLAGS) -I$(IDIRS) -I(IDIRS_LIB) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(IDIRS) -I$(IDIRS_LIB) -c $< -o $@
 
 $(ODIRS_LIB)/%.o: $(SDIRS_LIB)/%.c
 	@mkdir -p $(ODIRS_LIB)
@@ -89,7 +98,7 @@ $(BONUS_NAME): $(OFILES_B) $(LIB_NAME)
 
 clean:
 	rm -f $(OFILES) $(OFILES_B) $(OFILES_LIB)
-	@rm -rf $(ODIRS_LIB)
+	@rm -rf $(ODIRS_LIB) $(ODIRS_MLX)
 
 fclean:	clean
 	rm -f $(NAME)

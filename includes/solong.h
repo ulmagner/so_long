@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/19 15:29:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:56:45 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,27 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "libft.h"
-// # include "./minilibx-linux/mlx.h"
+
+typedef struct s_info
+{
+	int		fd;
+	int		size_line;
+	char	*map;
+}	t_info;
 
 typedef struct s_map
 {
-	char **map;
+	char			index;
+	int				x;
+	int				y;
+	struct s_map	*right;
+	struct s_map	*left;
+	struct s_map	*up;
+	struct s_map	*down;
 }	t_map;
 
-typedef struct s_lst
-{
-	char			*path;
-	char			**argvec;
-	struct s_lst	*next;
-	struct s_lst	*prev;
-}	t_lst;
-
-int	map_handling(t_map *map);
-int	error_handling(int ac, char **av);
+void	ft_freeall(t_info *info, t_map **map);
+int		map_handling(t_info *info, t_map **map, int format);
+int		error_handling(int ac, char **av, t_info *info);
 int		main(int ac, char **av);
 #endif //SOLONG_H
