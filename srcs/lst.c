@@ -6,11 +6,25 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 17:21:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:31:34 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+t_map	**init_row_lst(t_info *info)
+{
+	t_map	**row;
+	int		i;
+
+	i = -1;
+	row = malloc(sizeof(t_map *) * info->nbr_column);
+	if (!row)
+		return (NULL);
+	while (++i < info->nbr_column)
+		row[i] = NULL;
+	return (row);
+}
 
 static t_map	*ft_newnode(t_info *info, int i)
 {
@@ -29,7 +43,7 @@ static t_map	*ft_newnode(t_info *info, int i)
 	return (node);
 }
 
-static void	chain_map(t_map **curr, t_map **head, t_map *node)
+void	chain_map(t_map **curr, t_map **head, t_map *node)
 {
 	if (!(*head))
 	{
@@ -44,7 +58,7 @@ static void	chain_map(t_map **curr, t_map **head, t_map *node)
 	}
 }
 
-static void	chain_map_updown(t_map *node, t_info *info, t_map **row)
+void	chain_map_updown(t_map *node, t_info *info, t_map **row)
 {
 	if (row[info->i_x])
 	{
@@ -54,7 +68,7 @@ static void	chain_map_updown(t_map *node, t_info *info, t_map **row)
 	row[info->i_x] = node;
 }
 
-static int	make_list(t_info *info, int i, t_map **node)
+int	make_list(t_info *info, int i, t_map **node)
 {
 	++info->i_x;
 	if (info->i_x == info->nbr_column)
@@ -66,33 +80,4 @@ static int	make_list(t_info *info, int i, t_map **node)
 	if (!*node)
 		return (0);
 	return (1);
-}
-
-int	fill_map(t_info *info, t_map **head)
-{
-	t_map	*curr;
-	t_map	*node;
-	t_map	**row;
-	int		i;
-
-	*head = NULL;
-	curr = NULL;
-	node = NULL;
-	i = -1;
-	row = init_row_lst(info);
-	if (!row)
-		return (0);
-	while (++i < info->size_map)
-	{
-		if (!make_list(info, i, &node))
-			return (free(row), 0);
-		chain_map(&curr, head, node);
-		chain_map_updown(node, info, row);
-	}
-	if (*head)
-	{
-		curr->right = NULL;
-		(*head)->left = curr;
-	}
-	return (free(row), 1);
 }
