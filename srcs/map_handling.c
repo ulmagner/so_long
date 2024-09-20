@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:22:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:37:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	map_handling(t_info *info, t_map **map)
 	if (!fill_map(info, map))
 		return (0);
 	printf("%s\n\n", info->map);
+	if (!check_close_map(map, info))
+		return (0);
 	print_map(map);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:10:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:52:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,20 @@ int	check_ep_doubles(t_info *info)
 	return (1);
 }
 
-// int	check_doubles(t_info *info)
-// {
-// 	int	j;
-// 	int	k;
-
-// 	j = -1;
-// 	while (info->map[++j])
-// 	{
-// 		k = -1;
-// 		if (info->map[j] == 'P' || info->map[j] == 'E')
-// 		{
-// 			while (++k < j)
-// 			{
-// 				if (info->map[k] == info->map[j])
-// 					return (1);
-// 			}
-// 		}
-// 	}
-// 	return (0);
-// }
+int	check_close_map(t_map **map, t_info *info)
+{
+	t_map *curr;
+	
+	curr = *map;
+	while (curr)
+	{
+		if (((curr->x == 0 || curr->x == info->nbr_column - 1) && curr->index != '1')
+			|| ((curr->y == 0 || curr->y == info->nbr_line - 1) && curr->index != '1'))
+			printf("%c\n", curr->index);
+		curr = curr->right;
+	}
+	return (1);
+}
 
 int	error_handling(int ac, char **av, t_info *info)
 {

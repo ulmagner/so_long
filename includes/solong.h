@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:09:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:36:41 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **row);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
+int 	check_close_map(t_map **map, t_info *info);
 int		make_list(t_info *info, int i, t_map **node);
 int		empty_string(t_info *info);
 int		map_handling(t_info *info, t_map **map);
