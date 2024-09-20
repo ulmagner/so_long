@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 10:46:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:33:51 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@
 typedef struct s_info
 {
 	int		fd;
-	int		size_line;
+	int		i_x;
+	int		i_y;
+	int		nbr_line;
+	int		nbr_column;
+	int		size_map;
 	char	*map;
 }	t_info;
 
@@ -41,7 +45,7 @@ typedef struct s_map
 }	t_map;
 
 void	ft_freeall(t_info *info, t_map **map);
-int		map_handling(t_info *info, t_map **map, int format);
+int		map_handling(t_info *info, t_map **map);
 int		error_handling(int ac, char **av, t_info *info);
 int		main(int ac, char **av);
 #endif //SOLONG_H

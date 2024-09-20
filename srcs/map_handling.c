@@ -42,28 +42,32 @@ static int	get_map(t_info *info)
 		nbr_line++;
 		line = ft_get_next_line(info->fd);
 	}
-	info->size_line = ft_strlen(info->map) / nbr_line;
+	info->i_x = -1;
+	info->i_y = 0;
+	info->size_map = ft_strlen(info->map);
+	info->nbr_line = nbr_line;
+	info->nbr_column = info->size_map / nbr_line;
 	return (1);
 }
 
-static t_map	*ft_newnode(t_info *info, int x, int y)
+static t_map	*ft_newnode(t_info *info, int i)
 {
 	t_map	*node;
 
 	node = malloc(sizeof(t_map));
 	if (!node)
 		return (NULL);
-	node->index = info->map[x];
-	node->x = x;
-	node->y = y;
-	node->right = node;
-	node->left = node;
-	node->up = node;
-	node->down = node;
+	node->index = info->map[i];
+	node->x = info->i_x;
+	node->y = info->i_y;
+	node->right = NULL;
+	node->left = NULL;
+	node->up = NULL;
+	node->down = NULL;
 	return (node);
 }
 
-static void	chain_map(t_map **curr, t_map **head, t_map *node)
+static void	chain_map(t_map **curr, t_map **head, t_map *node, t_info *info, t_map *row[])
 {
 	if (!(*head))
 	{
@@ -76,44 +80,69 @@ static void	chain_map(t_map **curr, t_map **head, t_map *node)
 		node->left = *curr;
 		*curr = node;
 	}
+	if (row[info->i_x])
+	{
+		node->up = row[info->i_x];
+		row[info->i_x]->down = node;
+	}
+	row[info->i_x] = node;
 }
 
-int	fill_map(t_info *info, int x, t_map **head)
+int	fill_map(t_info *info, t_map **head)
 {
 	t_map	*curr;
 	t_map	*node;
-	int		y;
+	t_map	*row[info->nbr_column + 1];
+	int		i;
 
-	y = 0;
+	i = -1;
 	*head = NULL;
 	curr = NULL;
-	while (++x < info->size_line)
+	while (++i < info->nbr_column)
+		row[i] = NULL;
+	i = -1;
+	while (++i < info->size_map)
 	{
-		if (info->map[x] == '\n')
+		++info->i_x;
+		if (info->i_x == info->nbr_column)
 		{
-			x = -1;
-			y++;
-			continue ;
+			info->i_x = 0;
+			info->i_y++;
 		}
-		node = ft_newnode(info, x, y);
+		node = ft_newnode(info, i);
 		if (!node)
 			return (0);
-		chain_map(&curr, head, node);
+		chain_map(&curr, head, node, info, row);
 	}
 	if (*head)
 	{
-		curr->right = *head;
+		curr->right = NULL;
 		(*head)->left = curr;
 	}
 	return (1);
 }
 
-int	map_handling(t_info *info, t_map **map, int format)
+void	print_map(t_map **map)
+{
+	t_map	*curr;
+
+	curr = *map;
+	while (curr != NULL)
+	{
+		printf("%c", curr->index);
+		curr = curr->right;
+	}
+	printf("\n");
+}
+
+int	map_handling(t_info *info, t_map **map)
 {
 	if (!get_map(info))
 		return (0);
-	if (!fill_map(info, format, map))
+	printf("%d %d %d\n", info->nbr_column, info->nbr_line, info->size_map);
+	if (!fill_map(info, map))
 		return (0);
-	printf("%s", info->map);
+	printf("%s\n\n", info->map);
+	print_map(map);
 	return (1);
 }
