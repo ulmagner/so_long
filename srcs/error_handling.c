@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:52:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 23:19:33 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ int	check_ep_doubles(t_info *info)
 
 int	check_close_map(t_map **map, t_info *info)
 {
-	t_map *curr;
-	
+	t_map	*curr;
+
 	curr = *map;
 	while (curr)
 	{
-		if (((curr->x == 0 || curr->x == info->nbr_column - 1) && curr->index != '1')
-			|| ((curr->y == 0 || curr->y == info->nbr_line - 1) && curr->index != '1'))
-			printf("%c\n", curr->index);
+		if (((curr->x == 0 || curr->x == info->nbr_column - 1)
+				&& curr->index != '1')
+			|| ((curr->y == 0 || curr->y == info->nbr_line - 1)
+				&& curr->index != '1'))
+			return (0);
 		curr = curr->right;
 	}
 	return (1);

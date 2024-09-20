@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:37:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 23:17:50 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	fill_map(t_info *info, t_map **head)
 		return (0);
 	while (++i < info->size_map)
 	{
-		if (!make_list(info, i, &node))
+		if (!make_list(info, &i, &node))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, row);
@@ -65,17 +65,40 @@ static int	fill_map(t_info *info, t_map **head)
 	return (free(row), 1);
 }
 
-static void	print_map(t_map **map)
-{
-	t_map	*curr;
+// static void	print_map(t_map **map)
+// {
+// 	t_map	*curr;
 
-	curr = *map;
-	while (curr != NULL)
+// 	curr = *map;
+// 	while (curr != NULL)
+// 	{
+// 		printf("%c", curr->index);
+// 		curr = curr->right;
+// 	}
+// 	printf("\n");
+// }
+
+void	print_map(t_map **head, t_info *info)
+{
+	t_map	*row;
+	t_map	*col;
+
+	row = *head;
+	while (row)
 	{
-		printf("%c", curr->index);
-		curr = curr->right;
+		col = row;
+		while (col)
+		{
+			printf("%c", col->index);
+			if (col->x == info->nbr_column - 1)
+				break ;
+			col = col->right;
+		}
+		printf("\n");
+		if (col->y == info->nbr_line - 1)
+			break ;
+		row = row->down;
 	}
-	printf("\n");
 }
 
 int	map_handling(t_info *info, t_map **map)
@@ -88,6 +111,6 @@ int	map_handling(t_info *info, t_map **map)
 	printf("%s\n\n", info->map);
 	if (!check_close_map(map, info))
 		return (0);
-	print_map(map);
+	print_map(map, info);
 	return (1);
 }

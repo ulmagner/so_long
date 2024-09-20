@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:50:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 22:32:11 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ t_map	**init_row_lst(t_info *info)
 	return (row);
 }
 
-static t_map	*ft_newnode(t_info *info, int i)
+static t_map	*ft_newnode(t_info *info, int *i)
 {
 	t_map	*node;
 
 	node = malloc(sizeof(t_map));
 	if (!node)
 		return (NULL);
-	node->index = info->map[i];
+	node->index = info->map[*i];
 	node->x = info->i_x;
 	node->y = info->i_y;
 	node->right = NULL;
@@ -68,13 +68,14 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **row)
 	row[info->i_x] = node;
 }
 
-int	make_list(t_info *info, int i, t_map **node)
+int	make_list(t_info *info, int *i, t_map **node)
 {
 	++info->i_x;
 	if (info->i_x == info->nbr_column)
 	{
 		info->i_x = 0;
 		info->i_y++;
+		(*i)++;
 	}
 	*node = ft_newnode(info, i);
 	if (!*node)
