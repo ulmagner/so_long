@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 23:17:50 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/21 00:36:22 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	fill_map(t_info *info, t_map **head)
 	row = init_row_lst(info);
 	if (!row)
 		return (0);
-	while (++i < info->size_map)
+	while (++i < info->size_map - 1)
 	{
 		if (!make_list(info, &i, &node))
 			return (free(row), 0);
