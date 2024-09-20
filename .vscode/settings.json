@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"mlx.h": "c",
-		"solong.h": "c"
+		"solong.h": "c",
+		"libft.h": "c"
 	}
 }

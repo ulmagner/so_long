@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/19 19:04:50 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/20 11:55:22 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,96 +14,84 @@ NAME		= so_long
 
 BONUS_NAME	= so_long_bonus
 
-LIB_NAME	= libft.a
+LFT_NAME	= libft.a
 
 MLX_NAME	= libmlx.a
 
-SRCS		= main.c error_handling.c map_handling.c  free.c \
-
-SRCS_LIB	= ft_strcat.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strdup.c \
-ft_strlcat.c ft_strlen.c ft_strncat.c ft_strncmp.c ft_strncpy.c	ft_strrchr.c \
-ft_strstr.c	ft_tolower.c ft_toupper.c ft_atoi.c	ft_isalnum.c ft_isalpha.c \
-ft_isascii.c ft_isdigit.c ft_isprint.c ft_memset.c ft_bzero.c ft_strlcpy.c \
-ft_memcpy.c ft_memmove.c ft_memchr.c ft_memcmp.c ft_isstrchr.c ft_countwords.c \
-ft_split.c ft_strjoin.c ft_itoa.c ft_calloc.c ft_putchar_fd.c ft_putstr_fd.c \
-ft_putnbr_fd.c ft_putendl_fd.c ft_strtrim.c ft_strmapi.c ft_substr.c \
-ft_striteri.c ft_strnstr.c ft_lstlast.c ft_lstsize.c ft_lstnew.c ft_lstmap.c \
-ft_lstadd_front.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
-ft_printf.c ft_printf_utils.c ft_printf_utils_bis.c ft_get_next_line.c \
+SRCS		= main.c error_handling.c map_handling.c free.c \
 
 SRCS_B		= main_bonus.c \
 
 INCS		= solong.h
 INCS_B		= solongb.h
-INCS_LIB	= libft.h
+INCS_LFT	= libft.h
 INCS_MLX	= mlx.h
 SDIRS		= srcs
 SDIRS_B		= srcsb
-SDIRS_LIB	= libfts/srcs
-SDIRS_MLX	= minilibx-linux
 IDIRS		= includes
 IDIRS_B		= includesb
-IDIRS_LIB	= libfts/includes
-IDIRS_MLX	= minilibx-linux/
-ODIRS		= $(SDIRS)
-ODIRS_B		= $(SDIRS_B)
-ODIRS_LIB	= libobj
-ODIRS_MLX	= mlxobj
+IDIRS_LFT	= includes/libfts/includes
+IDIRS_MLX	= includes/minilibx-linux
+ODIRS		= objs
+ODIRS_B		= objs_b
+DIRS_LFT	= includes/libfts
+DIRS_MLX	= includes/minilibx-linux
 
 IFILES		= $(addprefix $(IDIRS)/,$(INCS))
 IFILES_B	= $(addprefix $(IDIRS)/,$(INCS))
-IFILES_LIB	= $(addprefix $(IDIRS_LIB)/,$(INCS_LIB))
+IFILES_LFT	= $(addprefix $(IDIRS_LFT)/,$(INCS_LFT))
 IFILES_MLX	= $(addprefix $(IDIRS_MLX)/,$(INCS_MLX))
 SFILES		= $(addprefix $(SDIRS)/,$(SRCS))
 SFILES_B	= $(addprefix $(SDIRS_B)/,$(SRCS_B))
-SFILES_LIB	= $(addprefix $(SDIRS_LIB)/,$(SRCS_LIB))
-SFILES_MLX	= $(addprefix $(SDIRS_MLX)/,$(SRCS_MLX))
-OFILES		= $(patsubst %.c,%.o,$(SFILES))
-OFILES_B	= $(patsubst %.c,%.o,$(SFILES_B))
-OFILES_LIB	= $(addprefix $(ODIRS_LIB)/,$(patsubst %.c,%.o,$(SRCS_LIB)))
-OFILES_MLX	= $(addprefix $(ODIRS_MLX)/,$(patsubst %.c,%.o,$(SRCS_MLX)))
+OFILES		= $(addprefix $(ODIRS)/,$(patsubst %.c,%.o,$(SRCS)))
+OFILES_B	= $(addprefix $(ODIRS_B)/,$(patsubst %.c,%.o,$(SRCS_B)))
+A_LFT		= $(addprefix $(DIRS_LFT)/,$(LFT_NAME))
+A_MLX		= $(addprefix $(DIRS_MLX)/,$(MLX_NAME))
 
+CC			= cc
 MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
-CFLAGS		= -Wall -Wextra -Werror -ggdb -std=c99 -I$(IDIRS) -I$(IDIRS_LIB)
+CFLAGS		= -Wall -Wextra -Werror -ggdb -std=c99
+OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX)
 MAKEFLAGS 	+= -s
+MAKE		= make
+
+$(ODIRS):
+	@mkdir -p $(ODIRS)
+
+$(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) | $(ODIRS)
+	$(CC) $(CFLAGS) $(OPTION) -c $< -o $@
+
+$(A_LFT):
+	$(MAKE) -C $(DIRS_LFT)
+
+$(A_MLX):
+	$(MAKE) -C $(DIRS_MLX)
+
+$(NAME): $(OFILES) $(A_LFT) $(A_MLX)
+	$(CC) -o $(NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
+
+$(ODIRS_B):
+	@mkdir -p $(ODIRS_B)
+
+$(ODIRS_B)/%.o: $(SDIRS_B)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) | $(ODIRS_B)
+	$(CC) $(CFLAGS) $(OPTION) -c $< -o $@
+
+$(BONUS_NAME): $(OFILES_B) $(A_LFT) $(A_MLX)
+	$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES_B)
 
 all: $(NAME)
 
-$(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) $(IFILES_LIB)
-	@mkdir -p $(ODIRS)
-	$(CC) $(CFLAGS) -I$(IDIRS) -I$(IDIRS_LIB) -c $< -o $@
-
-$(ODIRS_LIB)/%.o: $(SDIRS_LIB)/%.c
-	@mkdir -p $(ODIRS_LIB)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(LIB_NAME): $(OFILES_LIB)
-	ar rcs $@ $^
-
-$(NAME): $(OFILES) $(LIB_NAME)
-	cc $(CFLAGS) $(OFILES) -L. -lft -o $(NAME)
-
 bonus:	$(BONUS_NAME)
 
-$(ODIRS_B)/%.o: $(SDIRS_B)/%.c $(IFILES) $(IFILES_LIB)
-	@mkdir -p $(ODIRS_B)
-	$(CC) $(CFLAGS) -I$(IDIRS) -I$(IDIRS_LIB) -c $< -o $@
-
-$(ODIRS_LIB)/%.o: $(SDIRS_LIB)/%.c
-	@mkdir -p $(ODIRS_LIB)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BONUS_NAME): $(OFILES_B) $(LIB_NAME)
-	cc $(CFLAGS) $(OFILES_B) -L. -lft -o $(BONUS_NAME)
-
 clean:
-	rm -f $(OFILES) $(OFILES_B) $(OFILES_LIB)
-	@rm -rf $(ODIRS_LIB) $(ODIRS_MLX)
+	rm -f $(OFILES) $(OFILES_B)
+	@rm -rf $(ODIRS) $(ODIRS_B)
+	$(MAKE) -C $(DIRS_LFT) clean
 
 fclean:	clean
 	rm -f $(NAME)
-	rm -f $(LIB_NAME)
 	rm -f $(BONUS_NAME)
+	$(MAKE) -C $(DIRS_LFT) fclean
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 10:05:18 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/18 21:29:40 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/20 10:19:13 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,25 +27,31 @@ INCS	= libft.h
 
 SDIRS	= srcs
 IDIRS	= includes
-ODIRS	= $(SDIRS)
+ODIRS	= objs
 
 SFILES	= $(addprefix $(SDIRS)/,$(SRCS))
 IFILES	= $(addprefix $(IDIRS)/,$(INCS))
-OFILES	= $(patsubst %.c,%.o,$(SRCS))
+OFILES	= $(addprefix $(ODIRS)/,$(patsubst %.c,%.o,$(SRCS)))
 
-CFLAGS	= -Wall -Wextra -Werror -ggdb -std=c99 -I$(IDIRS)
+CC		= cc
+
+CFLAGS	= -Wall -Wextra -Werror -ggdb -std=c99
 MAKEFLAGS += -s
 
 all: $(NAME)
 
-%.o: %.c $(IFILES)
-	cc $(CFLAGS) -c -I$(IDIRS) $< -o $@
+$(ODIRS):
+	@mkdir -p $(ODIRS)
+
+$(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) | $(ODIRS)
+	$(CC) $(CFLAGS) -c -I$(IDIRS) $< -o $@
 
 $(NAME): $(OFILES)
 	ar -rcs $(NAME) $(OFILES)
 
 clean:
 	rm -f $(OFILES)
+	rm -rf $(ODIRS)
 
 fclean:	clean
 	rm -f $(NAME)
