@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 19:13:10 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:22:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static int	get_info(t_info *info)
 	if (info->map[info->size_map - 1] != '\n')
 		info->size_map++;
 	info->nbr_column = nbr_column;
-	if ((info->nbr_column == info->nbr_line)
-		|| info->nbr_column <= 1 || info->nbr_line <= 1
+	if (info->nbr_column <= 1 || info->nbr_line <= 1
 		|| (info->nbr_column * info->nbr_line != info->size_map - nbr_line))
 		return (ft_printf(2, "Error\nInvalid map\n"), 0);
 	return (1);
