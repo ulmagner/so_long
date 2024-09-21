@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/21 00:36:22 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/21 20:29:23 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static int	fill_map(t_info *info, t_map **head)
 	{
 		if (!make_list(info, &i, &node))
 			return (free(row), 0);
-		chain_map(&curr, head, node);
-		chain_map_updown(node, info, row);
+		chain_map(&curr, head, node, info);
+		// chain_map_updown(node, info, row);
 	}
 	if (*head)
 	{
