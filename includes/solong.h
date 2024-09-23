@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 01:55:23 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 01:57:52 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_info
 	int				nbr_line;
 	int				nbr_column;
 	int				size_map;
-	struct s_map	**row;
 	char			*map;
 }	t_info;
 
@@ -55,7 +54,7 @@ typedef struct s_player
 
 t_map	**init_row_lst(t_info *info);
 void	ft_freeall(t_info *info, t_map **map);
-void	chain_map(t_map **curr, t_map **head, t_map *node, t_info *info);
+void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);

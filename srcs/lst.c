@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 01:53:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 01:58:05 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_map	*ft_newnode(t_info *info, int *i)
 	return (node);
 }
 
-void	chain_map(t_map **curr, t_map **head, t_map *node, t_info *info)
+void	chain_map(t_map **curr, t_map **head, t_map *node)
 {
 	if (!(*head))
 	{
