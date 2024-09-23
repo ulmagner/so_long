@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/21 20:30:20 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/24 01:53:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static t_map	*ft_newnode(t_info *info, int *i)
 	if (!node)
 		return (NULL);
 	node->index = info->map[*i];
+	node->is_visited = 0;
 	node->x = info->i_x;
 	node->y = info->i_y;
 	node->right = NULL;
@@ -56,44 +57,26 @@ void	chain_map(t_map **curr, t_map **head, t_map *node, t_info *info)
 		node->left = *curr;
 		*curr = node;
 	}
-    t_map *temp;
-
-    // If we're on the first row (info->i_y == 0), no "up" link is needed
-    if (info->i_y == 0)
-    {
-        node->up = NULL; // No node above
-    }
-    else
-    {
-        // Traverse upwards from the current node in the previous row
-        temp = *head;
-
-        while (temp && (temp->x != node->x || temp->y != node->y - 1))
-        {
-            temp = temp->right; // Move right to find the node directly above
-        }
-
-        // If we found the node in the previous row, link them
-        if (temp)
-        {
-            node->up = temp;
-            temp->down = node;
-        }
-    }
-
-    // Set the current node to the newly created node
-    *curr = node;
-
 }
 
-void	chain_map_updown(t_map *node, t_info *info, t_map **row)
+void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 {
-	if (row[info->i_x])
+	t_map	*temp;
+
+	if (info->i_y == 0)
+		node->up = NULL;
+	else
 	{
-		node->up = row[info->i_x];
-		row[info->i_x]->down = node;
+		temp = *head;
+		while (temp && (temp->x != node->x || temp->y != node->y - 1))
+			temp = temp->right;
+		if (temp)
+		{
+			node->up = temp;
+			temp->down = node;
+		}
 	}
-	row[info->i_x] = node;
+	*curr = node;
 }
 
 int	make_list(t_info *info, int *i, t_map **node)
