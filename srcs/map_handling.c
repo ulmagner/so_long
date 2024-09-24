@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 01:57:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:06:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,13 @@ void	print_map(t_map **head, t_info *info)
 	}
 }
 
-int	map_handling(t_info *info, t_map **map)
+int	map_handling(t_info *info, t_map **map, t_player *player)
 {
 	if (!get_info(info))
 		return (0);
-	printf("%d %d %d\n", info->nbr_column, info->nbr_line, info->size_map);
 	if (!fill_map(info, map))
 		return (0);
-	printf("%s\n\n", info->map);
-	if (!check_close_map(map, info))
+	if (!check_close_map(map, info, player))
 		return (0);
 	print_map(map, info);
 	return (1);

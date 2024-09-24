@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/20 17:39:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:02:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,14 @@ void	ft_freeinfo(t_info *info)
 		free(info->map);
 }
 
-void	ft_freeall(t_info *info, t_map **map)
+void	ft_freewindow(t_window *window)
 {
-	(void) map;
-	ft_mapfree(map);
-	ft_freeinfo(info);
+	free(window->mlx);
+}
+
+void	ft_clearall(t_solong *solong)
+{
+	ft_mapfree(&solong->map);
+	ft_freeinfo(&solong->info);
+	ft_freewindow(&solong->window);
 }
