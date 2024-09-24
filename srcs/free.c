@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 05:02:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:14:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,5 @@ void	ft_clearall(t_solong *solong)
 	ft_mapfree(&solong->map);
 	ft_freeinfo(&solong->info);
 	ft_freewindow(&solong->window);
+	close(solong->info.fd);
 }

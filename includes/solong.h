@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 04:55:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:00:28 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "libft.h"
 # include "mlx.h"
 # include <X11/keysym.h>
+# define TILE_SIZE 64
 
 typedef struct s_map
 {
@@ -54,6 +55,17 @@ typedef struct s_player
 	int	y;
 }	t_player;
 
+typedef struct	s_image {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char	*img_path;
+	int		width;
+	int		height;
+}	t_image;
+
 typedef struct s_window
 {
 	void	*mlx;
@@ -66,6 +78,8 @@ typedef struct s_solong
 	t_info		info;
 	t_player	player;
 	t_map		*map;
+	t_image		tileset;
+	t_image		map;
 }	t_solong;
 
 t_map	**init_row_lst(t_info *info);
