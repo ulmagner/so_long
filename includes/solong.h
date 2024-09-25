@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 13:00:28 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:22:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_player
 	int	y;
 }	t_player;
 
-typedef struct	s_image {
+typedef struct s_image {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -70,6 +70,8 @@ typedef struct s_window
 {
 	void	*mlx;
 	void	*main;
+	int		main_width;
+	int		main_height;
 }	t_window;
 
 typedef struct s_solong
@@ -79,7 +81,7 @@ typedef struct s_solong
 	t_player	player;
 	t_map		*map;
 	t_image		tileset;
-	t_image		map;
+	t_image		ground;
 }	t_solong;
 
 t_map	**init_row_lst(t_info *info);
