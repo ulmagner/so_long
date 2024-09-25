@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/25 11:18:53 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/25 17:19:02 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LFT_NAME	= libft.a
 
 MLX_NAME	= libmlx.a
 
-SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c map_xpl.c \
+SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
+map_xpl.c tileset.c \
 
 SRCS_B		= main_bonus.c \
 
@@ -55,6 +56,8 @@ OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX)
 MAKEFLAGS 	+= -s
 MAKE		= make
 
+all:	$(NAME)
+
 $(ODIRS):
 	@mkdir -p $(ODIRS)
 
@@ -70,6 +73,8 @@ $(A_MLX):
 $(NAME): $(OFILES) $(A_LFT) $(A_MLX)
 	$(CC) -o $(NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
 
+bonus:	$(BONUS_NAME)
+
 $(ODIRS_B):
 	@mkdir -p $(ODIRS_B)
 
@@ -78,10 +83,6 @@ $(ODIRS_B)/%.o: $(SDIRS_B)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) | $(ODIRS_B
 
 $(BONUS_NAME): $(OFILES_B) $(A_LFT) $(A_MLX)
 	$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES_B)
-
-all: $(NAME)
-
-bonus:	$(BONUS_NAME)
 
 clean:
 	rm -f $(OFILES) $(OFILES_B)

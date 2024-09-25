@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 11:17:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:05:35 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,10 @@ typedef struct s_info
 	int				nbr_column;
 	int				size_map;
 	char			*map;
+	int				nbr_image;
+	int				*nbr_i;
+	char			**path_texture;
 }	t_info;
-
-typedef struct s_player
-{
-	int	x;
-	int	y;
-}	t_player;
 
 typedef struct s_image {
 	void	*img;
@@ -65,6 +62,12 @@ typedef struct s_image {
 	int		width;
 	int		height;
 }	t_image;
+
+typedef struct s_player
+{
+	int		x;
+	int		y;
+}	t_player;
 
 typedef struct s_window
 {
@@ -80,11 +83,14 @@ typedef struct s_solong
 	t_info		info;
 	t_player	player;
 	t_map		*map;
-	t_image		tileset;
+	t_image		*image;
+	t_image		**tileset;
 	t_image		ground;
 }	t_solong;
 
 t_map	**init_row_lst(t_info *info);
+t_image	**split_tileset(t_solong *solong);
+int		get_paths(char *file, t_info *info);
 void	build_map(t_solong *solong);
 void	ft_clearall(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);

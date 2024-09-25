@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 11:17:32 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:42:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ unsigned int	get_pixel_color(t_image *image, int x, int y)
 	return (*(unsigned int *)src);
 }
 
-void	copy_tile_to_map(t_solong *solong, int tile_x, int tile_y, t_map *map)
+void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
 {
+	unsigned int	color;
 	int				x;
 	int				y;
-	unsigned int	color;
 
 	y = -1;
-	while (++y < TILE_SIZE)
+	while (++y < image->height)
 	{
 		x = -1;
-		while (++x < TILE_SIZE)
+		while (++x < image->width)
 		{
-			color = get_pixel_color(&solong->tileset, \
-				tile_x * TILE_SIZE + x, tile_y * TILE_SIZE + y);
-			ft_pixel_put(&solong->ground, \
-				map->x * TILE_SIZE + x, map->y * TILE_SIZE + y, color);
+			color = get_pixel_color(image, \
+				0 * image->width + x, 0 * image->height + y);
+			ft_pixel_put(ground, \
+				map->x * image->width + x, map->y * image->height + y, color);
 		}
 	}
 }
@@ -53,11 +53,31 @@ void	copy_tile_to_map(t_solong *solong, int tile_x, int tile_y, t_map *map)
 void	build_map(t_solong *solong)
 {
 	t_map	*col;
+	int	i;
+	int	j;
 
+	i = -1;
+	j = -1;
 	col = solong->map;
 	while (col)
 	{
-		copy_tile_to_map(solong, 0, 0, col);
+		copy_tile_to_map(&solong->tileset[0][0], &solong->ground, col);
+		if (col->index == '1' && col->y == solong->info.nbr_line - 1)
+			copy_tile_to_map(&solong->tileset[1][0], &solong->ground, col);
+		else if (col->index == '1' && col->x == 0)
+			copy_tile_to_map(&solong->tileset[1][1], &solong->ground, col);
+		else if (col->index == '1' && col->y == 0)
+			copy_tile_to_map(&solong->tileset[1][2], &solong->ground, col);
+		else if (col->index == '1' && col->x == solong->info.nbr_column - 1)
+			copy_tile_to_map(&solong->tileset[1][3], &solong->ground, col);
+		else if (col->index == '1')
+			copy_tile_to_map(&solong->tileset[1][4], &solong->ground, col);
+		if (col->index == 'E' && col->down->index == '0')
+			copy_tile_to_map(&solong->tileset[2][0], &solong->ground, col);
+		if (col->index == 'C')
+			copy_tile_to_map(&solong->tileset[3][0], &solong->ground, col);
+		if (col->index == 'P')
+			copy_tile_to_map(&solong->tileset[4][0], &solong->ground, col);
 		col = col->right;
 	}
 }

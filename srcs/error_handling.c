@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 10:18:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:48:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	check_close_map(t_map **map, t_info *info, t_player *player)
 
 int	error_handling(int ac, char **av, t_info *info)
 {
-	if (ac < 4)
+	if (ac < 5)
 		return (0);
 	if (ft_strncmp(av[1] + (ft_strlen(av[1]) - 4), ".ber", 4))
 		return (0);
