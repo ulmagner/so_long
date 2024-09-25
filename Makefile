@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/24 04:43:26 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/25 11:18:53 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LFT_NAME	= libft.a
 
 MLX_NAME	= libmlx.a
 
-SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
+SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c map_xpl.c \
 
 SRCS_B		= main_bonus.c \
 
