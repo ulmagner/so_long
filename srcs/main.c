@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:14:20 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 10:24:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:31:03 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y)
 	char	*src;
 
 	src = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
-	return (*(unsigned int *)src);
+	return *(unsigned int *)src;
 }
 
 void	copy_tile_to_map(t_solong *solong, int tile_x, int tile_y, int map_x, int map_y)
@@ -49,8 +49,8 @@ void	copy_tile_to_map(t_solong *solong, int tile_x, int tile_y, int map_x, int m
 	y = -1;
 	while (++y < TILE_SIZE)
 	{
-		x = 0;
-		while (x < TILE_SIZE)
+		x = -1;
+		while (++x < TILE_SIZE)
 		{
 			color = get_pixel_color(&solong->tileset, tile_x * TILE_SIZE + x, tile_y * TILE_SIZE + y);
 			ft_pixel_put(&solong->ground, map_x * TILE_SIZE + x, map_y * TILE_SIZE + y, color);
