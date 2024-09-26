@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:16:14 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:23:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_map(t_map **head, t_info *info)
 		col = row;
 		while (col)
 		{
-			printf("%c", col->index);
+			ft_printf(2, "%c", col->index);
 			if (col->x == info->nbr_column - 1)
 				break ;
 			col = col->right;

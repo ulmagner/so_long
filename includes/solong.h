@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:51:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:30:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_map
 typedef struct s_info
 {
 	int				coin;
+	bool			exit;
 	int				fd;
 	int				i_x;
 	int				i_y;

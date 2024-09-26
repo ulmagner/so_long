@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:43:08 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:04:21 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	launcher(t_solong *solong, char **av)
 	solong->window.main_width = ft_atoi(av[2]);
 	solong->window.main_height = ft_atoi(av[3]);
 	solong->window.mlx = mlx_init();
+	if (!solong->window.mlx)
+		return (0);
 	solong->window.main = mlx_new_window(solong->window.mlx, \
 		solong->window.main_width, solong->window.main_height, "So_long");
 	solong->tileset = split_tileset(solong);

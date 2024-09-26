@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 14:39:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:58:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,25 @@ int	movement_r(int keycode, t_solong *solong)
 
 int	movement_handling(t_solong *solong)
 {
-	if (solong->i % 32 != 0)
-		return (0);
+// 	if (solong->i % 64 != 0)
+// 		return (0);
 	if (solong->movement.move[XK_w] && solong->player.hero->up->index != '1')
-	{
 		solong->player.hero = solong->player.hero->up;
-	}
 	if (solong->movement.move[XK_s] && solong->player.hero->down->index != '1')
-	{
 		solong->player.hero = solong->player.hero->down;
-	}
 	if (solong->movement.move[XK_a] && solong->player.hero->left->index != '1')
-	{
 		solong->player.hero = solong->player.hero->left;
-	}
 	if (solong->movement.move[XK_d] && solong->player.hero->right->index != '1')
-	{
 		solong->player.hero = solong->player.hero->right;
+	if (solong->player.hero->index == 'C')
+	{
+		solong->info.coin--;
+		solong->player.hero->index = '0';
+		solong->player.hero->is_visited = 2;
 	}
+	if (solong->info.coin == 0)
+		solong->info.exit = 1;
+	if (solong->player.hero->index == 'E' && solong->info.exit)
+		exit((ft_clearall(solong), EXIT_SUCCESS));
 	return (1);
 }
