@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/24 01:58:05 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:16:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_map	**init_row_lst(t_info *info)
 	return (row);
 }
 
-static t_map	*ft_newnode(t_info *info, int *i)
+static t_map	*ft_newnode(t_info *info, int *i, t_map **hero)
 {
 	t_map	*node;
 
@@ -41,6 +41,8 @@ static t_map	*ft_newnode(t_info *info, int *i)
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
+	if (node->index == 'P')
+		*hero = node;
 	return (node);
 }
 
@@ -79,7 +81,7 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	*curr = node;
 }
 
-int	make_list(t_info *info, int *i, t_map **node)
+int	make_list(t_info *info, int *i, t_map **node, t_map **hero)
 {
 	++info->i_x;
 	if (info->i_x == info->nbr_column)
@@ -88,7 +90,7 @@ int	make_list(t_info *info, int *i, t_map **node)
 		info->i_y++;
 		(*i)++;
 	}
-	*node = ft_newnode(info, i);
+	*node = ft_newnode(info, i, hero);
 	if (!*node)
 		return (0);
 	return (1);

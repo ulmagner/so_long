@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 18:05:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:16:48 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_map
 	struct s_map	*left;
 	struct s_map	*up;
 	struct s_map	*down;
+	struct s_map	*player;
 }	t_map;
 
 typedef struct s_info
@@ -67,7 +68,14 @@ typedef struct s_player
 {
 	int		x;
 	int		y;
+	t_map	*hero;
 }	t_player;
+
+typedef struct s_movement
+{
+	bool	move[65535];
+	int		keycode;
+}	t_movement;
 
 typedef struct s_window
 {
@@ -83,14 +91,16 @@ typedef struct s_solong
 	t_info		info;
 	t_player	player;
 	t_map		*map;
-	t_image		*image;
 	t_image		**tileset;
 	t_image		ground;
+	t_movement	movement;
+	int			i;
 }	t_solong;
 
 t_map	**init_row_lst(t_info *info);
 t_image	**split_tileset(t_solong *solong);
 int		get_paths(char *file, t_info *info);
+void	copy_player_to_map(t_solong *solong);
 void	build_map(t_solong *solong);
 void	ft_clearall(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
@@ -98,7 +108,7 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
 int		check_close_map(t_map **map, t_info *info, t_player *player);
-int		make_list(t_info *info, int *i, t_map **node);
+int		make_list(t_info *info, int *i, t_map **node, t_map **hero);
 int		empty_string(t_info *info);
 int		map_handling(t_info *info, t_map **map, t_player *player);
 int		error_handling(int ac, char **av, t_info *info);

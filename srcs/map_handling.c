@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 19:46:02 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:16:14 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	get_info(t_info *info)
 	return (1);
 }
 
-static int	fill_map(t_info *info, t_map **head)
+static int	fill_map(t_info *info, t_map **head, t_map **hero)
 {
 	t_map	*curr;
 	t_map	*node;
@@ -52,7 +52,7 @@ static int	fill_map(t_info *info, t_map **head)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(info, &i, &node))
+		if (!make_list(info, &i, &node, hero))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);
@@ -92,7 +92,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player)
 {
 	if (!get_info(info))
 		return (0);
-	if (!fill_map(info, map))
+	if (!fill_map(info, map, &player->hero))
 		return (0);
 	if (!check_close_map(map, info, player))
 		return (0);
