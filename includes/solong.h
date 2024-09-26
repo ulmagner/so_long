@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 19:54:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 23:27:56 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_map
 	char			index;
 	int				x;
 	int				y;
-	double				x_pxl;
-	double				y_pxl;
+	int				x_pxl;
+	int				y_pxl;
 	int				is_visited;
 	struct s_map	*right;
 	struct s_map	*left;
@@ -74,8 +74,8 @@ typedef struct s_image {
 
 typedef struct s_player
 {
-	double		x;
-	double		y;
+	int		x;
+	int		y;
 	t_map	*hero;
 }	t_player;
 
