@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:56:46 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:39:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ int	movement_handling(t_solong *solong)
 {
 	if (solong->i % 32 != 0)
 		return (0);
-	if (solong->movement.move[XK_w])
+	if (solong->movement.move[XK_w] && solong->player.hero->up->index != '1')
 	{
 		solong->player.hero = solong->player.hero->up;
 	}
-	if (solong->movement.move[XK_s])
+	if (solong->movement.move[XK_s] && solong->player.hero->down->index != '1')
 	{
 		solong->player.hero = solong->player.hero->down;
 	}
-	if (solong->movement.move[XK_a])
+	if (solong->movement.move[XK_a] && solong->player.hero->left->index != '1')
 	{
 		solong->player.hero = solong->player.hero->left;
 	}
-	if (solong->movement.move[XK_d])
+	if (solong->movement.move[XK_d] && solong->player.hero->right->index != '1')
 	{
 		solong->player.hero = solong->player.hero->right;
 	}
