@@ -3,21 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   tileset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 22:58:51 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/26 10:37:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	create_image(t_image *image, t_window *window)
+static int	create_image(t_image *image, t_window *window)
 {
 	image->img = mlx_xpm_file_to_image(window->mlx,
 			image->img_path, &image->width, &image->height);
+	if (!image->img)
+		return (ft_printf(2, "Error\nTexture_path\n"), 0);
 	image->addr = mlx_get_data_addr(image->img,
 			&image->bits_per_pixel, &image->line_length, &image->endian);
+	return (1);
+}
+
+t_image	**free_failedimage(int i, int j, t_solong *solong, t_image **tileset)
+{
+	while (j > 0)
+		mlx_destroy_image(solong->window.mlx, tileset[i][--j].img);
+	free(tileset[i]);
+	while (i-- > 0)
+	{
+		j = solong->info.nbr_i[i];
+		while (j > 0)
+			mlx_destroy_image(solong->window.mlx, tileset[i][--j].img);
+		free(tileset[i]);
+	}
+	return (free(tileset), NULL);
 }
 
 t_image	**split_tileset(t_solong *solong)
@@ -30,17 +48,15 @@ t_image	**split_tileset(t_solong *solong)
 	k = 0;
 	i = -1;
 	tileset = malloc(sizeof(t_image *) * solong->info.nbr_image);
-	ft_printf(2, "%d\n", solong->info.nbr_image);
 	while (++i < solong->info.nbr_image)
 	{
 		j = -1;
 		tileset[i] = malloc(sizeof(t_image) * (solong->info.nbr_i[i]));
-		ft_printf(2, "%d\n", solong->info.nbr_i[i]);
 		while (++j < solong->info.nbr_i[i])
 		{
 			tileset[i][j].img_path = solong->info.path_texture[k];
-			ft_printf(2, "%s\n", tileset[i][j].img_path);
-			create_image(&tileset[i][j], &solong->window);
+			if (!create_image(&tileset[i][j], &solong->window))
+				return (free_failedimage(i, j, solong, tileset));
 			k++;
 		}
 	}
