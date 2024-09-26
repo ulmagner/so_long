@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_xpl.c                                          :+:      :+:    :+:   */
+/*   map_xpm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:14:05 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:51:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y)
 	return (*(unsigned int *)src);
 }
 
-void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
+static void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
 {
 	unsigned int	color;
 	int				x;
@@ -46,26 +46,6 @@ void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
 				0 * image->width + x, 0 * image->height + y);
 			ft_pixel_put(ground, \
 				map->x * image->width + x, map->y * image->height + y, color);
-		}
-	}
-}
-
-void	copy_player_to_map(t_solong *solong)
-{
-	unsigned int	color;
-	int				x;
-	int				y;
-
-	y = -1;
-	while (++y < solong->tileset[5][0].height)
-	{
-		x = -1;
-		while (++x < solong->tileset[5][0].width)
-		{
-			color = get_pixel_color(&solong->tileset[5][0], \
-				0 * solong->tileset[5][0].width + x, 0 * solong->tileset[5][0].height + y);
-			ft_pixel_put(&solong->ground, \
-				solong->player.hero->x * solong->tileset[5][0].width + x, solong->player.hero->y * solong->tileset[5][0].height + y, color);
 		}
 	}
 }
@@ -92,8 +72,6 @@ void	build_map(t_solong *solong)
 			copy_tile_to_map(&solong->tileset[3][0], &solong->ground, col);
 		if (col->index == 'C')
 			copy_tile_to_map(&solong->tileset[4][0], &solong->ground, col);
-		// if (col->index == 'P')
-		// 	copy_tile_to_map(&solong->tileset[5][0], &solong->ground, col);
 		col = col->right;
 	}
 }
