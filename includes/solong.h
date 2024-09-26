@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 15:30:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:54:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,19 @@
 # include "mlx.h"
 # include <X11/keysym.h>
 # define TILE_SIZE 64
+# ifndef MANDATORY
+#  define MANDATORY 0
+# else
+# define MANDATORY 1
+# endif
 
 typedef struct s_map
 {
 	char			index;
 	int				x;
 	int				y;
+	double				x_pxl;
+	double				y_pxl;
 	int				is_visited;
 	struct s_map	*right;
 	struct s_map	*left;
@@ -67,8 +74,8 @@ typedef struct s_image {
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	double		x;
+	double		y;
 	t_map	*hero;
 }	t_player;
 
@@ -119,7 +126,7 @@ int		movement_r(int keycode, t_solong *solong);
 int		movement_handling(t_solong *solong);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
-int		check_close_map(t_map **map, t_info *info, t_player *player);
+int		check_close_map(t_map **map, t_info *info, t_player **player);
 int		make_list(t_info *info, int *i, t_map **node, t_map **hero);
 int		empty_string(t_info *info);
 int		map_handling(t_info *info, t_map **map, t_player *player);

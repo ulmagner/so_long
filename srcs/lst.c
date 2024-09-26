@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:16:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:42:28 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_map	**init_row_lst(t_info *info)
 
 static t_map	*ft_newnode(t_info *info, int *i, t_map **hero)
 {
+	(void) hero;
 	t_map	*node;
 
 	node = malloc(sizeof(t_map));
@@ -37,12 +38,12 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **hero)
 	node->is_visited = 0;
 	node->x = info->i_x;
 	node->y = info->i_y;
+	node->x_pxl = node->x * TILE_SIZE;
+	node->y_pxl = node->y * TILE_SIZE;
 	node->right = NULL;
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
-	if (node->index == 'P')
-		*hero = node;
 	return (node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 15:23:43 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:38:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player)
 		return (0);
 	if (!fill_map(info, map, &player->hero))
 		return (0);
-	if (!check_close_map(map, info, player))
+	if (!check_close_map(map, info, &player))
 		return (0);
 	print_map(map, info);
 	return (1);

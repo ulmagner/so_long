@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:50:37 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:21:45 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ void	copy_player_to_map(t_solong *solong)
 		x = -1;
 		while (++x < solong->tileset[5][0].width)
 		{
-			color = get_pixel_color(&solong->tileset[5][0], \
-				0 * solong->tileset[5][0].width + x, \
-				0 * solong->tileset[5][0].height + y);
+			color = get_pixel_color(&solong->tileset[5][0], x, y);
 			ft_pixel_put(&solong->ground, \
-				solong->player.hero->x * solong->tileset[5][0].width + x, \
-				solong->player.hero->y * solong->tileset[5][0].height + y, \
+				solong->player.hero->x_pxl + x, \
+				solong->player.hero->y_pxl + y, \
 				color);
 		}
 	}

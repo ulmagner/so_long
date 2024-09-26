@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/26 13:54:42 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/09/26 17:53:20 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,9 +49,9 @@ OFILES_B	= $(addprefix $(ODIRS_B)/,$(patsubst %.c,%.o,$(SRCS_B)))
 A_LFT		= $(addprefix $(DIRS_LFT)/,$(LFT_NAME))
 A_MLX		= $(addprefix $(DIRS_MLX)/,$(MLX_NAME))
 
-CC			= cc
+CC			= cc -O3 -ggdb
 MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
-CFLAGS		= -Wall -Wextra -Werror -ggdb -std=c99
+CFLAGS		= -Wall -Wextra -Werror -std=c99
 OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX)
 MAKEFLAGS 	+= -s
 MAKE		= make
@@ -62,7 +62,7 @@ $(ODIRS):
 	@mkdir -p $(ODIRS)
 
 $(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) | $(ODIRS)
-	$(CC) $(CFLAGS) $(OPTION) -c $< -o $@
+	$(CC) -DMANDATORY=1 $(CFLAGS) $(OPTION) -c $< -o $@
 
 $(A_LFT):
 	$(MAKE) -C $(DIRS_LFT)
@@ -82,7 +82,7 @@ $(ODIRS_B)/%.o: $(SDIRS_B)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) | $(ODIRS_B
 	$(CC) $(CFLAGS) $(OPTION) -c $< -o $@
 
 $(BONUS_NAME): $(OFILES_B) $(A_LFT) $(A_MLX)
-	$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES_B)
+	$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES_B) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
 
 clean:
 	rm -f $(OFILES) $(OFILES_B)

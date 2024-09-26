@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 13:54:59 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:41:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	floodfill(t_map *player, int *c, int *e)
 		floodfill(player->down, c, e);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_player *player)
+int	check_close_map(t_map **map, t_info *info, t_player **player)
 {
 	t_map	*curr;
 	int		c;
@@ -74,8 +74,10 @@ int	check_close_map(t_map **map, t_info *info, t_player *player)
 			return (0);
 		if (curr->index == 'P')
 		{
-			player->x = curr->x;
-			player->y = curr->x;
+			(*player)->x = curr->x;
+			(*player)->y = curr->x;
+			(*player)->hero = curr;
+			ft_printf(2, "%d %d\n", (*player)->hero->x_pxl, (*player)->hero->y_pxl);
 			floodfill(curr, &c, &e);
 		}
 		curr = curr->right;
