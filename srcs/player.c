@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 21:03:38 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/27 10:33:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	copy_player_to_map(t_solong *solong)
 		{
 			color = get_pixel_color(&solong->tileset[5][0], x, y);
 			ft_pixel_put(&solong->ground, \
-				solong->player.hero->x_pxl + x, \
-				solong->player.hero->y_pxl + y, \
+				solong->player.x + x, \
+				solong->player.y + y, \
 				color);
 		}
 	}

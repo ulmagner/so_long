@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 22:45:12 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/27 10:36:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	check_close_map(t_map **map, t_info *info, t_player **player)
 			return (0);
 		if (curr->index == 'P')
 		{
-			(*player)->x = curr->x;
-			(*player)->y = curr->y;
+			(*player)->x = curr->x * 64;
+			(*player)->y = curr->y * 64;
 			(*player)->hero = curr;
 			floodfill(curr, &c, &e);
 		}
