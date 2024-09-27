@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 21:16:01 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/27 15:20:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 static int	display_map(t_solong *solong, t_window *window)
 {
 	build_map(solong);
-	copy_player_to_map(solong);
+	// if (solong->player.index_e != 3)
+	// 	copy_player_to_map(solong, solong->player.index_e);
+	// else if (solong->player.index_n != 0)
+	// 	copy_player_to_map(solong, solong->player.index_n);
+	// else if (solong->player.index_s != 1)
+	// 	copy_player_to_map(solong, solong->player.index_s);
+	// else if (solong->player.index_o != 2)
+	copy_player_to_map(solong, 0);
 	mlx_put_image_to_window(window->mlx,
 		window->main, solong->ground.img, 0, 0);
 	return (1);

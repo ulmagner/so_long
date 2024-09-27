@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 23:27:56 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/09/27 15:22:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_info
 	char			*map;
 	int				nbr_image;
 	int				*nbr_i;
+	int				*nbr_a;
 	char			**path_texture;
 }	t_info;
 
@@ -76,6 +77,12 @@ typedef struct s_player
 {
 	int		x;
 	int		y;
+	int		index_n;
+	int		index_s;
+	int		index_e;
+	int		index_o;
+	int		index;
+	int		*animation;
 	t_map	*hero;
 }	t_player;
 
@@ -99,24 +106,23 @@ typedef struct s_solong
 	t_info		info;
 	t_player	player;
 	t_map		*map;
-	t_image		**tileset;
+	t_image		***tileset;
 	t_image		ground;
 	t_movement	movement;
 	int			i;
 }	t_solong;
 
 t_map	**init_row_lst(t_info *info);
-t_image	**split_tileset(t_solong *solong);
+t_image	***split_tileset(t_solong *solong);
 int		get_paths(char *file, t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
-void	copy_player_to_map(t_solong *solong);
+void	copy_player_to_map(t_solong *solong, int index);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_solong *solong);
-void	copy_player_to_map(t_solong *solong);
 void	build_map(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);

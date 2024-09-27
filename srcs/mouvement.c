@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/27 10:56:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:21:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,32 @@ int	check_mouvment(t_solong *solong, t_map **player)
 	return (0);
 }
 
+// void	animation_mouvment(t_solong *solong, int *is)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (++i < solong->info.nbr_a)
+// 	{
+// 		if (!is )
+// 	}
+// }
+
 int	movement_handling(t_solong *solong)
 {
 	if (solong->i % 10 != 0)
 		return (0);
 	int speed;
-
+	int is;
+	solong->player.index_n = 0;
+	solong->player.index_s = 1;
+	solong->player.index_o = 2;
+	solong->player.index_e = 3;
+	is = 0;
 	speed = 8;
 	if (solong->movement.move[XK_w] && (solong->player.hero->up->index != '1' && solong->player.y >= solong->player.hero->up->y_pxl))
 	{
+		solong->player.index = 0;
 		solong->player.y -= speed;
 		if (solong->player.y <= solong->player.hero->up->y_pxl)
 		{
@@ -60,6 +77,7 @@ int	movement_handling(t_solong *solong)
 	}
 	if (solong->movement.move[XK_s] && solong->player.hero->down->index != '1' && solong->player.y <= solong->player.hero->down->y_pxl)
 	{
+		solong->player.index = 1;
 		solong->player.y += speed;
 		if (solong->player.y >= solong->player.hero->down->y_pxl)
 		{
@@ -69,6 +87,7 @@ int	movement_handling(t_solong *solong)
 	}
 	if (solong->movement.move[XK_a] && solong->player.hero->left->index != '1' && solong->player.x >= solong->player.hero->left->x_pxl)
 	{
+		solong->player.index = 2;
 		solong->player.x -= speed;
 		if (solong->player.x <= solong->player.hero->left->x_pxl)
 		{
@@ -78,6 +97,7 @@ int	movement_handling(t_solong *solong)
 	}
 	if (solong->movement.move[XK_d] && solong->player.hero->right->index != '1' && solong->player.x <= solong->player.hero->right->x_pxl)
 	{
+		solong->player.index = 3;
 		solong->player.x += speed;
 		if (solong->player.x >= solong->player.hero->right->x_pxl)
 		{

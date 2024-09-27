@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 17:55:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:18:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_freeimage(t_solong *solong)
 		j = -1;
 		while (++j < solong->info.nbr_i[i])
 		{
-			mlx_destroy_image(solong->window.mlx, solong->tileset[i][j].img);
+			mlx_destroy_image(solong->window.mlx, solong->tileset[i][j][0].img);
 		}
 		free(solong->tileset[i]);
 	}
