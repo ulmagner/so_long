@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_xpm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/27 15:05:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/28 14:56:23 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	build_map(t_solong *solong)
 	while (col)
 	{
 		copy_tile_to_map(&solong->tileset[0][0][0], &solong->ground, col);
-		if (col->index == '1' && col->y == solong->info.nbr_line - 1)
+		if (col->index == '1' && col->y == 0)
 			copy_tile_to_map(&solong->tileset[1][0][0], &solong->ground, col);
+		else if (col->index == '1' && col->y == solong->info.nbr_line - 1)
+			copy_tile_to_map(&solong->tileset[1][1][0], &solong->ground, col);
 		else if (col->index == '1' && col->x == 0)
-			copy_tile_to_map(&solong->tileset[1][3][0], &solong->ground, col);
-		else if (col->index == '1' && col->y == 0)
 			copy_tile_to_map(&solong->tileset[1][2][0], &solong->ground, col);
 		else if (col->index == '1' && col->x == solong->info.nbr_column - 1)
-			copy_tile_to_map(&solong->tileset[1][1][0], &solong->ground, col);
+			copy_tile_to_map(&solong->tileset[1][3][0], &solong->ground, col);
 		else if (col->index == '1')
 			copy_tile_to_map(&solong->tileset[2][0][0], &solong->ground, col);
 		if (col->index == 'C' && col->is_visited != 2)

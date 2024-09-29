@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tileset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/27 16:07:40 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/29 15:03:42 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,51 +23,60 @@ static int	create_image(t_image *image, t_window *window)
 	return (1);
 }
 
-t_image	**free_failedimage(int i, int j, t_solong *solong, t_image **tileset)
+static int	free_failedimage(int i, int j, int a, t_solong *solong)
 {
-	while (j > 0)
-		mlx_destroy_image(solong->window.mlx, tileset[i][--j].img);
-	free(tileset[i]);
+	int	b;
+
+	b = 0;
+	while (a > 0)
+		mlx_destroy_image(solong->window.mlx, solong->tileset[i][j][--a].img);
+	free(solong->tileset[i][j]);
 	while (i-- > 0)
 	{
 		j = solong->info.nbr_i[i];
 		while (j > 0)
-			mlx_destroy_image(solong->window.mlx, tileset[i][--j].img);
-		free(tileset[i]);
+		{
+			a = solong->info.nbr_a[b];
+			while (a > 0)
+				mlx_destroy_image(solong->window.mlx,
+					solong->tileset[i][j][--a].img);
+			free(solong->tileset[i][j--]);
+		}
+		free(solong->tileset[i]);
 	}
-	return (free(tileset), NULL);
+	return (free(solong->tileset), 0);
 }
 
-t_image	***split_tileset(t_solong *solong)
+int	split_tileset(t_solong *solong)
 {
-	t_image	***tileset;
 	int		i;
 	int		j;
 	int		k;
 	int		a;
+	int		b;
 
 	k = 0;
+	b = 0;
 	i = -1;
-	tileset = malloc(sizeof(t_image **) * solong->info.nbr_image);
+	solong->tileset = malloc(sizeof(t_image **) * solong->info.nbr_image);
 	while (++i < solong->info.nbr_image)
 	{
 		j = -1;
-		tileset[i] = malloc(sizeof(t_image *) * (solong->info.nbr_i[i]));
-		ft_printf(2, "\nnbr_image:%d ", i);
+		solong->tileset[i] = malloc(sizeof(t_image *) * (solong->info.nbr_i[i]));
 		while (++j < solong->info.nbr_i[i])
 		{
 			a = -1;
-			// ft_printf(2, "nbr_i:%d ", solong->info.nbr_i[i]);
-			tileset[i][j] = malloc(sizeof(t_image) * (solong->info.nbr_a[j]));
-			while (++a < solong->info.nbr_a[j])
+			solong->tileset[i][j] = malloc(sizeof(t_image) * (solong->info.nbr_a[b]));
+			while (++a < solong->info.nbr_a[b] && solong->info.path_texture[k] != NULL)
 			{
-				ft_printf(2, "nbr_a:%d path%s ", solong->info.nbr_a[j], solong->info.path_texture[k]);
-				tileset[i][j][a].img_path = solong->info.path_texture[k];
-				if (!create_image(&tileset[i][j][a], &solong->window))
-					return (/*free_failedimage(i, j, solong, tileset)*/NULL);
+				ft_printf(2, "%d %d %d %d\n", i, j, a, b);
+				solong->tileset[i][j][a].img_path = solong->info.path_texture[k];
+				if (!create_image(&solong->tileset[i][j][a], &solong->window))
+					return (free_failedimage(i, j, a, solong));
 				k++;
 			}
+			b++;
 		}
 	}
-	return (tileset);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/27 10:36:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/29 15:07:20 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	check_close_map(t_map **map, t_info *info, t_player **player)
 		{
 			(*player)->x = curr->x * 64;
 			(*player)->y = curr->y * 64;
-			(*player)->hero = curr;
 			floodfill(curr, &c, &e);
 		}
 		curr = curr->right;

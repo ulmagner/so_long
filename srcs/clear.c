@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/27 15:18:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/09/29 15:08:56 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static void	ft_freeimage(t_solong *solong)
 {
 	int	i;
 	int	j;
+	int	a;
+	int	b;
 
+	b = 0;
 	i = -1;
 	if (!solong->tileset || !*solong->tileset)
 		return ;
@@ -32,7 +35,12 @@ static void	ft_freeimage(t_solong *solong)
 		j = -1;
 		while (++j < solong->info.nbr_i[i])
 		{
-			mlx_destroy_image(solong->window.mlx, solong->tileset[i][j][0].img);
+			a = -1;
+			while (++a < solong->info.nbr_a[b])
+				mlx_destroy_image(solong->window.mlx,
+					solong->tileset[i][j][a].img);
+			b++;
+			free(solong->tileset[i][j]);
 		}
 		free(solong->tileset[i]);
 	}
@@ -43,6 +51,7 @@ static void	ft_freeimage(t_solong *solong)
 void	ft_clearall(t_solong *solong)
 {
 	ft_freemap(&solong->map);
+	ft_freeplayer(&solong->player);
 	ft_freeimage(solong);
 	ft_freeinfo(&solong->info);
 	ft_freewindow(&solong->window);
