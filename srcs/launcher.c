@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/29 15:09:22 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/01 18:50:32 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	display_map(t_solong *solong, t_window *window)
 
 static int	looping(t_solong *solong)
 {
-	movement_handling(solong);
+	movement_handling(solong, &solong->player);
 	if (!display_map(solong, &solong->window))
 		exit((ft_clearall(solong), EXIT_FAILURE));
 	solong->i++;

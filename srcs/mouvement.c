@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/30 18:55:01 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:31:46 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,74 +40,84 @@ int	check_mouvment(t_solong *solong, t_map **player)
 	return (0);
 }
 
-int	movement_handling(t_solong *solong)
+int	movement_handling(t_solong *solong, t_player *player)
 {
-	int	speed;
-
 	if (solong->i % 10 != 0)
 		return (0);
-	speed = 8;
-	if (solong->movement.move[XK_w] && (solong->player.hero->up->index != '1' && solong->player.y >= solong->player.hero->up->y_pxl))
+	player->ms = 8;
+	if (solong->movement.move[XK_w] && (player->hero->up->index != '1' && player->y >= player->hero->up->y_pxl))
 	{
-		solong->player.index = 0;
-		if (solong->i % speed == 0)
-			solong->player.animation[0] = (solong->player.animation[0] + 1) % 9;
-		solong->player.y -= speed;
-		if (solong->player.y <= solong->player.hero->up->y_pxl)
+		player->index = 0;
+		if (solong->i % player->ms == 0)
+		{
+			if ((player->animation[0] + 1) % 6 == 0)
+				player->animation[0] += 2;
+			player->animation[0] = (player->animation[0] + 1) % 6;
+		}
+		player->y -= player->ms;
+		if (player->y <= player->hero->up->y_pxl)
 		{
 			ft_printf(2, "up\n");
-			solong->player.hero = solong->player.hero->up;
+			player->hero = player->hero->up;
 		}
 	}
-	if (solong->movement.move[XK_s] && solong->player.hero->down->index != '1' && solong->player.y <= solong->player.hero->down->y_pxl)
+	if (solong->movement.move[XK_s] && player->hero->down->index != '1' && player->y <= player->hero->down->y_pxl)
 	{
-		solong->player.index = 1;
-		// if (solong->i % speed == 0)
-		// 	solong->player.animation[1] = (solong->player.animation[1] + 1) % 9;
-		if (solong->i % speed == 0)
-			solong->player.animation[1] = 0;
-		solong->player.y += speed;
-		if (solong->player.y >= solong->player.hero->down->y_pxl)
+		player->index = 1;
+		if (solong->i % player->ms == 0)
+		{
+			if ((player->animation[1] + 1) % 6 == 0)
+				player->animation[1] += 2;
+			player->animation[1] = (player->animation[1] + 1) % 6;
+		}
+		player->y += player->ms;
+		if (player->y >= player->hero->down->y_pxl)
 		{
 			ft_printf(2, "down\n");
-			solong->player.hero = solong->player.hero->down;
+			player->hero = player->hero->down;
 		}
 	}
-	if (solong->movement.move[XK_a] && solong->player.hero->left->index != '1' && solong->player.x >= solong->player.hero->left->x_pxl)
+	if (solong->movement.move[XK_a] && player->hero->left->index != '1' && player->x >= player->hero->left->x_pxl)
 	{
-		solong->player.index = 2;
-		// if (solong->i % speed == 0)
-		// 	solong->player.animation[2] = (solong->player.animation[2] + 1) % 9;
-		if (solong->i % speed == 0)
-			solong->player.animation[2] = 0;
-		solong->player.x -= speed;
-		if (solong->player.x <= solong->player.hero->left->x_pxl)
+		player->index = 2;
+		if (solong->i % player->ms == 0)
+		{
+			if ((player->animation[2] + 1) % 6 == 0)
+				player->animation[2] += 2;
+			player->animation[2] = (player->animation[2] + 1) % 6;
+		}
+		player->x -= player->ms;
+		if (player->x <= player->hero->left->x_pxl)
 		{
 			ft_printf(2, "left\n");
-			solong->player.hero = solong->player.hero->left;
+			player->hero = player->hero->left;
 		}
 	}
-	if (solong->movement.move[XK_d] && solong->player.hero->right->index != '1' && solong->player.x <= solong->player.hero->right->x_pxl)
+	if (solong->movement.move[XK_d] && player->hero->right->index != '1' && player->x <= player->hero->right->x_pxl)
 	{
-		solong->player.index = 3;
-		if (solong->i % speed == 0)
-			solong->player.animation[3] = (solong->player.animation[3] + 1) % 9;
-		solong->player.x += speed;
-		if (solong->player.x >= solong->player.hero->right->x_pxl)
+		player->index = 3;
+		if (solong->i % player->ms == 0)
+		{
+			if ((player->animation[3] + 1) % 6 == 0)
+				player->animation[3] += 2;
+			player->animation[3] = (player->animation[3] + 1) % 6;
+		}
+		player->x += player->ms;
+		if (player->x >= player->hero->right->x_pxl)
 		{
 			ft_printf(2, "right\n");
-			solong->player.hero = solong->player.hero->right;
+			player->hero = player->hero->right;
 		}
 	}
-	if (solong->player.hero->index == 'C')
+	if (player->hero->index == 'C')
 	{
 		solong->info.coin--;
-		solong->player.hero->index = '0';
-		solong->player.hero->is_visited = 2;
+		player->hero->index = '0';
+		player->hero->is_visited = 2;
 	}
 	if (solong->info.coin == 0)
 		solong->info.exit = 1;
-	if (solong->player.hero->index == 'E' && solong->info.exit)
+	if (player->hero->index == 'E' && solong->info.exit)
 		exit((ft_clearall(solong), EXIT_SUCCESS));
 	return (1);
 }
