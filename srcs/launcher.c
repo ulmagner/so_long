@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/01 18:50:32 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 18:19:31 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	display_map(t_solong *solong, t_window *window)
 static int	looping(t_solong *solong)
 {
 	movement_handling(solong, &solong->player);
+	attack_handling(solong, &solong->player);
 	if (!display_map(solong, &solong->window))
 		exit((ft_clearall(solong), EXIT_FAILURE));
 	solong->i++;
@@ -51,12 +52,14 @@ int	launcher(t_solong *solong, char **av)
 	solong->ground.addr = mlx_get_data_addr(solong->ground.img,
 			&solong->ground.bits_per_pixel,
 			&solong->ground.line_length, &solong->ground.endian);
-	solong->player.animation = malloc(sizeof(int) * 4);
+	solong->player.animation = malloc(sizeof(int) * 6);
 	if (!solong->player.animation)
 		return (0);
-	ft_bzero(solong->player.animation, sizeof(int) * 4);
+	ft_bzero(solong->player.animation, sizeof(int) * 6);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);
+	mlx_hook(solong->window.main, 4, 1L << 2, attack_p, solong);
+	mlx_hook(solong->window.main, 5, 1L << 3, attack_r, solong);
 	mlx_loop_hook(solong->window.mlx, looping, solong);
 	mlx_loop(solong->window.mlx);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 16:46:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:58:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,22 @@ int	movement_p(int keycode, t_solong *solong)
 	return (0);
 }
 
+void	check_mouvment(t_player *player)
+{
+	if (player->animation[0] != 0)
+		player->animation[0] = 0;
+	if(player->animation[1] != 0)
+		player->animation[1] = 0;
+	if(player->animation[2] != 0)
+		player->animation[2] = 0;
+	if(player->animation[3] != 0)
+		player->animation[3] = 0;
+}
+
 int	movement_r(int keycode, t_solong *solong)
 {
 	solong->movement.move[keycode] = false;
-	return (0);
-}
-
-int	check_mouvment(t_solong *solong, t_map **player)
-{
-	t_map	*curr;
-
-	curr = solong->map;
-	while (curr)
-	{
-		if (curr->x_pxl == (*player)->x_pxl && curr->y_pxl == (*player)->y_pxl && curr->index != '1')
-			return (1);
-		curr = curr->right;
-	}
+	check_mouvment(&solong->player);
 	return (0);
 }
 

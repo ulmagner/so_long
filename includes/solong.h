@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/01 18:50:35 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 18:06:53 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ typedef struct s_movement
 	int		keycode;
 }	t_movement;
 
+typedef struct s_attack
+{
+	bool	attack[65535];
+	int		current_frame;
+	int		total_frame;
+	int		x;
+	int		y;
+	int		button;
+}	t_attack;
+
 typedef struct s_window
 {
 	void	*mlx;
@@ -107,6 +117,7 @@ typedef struct s_solong
 	t_image		***tileset;
 	t_image		ground;
 	t_movement	movement;
+	t_attack	attack;
 	int			i;
 }	t_solong;
 
@@ -128,6 +139,9 @@ int		launcher(t_solong *solong, char **av);
 int		movement_p(int keycode, t_solong *solong);
 int		movement_r(int keycode, t_solong *solong);
 int		movement_handling(t_solong *solong, t_player *player);
+int		attack_p(int button, int x, int y, t_solong *solong);
+int		attack_r(int button, int x, int y, t_solong *solong);
+int		attack_handling(t_solong *solong, t_player *player);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
 int		check_close_map(t_map **map, t_info *info, t_player **player);

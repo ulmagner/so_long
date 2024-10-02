@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
+#    By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/09/26 17:53:20 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/10/02 17:40:13 by ulysse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LFT_NAME	= libft.a
 MLX_NAME	= libmlx.a
 
 SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
-map_xpm.c tileset.c mouvement.c launcher.c clear.c player.c get_path.c \
+map_xpm.c tileset.c mouvement.c launcher.c clear.c player.c get_path.c attack.c \
 
 SRCS_B		= main_bonus.c \
 

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 16:20:29 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 18:23:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ static void	check_player(char *line, t_info *info)
 			info->nbr_a[10]++;
 		else if (ft_strnstr(line, "droite", ft_strlen(line)))
 			info->nbr_a[11]++;
+		else if (ft_strnstr(line, "attack_", ft_strlen(line)))
+			info->nbr_a[12]++;
+		else if (ft_strnstr(line, "attackr", ft_strlen(line)))
+			info->nbr_a[13]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[5]++;
 	}
@@ -119,7 +123,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 static int	init_index(t_info *info)
 {
 	info->nbr_i = ft_calloc(6, sizeof(int));
-	info->nbr_a = ft_calloc(12, sizeof(int));
+	info->nbr_a = ft_calloc(14, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 
