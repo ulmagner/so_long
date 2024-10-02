@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 16:31:46 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:46:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	movement_handling(t_solong *solong, t_player *player)
 			player->hero = player->hero->right;
 		}
 	}
-	if (player->hero->index == 'C')
+	if (player->hero->index == 'C' && solong->movement.move[XK_e])
 	{
 		solong->info.coin--;
 		player->hero->index = '0';
