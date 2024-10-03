@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/30 18:48:37 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:01:33 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@ void	ft_pixel_put(t_image *image, int x, int y, int color)
 
 	if (color == (int)0xFF000000)
 		return ;
-	// if (x >= 0 && y >= 0 &&  x < image->width && y < image->height)
-	// {
-		dst = image->addr \
-			+ (y * image->line_length + x * (image->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
-	// }
+	dst = image->addr \
+		+ (y * image->line_length + x * (image->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 unsigned int	get_pixel_color(t_image *image, int x, int y)

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 18:06:53 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:04:41 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ typedef struct s_solong
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
+void	dir_up(t_player *player, t_movement movement, t_solong *solong);
+void	dir_down(t_player *player, t_movement movement, t_solong *solong);
+void	dir_left(t_player *player, t_movement movement, t_solong *solong);
+void	dir_right(t_player *player, t_movement movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
 void	copy_player_to_map(t_solong *solong);
 void	ft_freeinfo(t_info *info);
@@ -133,12 +137,12 @@ void	ft_clearall(t_solong *solong);
 void	build_map(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
-int		split_tileset(t_solong *solong);
+int		split_tileset(t_solong *solong, t_info *info);
 int		get_paths(char *file, t_info *info);
 int		launcher(t_solong *solong, char **av);
 int		movement_p(int keycode, t_solong *solong);
 int		movement_r(int keycode, t_solong *solong);
-int		movement_handling(t_solong *solong, t_player *player);
+int		movement_handling(t_solong *solong);
 int		attack_p(int button, int x, int y, t_solong *solong);
 int		attack_r(int button, int x, int y, t_solong *solong);
 int		attack_handling(t_solong *solong, t_player *player);

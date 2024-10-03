@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/29 15:03:42 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:23:37 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,14 @@ static int	free_failedimage(int i, int j, int a, t_solong *solong)
 	return (free(solong->tileset), 0);
 }
 
-int	split_tileset(t_solong *solong)
+static void	init_index(int *i, int *k, int *b)
+{
+	*i = -1;
+	*k = -1;
+	*b = -1;
+}
+
+int	split_tileset(t_solong *solong, t_info *info)
 {
 	int		i;
 	int		j;
@@ -55,27 +62,22 @@ int	split_tileset(t_solong *solong)
 	int		a;
 	int		b;
 
-	k = 0;
-	b = 0;
-	i = -1;
-	solong->tileset = malloc(sizeof(t_image **) * solong->info.nbr_image);
-	while (++i < solong->info.nbr_image)
+	init_index(&i, &k, &b);
+	solong->tileset = malloc(sizeof(t_image **) * info->nbr_image);
+	while (++i < info->nbr_image)
 	{
 		j = -1;
-		solong->tileset[i] = malloc(sizeof(t_image *) * (solong->info.nbr_i[i]));
-		while (++j < solong->info.nbr_i[i])
+		solong->tileset[i] = malloc(sizeof(t_image *) * info->nbr_i[i]);
+		while (++j < info->nbr_i[i])
 		{
 			a = -1;
-			solong->tileset[i][j] = malloc(sizeof(t_image) * (solong->info.nbr_a[b]));
-			while (++a < solong->info.nbr_a[b] && solong->info.path_texture[k] != NULL)
+			solong->tileset[i][j] = malloc(sizeof(t_image) * info->nbr_a[++b]);
+			while (++a < info->nbr_a[b])
 			{
-				ft_printf(2, "%d %d %d %d\n", i, j, a, b);
-				solong->tileset[i][j][a].img_path = solong->info.path_texture[k];
+				solong->tileset[i][j][a].img_path = info->path_texture[++k];
 				if (!create_image(&solong->tileset[i][j][a], &solong->window))
 					return (free_failedimage(i, j, a, solong));
-				k++;
 			}
-			b++;
 		}
 	}
 	return (1);

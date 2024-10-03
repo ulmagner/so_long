@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 18:23:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:25:01 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static char	*empty_stringe(char *path)
 	path[0] = '\0';
 	return (path);
 }
-
 
 static void	check_wall(char *line, t_info *info)
 {
@@ -48,6 +47,7 @@ static void	check_exit(char *line, t_info *info)
 			info->nbr_i[3]++;
 	}
 }
+
 static void	check_coin(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "coin", ft_strlen(line)))

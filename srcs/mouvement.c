@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 17:58:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:24:11 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,101 +22,36 @@ int	movement_p(int keycode, t_solong *solong)
 
 void	check_mouvment(t_player *player)
 {
-	if (player->animation[0] != 0)
-		player->animation[0] = 0;
-	if(player->animation[1] != 0)
-		player->animation[1] = 0;
-	if(player->animation[2] != 0)
-		player->animation[2] = 0;
-	if(player->animation[3] != 0)
-		player->animation[3] = 0;
+	if (player->animation[player->index] != 0)
+		player->animation[player->index] = 0;
 }
 
 int	movement_r(int keycode, t_solong *solong)
 {
 	solong->movement.move[keycode] = false;
-	check_mouvment(&solong->player);
+	// check_mouvment(&solong->player);
 	return (0);
 }
 
-int	movement_handling(t_solong *solong, t_player *player)
+int	movement_handling(t_solong *solong)
 {
 	if (solong->i % 10 != 0)
 		return (0);
-	player->ms = 8;
-	if (solong->movement.move[XK_w] && (player->hero->up->index != '1' && player->y >= player->hero->up->y_pxl))
-	{
-		player->index = 0;
-		if (solong->i % player->ms == 0)
-		{
-			if ((player->animation[0] + 1) % 6 == 0)
-				player->animation[0] += 2;
-			player->animation[0] = (player->animation[0] + 1) % 6;
-		}
-		player->y -= player->ms;
-		if (player->y <= player->hero->up->y_pxl)
-		{
-			ft_printf(2, "up\n");
-			player->hero = player->hero->up;
-		}
-	}
-	if (solong->movement.move[XK_s] && player->hero->down->index != '1' && player->y <= player->hero->down->y_pxl)
-	{
-		player->index = 1;
-		if (solong->i % player->ms == 0)
-		{
-			if ((player->animation[1] + 1) % 6 == 0)
-				player->animation[1] += 2;
-			player->animation[1] = (player->animation[1] + 1) % 6;
-		}
-		player->y += player->ms;
-		if (player->y >= player->hero->down->y_pxl)
-		{
-			ft_printf(2, "down\n");
-			player->hero = player->hero->down;
-		}
-	}
-	if (solong->movement.move[XK_a] && player->hero->left->index != '1' && player->x >= player->hero->left->x_pxl)
-	{
-		player->index = 2;
-		if (solong->i % player->ms == 0)
-		{
-			if ((player->animation[2] + 1) % 6 == 0)
-				player->animation[2] += 2;
-			player->animation[2] = (player->animation[2] + 1) % 6;
-		}
-		player->x -= player->ms;
-		if (player->x <= player->hero->left->x_pxl)
-		{
-			ft_printf(2, "left\n");
-			player->hero = player->hero->left;
-		}
-	}
-	if (solong->movement.move[XK_d] && player->hero->right->index != '1' && player->x <= player->hero->right->x_pxl)
-	{
-		player->index = 3;
-		if (solong->i % player->ms == 0)
-		{
-			if ((player->animation[3] + 1) % 6 == 0)
-				player->animation[3] += 2;
-			player->animation[3] = (player->animation[3] + 1) % 6;
-		}
-		player->x += player->ms;
-		if (player->x >= player->hero->right->x_pxl)
-		{
-			ft_printf(2, "right\n");
-			player->hero = player->hero->right;
-		}
-	}
-	if (player->hero->index == 'C' && solong->movement.move[XK_e])
+	solong->player.ms = 8;
+	dir_up(&solong->player, solong->movement, solong);
+	dir_down(&solong->player, solong->movement, solong);
+	dir_left(&solong->player, solong->movement, solong);
+	dir_right(&solong->player, solong->movement, solong);
+	if (solong->player.hero->index == 'C' && solong->movement.move[XK_e])
 	{
 		solong->info.coin--;
-		player->hero->index = '0';
-		player->hero->is_visited = 2;
+		solong->player.hero->index = '0';
+		solong->player.hero->is_visited = 2;
 	}
 	if (solong->info.coin == 0)
 		solong->info.exit = 1;
-	if (player->hero->index == 'E' && solong->info.exit)
+	if (solong->player.hero->index == 'E' && solong->info.exit \
+		&& solong->movement.move[XK_e])
 		exit((ft_clearall(solong), EXIT_SUCCESS));
 	return (1);
 }

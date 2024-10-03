@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/02 18:19:31 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:04:19 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	display_map(t_solong *solong, t_window *window)
 
 static int	looping(t_solong *solong)
 {
-	movement_handling(solong, &solong->player);
+	movement_handling(solong);
 	attack_handling(solong, &solong->player);
 	if (!display_map(solong, &solong->window))
 		exit((ft_clearall(solong), EXIT_FAILURE));
@@ -43,7 +43,7 @@ int	launcher(t_solong *solong, char **av)
 		return (0);
 	solong->window.main = mlx_new_window(solong->window.mlx, \
 		solong->window.main_width, solong->window.main_height, "So_long");
-	if (!split_tileset(solong))
+	if (!split_tileset(solong, &solong->info))
 		return (0);
 	map_width_in_pixels = solong->info.nbr_column * TILE_SIZE;
 	map_height_in_pixels = solong->info.nbr_line * TILE_SIZE;

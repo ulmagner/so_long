@@ -6,7 +6,7 @@
 #    By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/10/02 17:40:13 by ulysse           ###   ########.fr        #
+#    Updated: 2024/10/03 09:59:34 by ulysse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LFT_NAME	= libft.a
 MLX_NAME	= libmlx.a
 
 SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
-map_xpm.c tileset.c mouvement.c launcher.c clear.c player.c get_path.c attack.c \
+map_xpm.c tileset.c mouvement.c launcher.c clear.c player.c get_path.c \
+attack.c direction.c \
 
 SRCS_B		= main_bonus.c \
 
