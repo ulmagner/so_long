@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 10:04:19 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 00:12:41 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 static int	display_map(t_solong *solong, t_window *window)
 {
+	int	i;
+
+	i = -1;
 	build_map(solong);
+	while (solong->slime[++i].is_free && i < solong->info.collectible)
+	{
+		solong->slime[i].anim_slime = (solong->slime[i].anim_slime + 1) % 5;
+		solong->slime[i].x = solong->player.hero->x_pxl + (32 + (i * 50));
+		solong->slime[i].y = solong->player.hero->y_pxl + 32;
+		copy_slime_to_map(solong, &solong->slime[i]);
+	}
 	copy_player_to_map(solong);
 	mlx_put_image_to_window(window->mlx,
 		window->main, solong->ground.img, 0, 0);
@@ -25,6 +35,17 @@ static int	looping(t_solong *solong)
 {
 	movement_handling(solong);
 	attack_handling(solong, &solong->player);
+	if (solong->movement.move[XK_e] && solong->player.hero->index == 'C')
+	{
+		if (solong->player.hero->is_visited == 2)
+		{
+			solong->player.hero->index = '0';
+			solong->info.coin--;
+			solong->slime[solong->info.slime++].is_free = 1;
+		}
+	}
+	if (solong->info.coin == 0)
+		solong->info.exit = 1;
 	if (!display_map(solong, &solong->window))
 		exit((ft_clearall(solong), EXIT_FAILURE));
 	solong->i++;
@@ -41,6 +62,9 @@ int	launcher(t_solong *solong, char **av)
 	solong->window.mlx = mlx_init();
 	if (!solong->window.mlx)
 		return (0);
+	solong->slime = malloc(sizeof(t_slime) * solong->info.coin);
+	if (!solong->slime)
+		return (0);
 	solong->window.main = mlx_new_window(solong->window.mlx, \
 		solong->window.main_width, solong->window.main_height, "So_long");
 	if (!split_tileset(solong, &solong->info))
@@ -55,6 +79,9 @@ int	launcher(t_solong *solong, char **av)
 	solong->player.animation = malloc(sizeof(int) * 6);
 	if (!solong->player.animation)
 		return (0);
+	solong->random.rd_floor = get_randoms(0, 1, 2);
+	solong->deco.index = 2;
+	solong->info.collectible = solong->info.coin;
 	ft_bzero(solong->player.animation, sizeof(int) * 6);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 10:04:41 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/03 23:48:55 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_map
 typedef struct s_info
 {
 	int				coin;
+	int				collectible;
+	int				slime;
 	bool			exit;
 	int				fd;
 	int				i_x;
@@ -84,6 +86,28 @@ typedef struct s_player
 	t_map	*hero;
 }	t_player;
 
+typedef struct s_wall
+{
+	int		index;
+	int		anim;
+}	t_wall;
+
+typedef struct s_deco
+{
+	int		index;
+	int		anim_jar;
+	int		is_break;
+}	t_deco;
+
+typedef struct s_slime
+{
+	int		x;
+	int		y;
+	int		index;
+	int		anim_slime;
+	int		is_free;
+}	t_slime;
+
 typedef struct s_movement
 {
 	bool	move[65535];
@@ -95,9 +119,12 @@ typedef struct s_attack
 	bool	attack[65535];
 	int		current_frame;
 	int		total_frame;
+	int		frame_delay;
+	int		frame_c;
 	int		x;
 	int		y;
 	int		button;
+	bool	is_attack;
 }	t_attack;
 
 typedef struct s_window
@@ -108,16 +135,25 @@ typedef struct s_window
 	int		main_height;
 }	t_window;
 
+typedef struct s_random
+{
+	int	rd_floor;
+}	t_random;
+
 typedef struct s_solong
 {
 	t_window	window;
 	t_info		info;
 	t_player	player;
+	t_deco		deco;
 	t_map		*map;
 	t_image		***tileset;
 	t_image		ground;
 	t_movement	movement;
 	t_attack	attack;
+	t_random	random;
+	t_wall		wall;
+	t_slime		*slime;
 	int			i;
 }	t_solong;
 
@@ -128,6 +164,7 @@ void	dir_down(t_player *player, t_movement movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement movement, t_solong *solong);
 void	dir_right(t_player *player, t_movement movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
+void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
@@ -137,6 +174,7 @@ void	ft_clearall(t_solong *solong);
 void	build_map(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
+int		get_randoms(int min, int max, int count);
 int		split_tileset(t_solong *solong, t_info *info);
 int		get_paths(char *file, t_info *info);
 int		launcher(t_solong *solong, char **av);
