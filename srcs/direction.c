@@ -12,11 +12,13 @@
 
 #include "solong.h"
 
-void	dir_up(t_player *player, t_movement movement, t_solong *solong)
+void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement.move[XK_w] && (player->hero->up->index != '1' \
+	if (movement->move[XK_w] && (player->hero->up->index != '1' \
 		&& player->y >= player->hero->up->y_pxl))
 	{
+		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
+		movement->index_move[0] = true;
 		player->index = 0;
 		if (solong->i % player->ms == 0)
 		{
@@ -33,11 +35,13 @@ void	dir_up(t_player *player, t_movement movement, t_solong *solong)
 	}
 }
 
-void	dir_down(t_player *player, t_movement movement, t_solong *solong)
+void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement.move[XK_s] && player->hero->down->index != '1' \
+	if (movement->move[XK_s] && player->hero->down->index != '1' \
 		&& player->y <= player->hero->down->y_pxl)
 	{
+		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
+		movement->index_move[1] = true;
 		player->index = 1;
 		if (solong->i % player->ms == 0)
 		{
@@ -54,11 +58,13 @@ void	dir_down(t_player *player, t_movement movement, t_solong *solong)
 	}
 }
 
-void	dir_left(t_player *player, t_movement movement, t_solong *solong)
+void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement.move[XK_a] && player->hero->left->index != '1' \
+	if (movement->move[XK_a] && player->hero->left->index != '1' \
 		&& player->x >= player->hero->left->x_pxl)
 	{
+		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
+		movement->index_move[2] = true;
 		player->index = 2;
 		if (solong->i % player->ms == 0)
 		{
@@ -75,11 +81,13 @@ void	dir_left(t_player *player, t_movement movement, t_solong *solong)
 	}
 }
 
-void	dir_right(t_player *player, t_movement movement, t_solong *solong)
+void	dir_right(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement.move[XK_d] && player->hero->right->index != '1' \
+	if (movement->move[XK_d] && player->hero->right->index != '1' \
 		&& player->x <= player->hero->right->x_pxl)
 	{
+		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
+		movement->index_move[3] = 1;
 		player->index = 3;
 		if (solong->i % player->ms == 0)
 		{

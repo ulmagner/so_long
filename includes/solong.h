@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 09:53:21 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 15:25:01 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_movement
 {
 	bool	move[65535];
 	int		keycode;
+	bool	index_move[4];
 }	t_movement;
 
 typedef struct s_attack
@@ -119,8 +120,6 @@ typedef struct s_attack
 	bool	attack[4];
 	int		current_frame;
 	int		total_frame;
-	int		frame_delay;
-	int		frame_c;
 	int		x;
 	int		y;
 	int		button;
@@ -159,10 +158,10 @@ typedef struct s_solong
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
-void	dir_up(t_player *player, t_movement movement, t_solong *solong);
-void	dir_down(t_player *player, t_movement movement, t_solong *solong);
-void	dir_left(t_player *player, t_movement movement, t_solong *solong);
-void	dir_right(t_player *player, t_movement movement, t_solong *solong);
+void	dir_up(t_player *player, t_movement *movement, t_solong *solong);
+void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
+void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
+void	dir_right(t_player *player, t_movement *movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
 void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);

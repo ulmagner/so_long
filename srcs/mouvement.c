@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 21:39:21 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 15:26:45 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_mouvment(t_player *player)
 int	movement_r(int keycode, t_solong *solong)
 {
 	solong->movement.move[keycode] = false;
-	// check_mouvment(&solong->player);
+	check_mouvment(&solong->player);
 	return (0);
 }
 
@@ -40,10 +40,10 @@ int	movement_handling(t_solong *solong)
 	solong->player.ms = 8;
 	if (!solong->attack.is_attack)
 	{
-		dir_up(&solong->player, solong->movement, solong);
-		dir_down(&solong->player, solong->movement, solong);
-		dir_left(&solong->player, solong->movement, solong);
-		dir_right(&solong->player, solong->movement, solong);
+		dir_up(&solong->player, &solong->movement, solong);
+		dir_down(&solong->player, &solong->movement, solong);
+		dir_left(&solong->player, &solong->movement, solong);
+		dir_right(&solong->player, &solong->movement, solong);
 	}
 	if (solong->player.hero->index == 'E' && solong->info.exit \
 		&& solong->movement.move[XK_e])
