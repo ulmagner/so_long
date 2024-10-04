@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 23:16:52 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:48:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_randoms(int min, int max, int count)
 {
 	int	i;
 	int	rd_num;
-	
+
 	i = -1;
 	rd_num = -1;
 	while (++i < count)
@@ -66,10 +66,11 @@ int	get_randoms(int min, int max, int count)
 
 void	deco_management(t_solong *solong, t_deco *deco, t_map **col)
 {
-	if ((*col)->index == 'C')
-		copy_tile_to_map(&solong->tileset[2][0][deco->anim_jar], &solong->ground, *col);
-	// if ((*col)->is_visited == 2)
-		// copy_tile_to_map(&solong->tileset[4][0][coin->anim_slime], &solong->ground, *col);
+	if ((*col)->index == 'C' && (*col)->is_visited == 2)
+		copy_tile_to_map(&solong->tileset[2][0][deco->anim_jar], \
+			&solong->ground, *col);
+	if ((*col)->index == 'C' && (*col)->is_visited != 2)
+		copy_tile_to_map(&solong->tileset[2][0][0], &solong->ground, *col);
 }
 
 void	build_map(t_solong *solong)
@@ -81,7 +82,7 @@ void	build_map(t_solong *solong)
 	col = solong->map;
 	while (col)
 	{
-		if (++i % 2 ==  0)
+		if (++i % 2 == 0)
 			copy_tile_to_map(&solong->tileset[0][0][0], &solong->ground, col);
 		else
 			copy_tile_to_map(&solong->tileset[0][0][1], &solong->ground, col);
@@ -100,7 +101,7 @@ void	build_map(t_solong *solong)
 		else if (col->index == '1' && col->x == solong->info.nbr_column - 1)
 			copy_tile_to_map(&solong->tileset[1][3][0], &solong->ground, col);
 		else if (col->index == '1')
-			copy_tile_to_map(&solong->tileset[2][1][1], &solong->ground, col);
+			copy_tile_to_map(&solong->tileset[2][1][0], &solong->ground, col);
 		if (col->index == '1' && col->x == 0 && col->y == 0)
 			copy_tile_to_map(&solong->tileset[1][4][0], &solong->ground, col);
 		if (col->index == '1' && col->x == 0 && col->y == solong->info.nbr_line - 1)

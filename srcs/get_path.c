@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 23:08:22 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 10:18:03 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void	check_deco(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "deco", ft_strlen(line)))
 	{
-		if (ft_strnstr(line, "tree", ft_strlen(line)))
-			info->nbr_a[6]++;
 		if (ft_strnstr(line, "jar", ft_strlen(line)))
+			info->nbr_a[6]++;
+		else if (ft_strnstr(line, "tree", ft_strlen(line)))
 			info->nbr_a[7]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[2]++;

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/03 23:48:55 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:53:21 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ typedef struct s_movement
 
 typedef struct s_attack
 {
-	bool	attack[65535];
+	bool	attack[4];
 	int		current_frame;
 	int		total_frame;
 	int		frame_delay;
