@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 16:16:26 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:15:25 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	copy_player_to_map(t_solong *solong)
 		while (++x < solong->tileset[5][index][anim].width)
 		{
 			color = get_pixel_color(&solong->tileset[5][index][anim], x, y);
-			ft_pixel_put(&solong->ground, solong->player.x + x,
+			ft_pixel_put(&solong->game, solong->player.x + x,
 				solong->player.y + y, color);
 		}
 	}
@@ -52,8 +52,27 @@ void	copy_slime_to_map(t_solong *solong, t_slime *slime)
 		while (++x < solong->tileset[4][index][anim].width)
 		{
 			color = get_pixel_color(&solong->tileset[4][index][anim], x, y);
-			ft_pixel_put(&solong->ground, slime->x + x,
+			ft_pixel_put(&solong->game, slime->x + x,
 				slime->y + y, color);
+		}
+	}
+}
+
+void	copy_ground_to_map(t_solong *solong)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+
+	y = -1;
+	while (++y < solong->ground.height)
+	{
+		x = -1;
+		while (++x < solong->ground.width)
+		{
+			color = get_pixel_color(&solong->ground, x, y);
+			ft_pixel_put(&solong->game, x,
+				y, color);
 		}
 	}
 }

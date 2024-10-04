@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 15:25:01 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:21:26 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_solong
 	t_map		*map;
 	t_image		***tileset;
 	t_image		ground;
+	t_image		game;
 	t_movement	movement;
 	t_attack	attack;
 	t_random	random;
@@ -163,6 +164,7 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_right(t_player *player, t_movement *movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
+void	copy_ground_to_map(t_solong *solong);
 void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);
 void	ft_freeinfo(t_info *info);
@@ -171,6 +173,7 @@ void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_solong *solong);
 void	build_map(t_solong *solong);
+void	build_game(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
 int		get_randoms(int min, int max, int count);

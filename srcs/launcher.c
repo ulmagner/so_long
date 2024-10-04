@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 17:32:15 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:21:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static int	display_map(t_solong *solong, t_window *window)
 	int	i;
 
 	i = -1;
-	build_map(solong);
+	
+	build_game(solong);
 	while (solong->slime[++i].is_free && i < solong->info.collectible)
 	{
 		solong->slime[i].anim_slime = (solong->slime[i].anim_slime + 1) % 5;
@@ -114,12 +115,13 @@ static int	display_map(t_solong *solong, t_window *window)
 	}
 	copy_player_to_map(solong);
 	mlx_put_image_to_window(window->mlx,
-		window->main, solong->ground.img, 0, 0);
+		window->main, solong->game.img, 0, 0);
 	return (1);
 }
 
 static int	looping(t_solong *solong)
 {
+	copy_ground_to_map(solong);
 	movement_handling(solong);
 	attack_handling(solong, &solong->player);
 	if (solong->movement.move[XK_e] && solong->player.hero->index == 'C')
@@ -160,17 +162,27 @@ int	launcher(t_solong *solong, char **av)
 		return (0);
 	map_width_in_pixels = solong->info.nbr_column * TILE_SIZE;
 	map_height_in_pixels = solong->info.nbr_line * TILE_SIZE;
+	solong->ground.width = map_width_in_pixels;
+	solong->ground.height = map_height_in_pixels;
+	solong->game.width = map_width_in_pixels;
+	solong->game.height = map_height_in_pixels;
 	solong->ground.img = mlx_new_image(solong->window.mlx,
 			map_width_in_pixels, map_height_in_pixels);
 	solong->ground.addr = mlx_get_data_addr(solong->ground.img,
 			&solong->ground.bits_per_pixel,
 			&solong->ground.line_length, &solong->ground.endian);
+	solong->game.img = mlx_new_image(solong->window.mlx,
+			map_width_in_pixels, map_height_in_pixels);
+	solong->game.addr = mlx_get_data_addr(solong->game.img,
+			&solong->game.bits_per_pixel,
+			&solong->game.line_length, &solong->game.endian);
 	solong->player.animation = malloc(sizeof(int) * 6);
 	if (!solong->player.animation)
 		return (0);
 	solong->random.rd_floor = get_randoms(0, 1, 2);
 	solong->deco.index = 2;
 	solong->info.collectible = solong->info.coin;
+	build_map(solong);
 	ft_bzero(solong->player.animation, sizeof(int) * 6);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);

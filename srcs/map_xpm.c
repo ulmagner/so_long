@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 13:48:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:21:34 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,20 @@ void	build_map(t_solong *solong)
 			copy_tile_to_map(&solong->tileset[1][4][1], &solong->ground, col);
 		if (col->index == '1' && col->x == solong->info.nbr_column - 1 && col->y == solong->info.nbr_line - 1)
 			copy_tile_to_map(&solong->tileset[1][4][3], &solong->ground, col);
+		deco_management(solong, &solong->deco, &col);
+		if (col->index == 'E' && solong->info.exit)
+			copy_tile_to_map(&solong->tileset[3][0][0], &solong->ground, col);
+		col = col->right;
+	}
+}
+
+void	build_game(t_solong *solong)
+{
+	t_map	*col;
+
+	col = solong->map;
+	while (col)
+	{
 		deco_management(solong, &solong->deco, &col);
 		if (col->index == 'E' && solong->info.exit)
 			copy_tile_to_map(&solong->tileset[3][0][0], &solong->ground, col);
