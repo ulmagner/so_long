@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/29 15:07:20 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/05 21:14:06 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	floodfill(t_map *player, int *c, int *e)
 		floodfill(player->down, c, e);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_player **player)
+int	check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil)
 {
 	t_map	*curr;
 	int		c;
@@ -77,6 +77,11 @@ int	check_close_map(t_map **map, t_info *info, t_player **player)
 			(*player)->x = curr->x * 64;
 			(*player)->y = curr->y * 64;
 			floodfill(curr, &c, &e);
+		}
+		if (curr->index == 'O')
+		{
+			(*oeuil)->x = curr->x * 64;
+			(*oeuil)->y = curr->y * 64;
 		}
 		curr = curr->right;
 	}

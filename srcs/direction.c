@@ -29,7 +29,7 @@ void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
 		player->y -= player->ms;
 		if (player->y <= player->hero->up->y_pxl)
 		{
-			ft_printf(2, "up\n");
+			ft_printf(2, "up: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->hero = player->hero->up;
 		}
 	}
@@ -52,7 +52,7 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
 		player->y += player->ms;
 		if (player->y >= player->hero->down->y_pxl)
 		{
-			ft_printf(2, "down\n");
+			ft_printf(2, "down: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->hero = player->hero->down;
 		}
 	}
@@ -75,7 +75,7 @@ void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
 		player->x -= player->ms;
 		if (player->x <= player->hero->left->x_pxl)
 		{
-			ft_printf(2, "left\n");
+			ft_printf(2, "left: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->hero = player->hero->left;
 		}
 	}
@@ -98,7 +98,7 @@ void	dir_right(t_player *player, t_movement *movement, t_solong *solong)
 		player->x += player->ms;
 		if (player->x >= player->hero->right->x_pxl)
 		{
-			ft_printf(2, "right\n");
+			ft_printf(2, "right: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->hero = player->hero->right;
 		}
 	}

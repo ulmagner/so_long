@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 21:21:26 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/05 21:31:35 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ typedef struct s_player
 	t_map	*hero;
 }	t_player;
 
+typedef struct s_oeuil
+{
+	int		x;
+	int		y;
+	int		index;
+	int		*animation;
+	int		pv;
+	int		ms;
+	t_map	*o;
+}	t_oeuil;
+
 typedef struct s_wall
 {
 	int		index;
@@ -144,6 +155,7 @@ typedef struct s_solong
 	t_window	window;
 	t_info		info;
 	t_player	player;
+	t_oeuil		oeuil;
 	t_deco		deco;
 	t_map		*map;
 	t_image		***tileset;
@@ -164,6 +176,8 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_right(t_player *player, t_movement *movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
+void	copy_oeuil_to_map(t_solong *solong);
+void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map);
 void	copy_ground_to_map(t_solong *solong);
 void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);
@@ -188,10 +202,10 @@ int		attack_r(int button, int x, int y, t_solong *solong);
 int		attack_handling(t_solong *solong, t_player *player);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
-int		check_close_map(t_map **map, t_info *info, t_player **player);
-int		make_list(t_info *info, int *i, t_map **node, t_map **hero);
+int		check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil);
+int		make_list(t_info *info, int *i, t_map **node, t_map **hero, t_map **o);
 int		empty_string(t_info *info);
-int		map_handling(t_info *info, t_map **map, t_player *player);
+int		map_handling(t_info *info, t_map **map, t_player *player, t_oeuil *oeuil);
 int		error_handling(int ac, char **av, t_info *info);
 int		main(int ac, char **av);
 #endif //SOLONG_H

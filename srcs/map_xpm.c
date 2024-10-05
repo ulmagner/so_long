@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 21:21:34 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/05 18:32:23 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y)
 	return (*(unsigned int *)src);
 }
 
-static void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
+void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map)
 {
 	unsigned int	color;
 	int				x;

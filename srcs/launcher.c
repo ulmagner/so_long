@@ -6,64 +6,11 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/04 21:21:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/05 21:39:31 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-
-// static int	display_map(t_solong *solong, t_window *window)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	build_map(solong);
-// 	while (solong->slime[++i].is_free && i < solong->info.collectible)
-// 	{
-// 		solong->slime[i].anim_slime = (solong->slime[i].anim_slime + 1) % 5;
-// 		if (solong->movement.index_move[0])
-// 		{
-// 			if (solong->slime[i].y > solong->player.y + 64)
-// 				solong->slime[i].y--;
-// 			if (solong->slime[i].x < solong->player.x + (i * 32))
-// 				solong->slime[i].x++;
-// 			else if (solong->slime[i].x > solong->player.x + (i * 32))
-// 				solong->slime[i].x--;
-// 		}
-// 		else if (solong->movement.index_move[1] && solong->slime[i].y <= solong->player.y - 64)
-// 		{
-// 			if (solong->slime[i].x < solong->player.x + (i * 32))
-// 				solong->slime[i].x++;
-// 			else if (solong->slime[i].x > solong->player.x + (i * 32))
-// 				solong->slime[i].x--;
-// 			if (solong->slime[i].y <= solong->player.y - 64)
-// 				solong->slime[i].y++;
-// 		}
-// 		else if (solong->movement.index_move[2] && solong->slime[i].x > solong->player.x + 64)
-// 		{
-// 			if (solong->slime[i].x > solong->player.x + 64)
-// 				solong->slime[i].x--;
-// 			if (solong->slime[i].y < solong->player.y + (i * 32))
-// 				solong->slime[i].y++;
-// 			else if (solong->slime[i].y > solong->player.y + (i * 32))
-// 				solong->slime[i].y--;
-// 		}
-// 		else if (solong->movement.index_move[3] && solong->slime[i].x <= solong->player.x - 64)
-// 		{
-// 			if (solong->slime[i].x <= solong->player.x - 64)
-// 				solong->slime[i].x++;
-// 			if (solong->slime[i].y < solong->player.y + (i * 32))
-// 				solong->slime[i].y++;
-// 			else if (solong->slime[i].y > solong->player.y + (i * 32))
-// 				solong->slime[i].y--;
-// 		}
-// 		copy_slime_to_map(solong, &solong->slime[i]);
-// 	}
-// 	copy_player_to_map(solong);
-// 	mlx_put_image_to_window(window->mlx,
-// 		window->main, solong->ground.img, 0, 0);
-// 	return (1);
-// }
 
 static int	display_map(t_solong *solong, t_window *window)
 {
@@ -113,6 +60,7 @@ static int	display_map(t_solong *solong, t_window *window)
 		}
 		copy_slime_to_map(solong, &solong->slime[i]);
 	}
+	copy_oeuil_to_map(solong);
 	copy_player_to_map(solong);
 	mlx_put_image_to_window(window->mlx,
 		window->main, solong->game.img, 0, 0);
@@ -124,15 +72,19 @@ static int	looping(t_solong *solong)
 	copy_ground_to_map(solong);
 	movement_handling(solong);
 	attack_handling(solong, &solong->player);
-	if (solong->movement.move[XK_e] && solong->player.hero->index == 'C')
+	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
-		if (solong->player.hero->is_visited == 2)
+		solong->slime[solong->info.slime].y = solong->player.y;
+		solong->slime[solong->info.slime].x = solong->player.x;
+		if (!solong->slime[solong->info.slime].is_free)
+			copy_tile_to_map(&solong->tileset[2][2][0], &solong->game, solong->player.hero);
+		else
+			solong->info.slime++;
+		if (solong->movement.move[XK_e])
 		{
-			solong->slime[solong->info.slime].y = solong->player.y;
-			solong->slime[solong->info.slime].x = solong->player.x;
 			solong->player.hero->index = '0';
 			solong->info.coin--;
-			solong->slime[solong->info.slime++].is_free = 1;
+			solong->slime[solong->info.slime].is_free = 1;
 		}
 	}
 	if (solong->info.coin == 0)
@@ -152,9 +104,6 @@ int	launcher(t_solong *solong, char **av)
 	solong->window.main_height = ft_atoi(av[3]);
 	solong->window.mlx = mlx_init();
 	if (!solong->window.mlx)
-		return (0);
-	solong->slime = malloc(sizeof(t_slime) * solong->info.coin);
-	if (!solong->slime)
 		return (0);
 	solong->window.main = mlx_new_window(solong->window.mlx, \
 		solong->window.main_width, solong->window.main_height, "So_long");
@@ -179,11 +128,19 @@ int	launcher(t_solong *solong, char **av)
 	solong->player.animation = malloc(sizeof(int) * 6);
 	if (!solong->player.animation)
 		return (0);
+	ft_bzero(solong->player.animation, sizeof(int) * 6);
+	solong->oeuil.animation = malloc(sizeof(int) * 6);
+	if (!solong->oeuil.animation)
+		return (0);
+	ft_bzero(solong->oeuil.animation, sizeof(int) * 6);
 	solong->random.rd_floor = get_randoms(0, 1, 2);
 	solong->deco.index = 2;
 	solong->info.collectible = solong->info.coin;
+	solong->slime = malloc(sizeof(t_slime) * solong->info.collectible);
+	if (!solong->slime)
+		return (0);
+	ft_bzero(solong->slime, sizeof(t_slime) * solong->info.collectible);
 	build_map(solong);
-	ft_bzero(solong->player.animation, sizeof(int) * 6);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);
 	mlx_hook(solong->window.main, 4, 1L << 2, attack_p, solong);

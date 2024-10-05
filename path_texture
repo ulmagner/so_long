@@ -13,6 +13,7 @@
 .textures/deco/jar1.xpm
 +textures/deco/jar2.xpm
 -textures/deco/tree1.xpm
+-textures/deco/loot_indicator.xpm
 .textures/exit/exit1.xpm
 .textures/slime/slime_run1.xpm
 +textures/slime/slime_run2.xpm
@@ -53,3 +54,13 @@
 +textures/player/player_attackr_3.xpm
 +textures/player/player_attackr_4.xpm
 +textures/player/player_attackr_5.xpm
+.textures/ennemies/oeuil_gauche1.xpm
++textures/ennemies/oeuil_gauche2.xpm
++textures/ennemies/oeuil_gauche3.xpm
++textures/ennemies/oeuil_gauche4.xpm
++textures/ennemies/oeuil_gauche3.xpm
++textures/ennemies/oeuil_gauche2.xpm
+-textures/ennemies/oeuil_droite1.xpm
++textures/ennemies/oeuil_droite2.xpm
++textures/ennemies/oeuil_droite3.xpm
++textures/ennemies/oeuil_droite4.xpm

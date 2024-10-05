@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:29:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/25 19:04:31 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/05 21:29:26 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	get_map(t_info *info, int *nbr_line, int *nbr_column)
 	{
 		i = -1;
 		while (line[++i])
-			if (!ft_isstrchr("01CEP\n", line[i]))
+			if (!ft_isstrchr("01CEPO\n", line[i]))
 				return (free(line), ft_printf(2, "Error\nCarte\n"), 0);
 		tmp = ft_strjoin(info->map, line);
 		if (!tmp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/26 19:38:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/05 21:17:32 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	get_info(t_info *info)
 	return (1);
 }
 
-static int	fill_map(t_info *info, t_map **head, t_map **hero)
+static int	fill_map(t_info *info, t_map **head, t_map **hero, t_map **o)
 {
 	t_map	*curr;
 	t_map	*node;
@@ -52,7 +52,7 @@ static int	fill_map(t_info *info, t_map **head, t_map **hero)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(info, &i, &node, hero))
+		if (!make_list(info, &i, &node, hero, o))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);
@@ -88,13 +88,13 @@ void	print_map(t_map **head, t_info *info)
 	}
 }
 
-int	map_handling(t_info *info, t_map **map, t_player *player)
+int	map_handling(t_info *info, t_map **map, t_player *player, t_oeuil *oeuil)
 {
 	if (!get_info(info))
 		return (0);
-	if (!fill_map(info, map, &player->hero))
+	if (!fill_map(info, map, &player->hero, &oeuil->o))
 		return (0);
-	if (!check_close_map(map, info, &player))
+	if (!check_close_map(map, info, &player, &oeuil))
 		return (0);
 	print_map(map, info);
 	return (1);
