@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 21:31:35 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:13:53 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct s_oeuil
 	int		*animation;
 	int		pv;
 	int		ms;
+	int		anim;
+	int		rd_dir;
 	t_map	*o;
 }	t_oeuil;
 
@@ -126,16 +128,17 @@ typedef struct s_movement
 	bool	index_move[4];
 }	t_movement;
 
-typedef struct s_attack
+typedef struct s_action
 {
-	bool	attack[4];
+	bool	action[4];
 	int		current_frame;
 	int		total_frame;
 	int		x;
 	int		y;
 	int		button;
 	bool	is_attack;
-}	t_attack;
+	bool	is_counter;
+}	t_action;
 
 typedef struct s_window
 {
@@ -171,6 +174,10 @@ typedef struct s_solong
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
+void	oeuil_up(t_oeuil *oeuil, t_solong *solong);
+void	oeuil_down(t_oeuil *oeuil, t_solong *solong);
+void	oeuil_left(t_oeuil *oeuil, t_solong *solong);
+void	oeuil_right(t_oeuil *oeuil, t_solong *solong);
 void	dir_up(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
@@ -196,6 +203,7 @@ int		get_paths(char *file, t_info *info);
 int		launcher(t_solong *solong, char **av);
 int		movement_p(int keycode, t_solong *solong);
 int		movement_r(int keycode, t_solong *solong);
+int		movement_handling_oeuil(t_solong *solong);
 int		movement_handling(t_solong *solong);
 int		attack_p(int button, int x, int y, t_solong *solong);
 int		attack_r(int button, int x, int y, t_solong *solong);

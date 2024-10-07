@@ -54,6 +54,14 @@
 +textures/player/player_attackr_3.xpm
 +textures/player/player_attackr_4.xpm
 +textures/player/player_attackr_5.xpm
+-textures/player/player_counter_1.xpm
++textures/player/player_counter_2.xpm
++textures/player/player_counter_3.xpm
++textures/player/player_counter_4.xpm
+-textures/player/player_counterr_1.xpm
++textures/player/player_counterr_2.xpm
++textures/player/player_counterr_3.xpm
++textures/player/player_counterr_4.xpm
 .textures/ennemies/oeuil_gauche1.xpm
 +textures/ennemies/oeuil_gauche2.xpm
 +textures/ennemies/oeuil_gauche3.xpm
@@ -64,3 +72,5 @@
 +textures/ennemies/oeuil_droite2.xpm
 +textures/ennemies/oeuil_droite3.xpm
 +textures/ennemies/oeuil_droite4.xpm
++textures/ennemies/oeuil_droite3.xpm
++textures/ennemies/oeuil_droite2.xpm

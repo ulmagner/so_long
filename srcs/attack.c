@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/04 15:37:15 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:08:34 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,31 @@ int	attack_handling(t_solong *solong, t_player *player)
 			solong->player.hero->is_visited = 2;
 			solong->deco.anim_jar = 1;
 		}
+	}
+	return (1);
+}
+
+int	attack_handling(t_solong *solong, t_player *player)
+{
+	if (solong->i % 20 != 0)
+		return (0);
+	if (solong->attack.attack[3])
+	{
+		if (solong->movement.index_move[0] || solong->movement.index_move[3])
+			player->index = 6;
+		else
+			player->index = 7;
+		if (solong->attack.current_frame < solong->attack.total_frame \
+			&& solong->attack.is_counter)
+		{
+			player->animation[player->index] = solong->attack.current_frame;
+			solong->attack.current_frame++;
+		}
+		// if (solong->player.hero->index == 'C')
+		// {
+		// 	solong->player.hero->is_visited = 2;
+		// 	solong->deco.anim_jar = 1;
+		// }
 	}
 	return (1);
 }

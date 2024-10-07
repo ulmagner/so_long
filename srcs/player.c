@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 21:39:27 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 11:49:43 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void	copy_oeuil_to_map(t_solong *solong)
 	int				index;
 
 	if (solong->i % 100 == 0)
+	{
 		solong->oeuil.animation[solong->oeuil.index] = (solong->oeuil.animation[solong->oeuil.index] + 1) % 6;
-	anim = solong->oeuil.animation[solong->oeuil.index];
+		solong->oeuil.anim = (solong->oeuil.anim + 1) % 6;
+	}
+	anim = solong->oeuil.anim;
 	index = solong->oeuil.index;
 	y = -1;
 	while (++y < solong->tileset[6][index][anim].height)

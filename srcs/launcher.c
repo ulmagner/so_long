@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 21:39:31 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/06 18:19:34 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	looping(t_solong *solong)
 {
 	copy_ground_to_map(solong);
 	movement_handling(solong);
+	movement_handling_oeuil(solong);
 	attack_handling(solong, &solong->player);
 	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
