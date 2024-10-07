@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 14:00:52 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 18:09:30 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ static void	check_player(char *line, t_info *info)
 			info->nbr_a[17]++;
 		else if (ft_strnstr(line, "counterr", ft_strlen(line)))
 			info->nbr_a[18]++;
+		else if (ft_strnstr(line, "dead", ft_strlen(line)))
+			info->nbr_a[19]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[5]++;
 	}
@@ -116,9 +118,9 @@ static void	check_ennemies(char *line, t_info *info)
 	if (ft_strnstr(line, "ennemies", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "gauche", ft_strlen(line)))
-			info->nbr_a[19]++;
-		else if (ft_strnstr(line, "droite", ft_strlen(line)))
 			info->nbr_a[20]++;
+		else if (ft_strnstr(line, "droite", ft_strlen(line)))
+			info->nbr_a[21]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[6]++;
 	}
@@ -149,7 +151,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 static int	init_index(t_info *info)
 {
 	info->nbr_i = ft_calloc(7, sizeof(int));
-	info->nbr_a = ft_calloc(21, sizeof(int));
+	info->nbr_a = ft_calloc(22, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 

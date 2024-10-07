@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/07 12:12:56 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 18:17:46 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 		if ((axis == 0 && ((increment > 0 && solong->oeuil.y >= direction->y_pxl) || (increment < 0 && solong->oeuil.y <= direction->y_pxl))) ||
 		    (axis == 1 && ((increment > 0 && solong->oeuil.x >= direction->x_pxl) || (increment < 0 && solong->oeuil.x <= direction->x_pxl))))
 			solong->oeuil.o = direction;
+		if ((solong->oeuil.o->x == solong->player.hero->x) && (solong->oeuil.o->y == solong->player.hero->y))
+			solong->player.index = 8;
 	}
 }
 
