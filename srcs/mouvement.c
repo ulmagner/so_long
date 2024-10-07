@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 13:49:00 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 16:07:52 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	movement_handling(t_solong *solong)
 	if (solong->i % 10 != 0)
 		return (0);
 	solong->player.ms = 4;
-	if (!solong->attack.is_attack)
+	if (!solong->attack.button && !solong->counter.button)
 	{
 		dir_up(&solong->player, &solong->movement, solong);
 		dir_down(&solong->player, &solong->movement, solong);

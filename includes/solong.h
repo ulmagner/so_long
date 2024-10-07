@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 14:13:53 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 15:47:00 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,12 @@ typedef struct s_movement
 
 typedef struct s_action
 {
-	bool	action[4];
 	int		current_frame;
 	int		total_frame;
 	int		x;
 	int		y;
-	int		button;
-	bool	is_attack;
-	bool	is_counter;
+	bool	button;
+	bool	is_action;
 }	t_action;
 
 typedef struct s_window
@@ -165,7 +163,8 @@ typedef struct s_solong
 	t_image		ground;
 	t_image		game;
 	t_movement	movement;
-	t_attack	attack;
+	t_action	attack;
+	t_action	counter;
 	t_random	random;
 	t_wall		wall;
 	t_slime		*slime;
@@ -174,10 +173,6 @@ typedef struct s_solong
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
-void	oeuil_up(t_oeuil *oeuil, t_solong *solong);
-void	oeuil_down(t_oeuil *oeuil, t_solong *solong);
-void	oeuil_left(t_oeuil *oeuil, t_solong *solong);
-void	oeuil_right(t_oeuil *oeuil, t_solong *solong);
 void	dir_up(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
@@ -205,9 +200,9 @@ int		movement_p(int keycode, t_solong *solong);
 int		movement_r(int keycode, t_solong *solong);
 int		movement_handling_oeuil(t_solong *solong);
 int		movement_handling(t_solong *solong);
-int		attack_p(int button, int x, int y, t_solong *solong);
-int		attack_r(int button, int x, int y, t_solong *solong);
-int		attack_handling(t_solong *solong, t_player *player);
+int		action_p(int button, int x, int y, t_solong *solong);
+int		action_r(int button, int x, int y, t_solong *solong);
+int		action_handling(t_solong *solong);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
 int		check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil);

@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/06 18:19:34 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 15:38:58 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	looping(t_solong *solong)
 	copy_ground_to_map(solong);
 	movement_handling(solong);
 	movement_handling_oeuil(solong);
-	attack_handling(solong, &solong->player);
+	action_handling(solong);
 	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
 		solong->slime[solong->info.slime].y = solong->player.y;
@@ -144,8 +144,8 @@ int	launcher(t_solong *solong, char **av)
 	build_map(solong);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);
-	mlx_hook(solong->window.main, 4, 1L << 2, attack_p, solong);
-	mlx_hook(solong->window.main, 5, 1L << 3, attack_r, solong);
+	mlx_hook(solong->window.main, 4, 1L << 2, action_p, solong);
+	mlx_hook(solong->window.main, 5, 1L << 3, action_r, solong);
 	mlx_loop_hook(solong->window.mlx, looping, solong);
 	mlx_loop(solong->window.mlx);
 	return (1);
