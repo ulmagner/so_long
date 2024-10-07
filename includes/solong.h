@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 16:29:01 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 19:22:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
+void	ft_freeoeuil(t_oeuil *oeuil);
+void	ft_freeslime(t_solong *solong);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_solong *solong);

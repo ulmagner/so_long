@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 15:38:58 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 19:15:13 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,21 +126,18 @@ int	launcher(t_solong *solong, char **av)
 	solong->game.addr = mlx_get_data_addr(solong->game.img,
 			&solong->game.bits_per_pixel,
 			&solong->game.line_length, &solong->game.endian);
-	solong->player.animation = malloc(sizeof(int) * 6);
+	solong->deco.index = 2;
+	solong->random.rd_floor = get_randoms(0, 1, 2);
+	solong->info.collectible = solong->info.coin;
+	solong->player.animation = ft_calloc(9, sizeof(int));
 	if (!solong->player.animation)
 		return (0);
-	ft_bzero(solong->player.animation, sizeof(int) * 6);
-	solong->oeuil.animation = malloc(sizeof(int) * 6);
+	solong->oeuil.animation = ft_calloc(2, sizeof(int));
 	if (!solong->oeuil.animation)
 		return (0);
-	ft_bzero(solong->oeuil.animation, sizeof(int) * 6);
-	solong->random.rd_floor = get_randoms(0, 1, 2);
-	solong->deco.index = 2;
-	solong->info.collectible = solong->info.coin;
-	solong->slime = malloc(sizeof(t_slime) * solong->info.collectible);
+	solong->slime = ft_calloc(solong->info.collectible, sizeof(t_slime));
 	if (!solong->slime)
 		return (0);
-	ft_bzero(solong->slime, sizeof(t_slime) * solong->info.collectible);
 	build_map(solong);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);
 	mlx_hook(solong->window.main, 3, 1L << 1, movement_r, solong);

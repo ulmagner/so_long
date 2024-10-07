@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/29 15:07:35 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 19:27:25 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,22 @@ void	ft_freeplayer(t_player *player)
 {
 	if (player->animation)
 		free(player->animation);
+}
+
+void	ft_freeoeuil(t_oeuil *oeuil)
+{
+	if (oeuil->animation)
+		free(oeuil->animation);
+}
+
+void	ft_freeslime(t_solong *solong)
+{
+	// int	i;
+
+	// i = -1;
+	// ft_printf(2, "%d\n", solong->info.collectible);
+	// while (++i < solong->info.collectible)
+	// 	if (&solong->slime[i])
+	// 		free(&solong->slime[i]);
+	free(solong->slime);
 }

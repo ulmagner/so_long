@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/09/29 15:08:56 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/07 19:30:37 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ static void	ft_freeimage(t_solong *solong)
 	}
 	free(solong->tileset);
 	mlx_destroy_image(solong->window.mlx, solong->ground.img);
+	mlx_destroy_image(solong->window.mlx, solong->game.img);
 }
 
 void	ft_clearall(t_solong *solong)
 {
 	ft_freemap(&solong->map);
 	ft_freeplayer(&solong->player);
+	ft_freeoeuil(&solong->oeuil);
+	ft_freeslime(solong);
 	ft_freeimage(solong);
 	ft_freeinfo(&solong->info);
 	ft_freewindow(&solong->window);
