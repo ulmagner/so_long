@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 16:46:21 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:42:59 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ int	check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil)
 	int	x;
 	int	y;
 	int	i;
-	int	j;
 
 	i = -1;
-	j = -1;
 	while (++i < 4)
 	{
 		x = interaction[i][0];

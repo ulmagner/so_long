@@ -6,7 +6,7 @@
 /*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 21:17:32 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 21:45:18 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_oeuil *oeuil)
 		return (0);
 	if (!check_close_map(map, info, &player, &oeuil))
 		return (0);
+	ft_printf(2, "oui\n");
 	print_map(map, info);
 	return (1);
 }

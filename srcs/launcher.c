@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 18:19:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:50:54 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	get_interaction_oeuil(t_oeuil *oeuil)
 static int	looping(t_solong *solong)
 {
 	solong->i++;
-	if (solong->i % 5000 != 0)
+	if (solong->i % 500 != 0)
 		return (0);
 	copy_ground_to_map(solong);
 	get_interaction_player(&solong->player);

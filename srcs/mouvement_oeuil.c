@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement_oeuil.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 16:53:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:43:11 by ulysse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	check_hitbox_player(int interaction[4][2], t_player *player)
 	int	x;
 	int	y;
 	int	i;
-	int	j;
 
 	i = -1;
-	j = -1;
 	while (++i < 4)
 	{
 		x = interaction[i][0];
