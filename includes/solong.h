@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 19:22:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 10:37:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_player
 	int		*animation;
 	int		pv;
 	int		ms;
+	int		is_dead;
 	t_map	*hero;
 }	t_player;
 
@@ -94,6 +95,7 @@ typedef struct s_oeuil
 	int		*animation;
 	int		pv;
 	int		ms;
+	int		is_dead;
 	int		anim;
 	int		rd_dir;
 	t_map	*o;

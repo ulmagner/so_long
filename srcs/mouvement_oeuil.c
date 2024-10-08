@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement_oeuil.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/07 18:17:46 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 10:57:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 		    (axis == 1 && ((increment > 0 && solong->oeuil.x >= direction->x_pxl) || (increment < 0 && solong->oeuil.x <= direction->x_pxl))))
 			solong->oeuil.o = direction;
 		if ((solong->oeuil.o->x == solong->player.hero->x) && (solong->oeuil.o->y == solong->player.hero->y))
+		{
+			solong->player.is_dead = 1;
 			solong->player.index = 8;
+		}
 	}
 }
 
@@ -46,9 +49,9 @@ int	movement_handling_oeuil(t_solong *solong)
 {
 	if (solong->i % 10 != 0)
 		return (0);
-	if (solong->i % 100 == 0)
+	if (solong->i % 200 == 0)
 		solong->oeuil.rd_dir = get_randoms(0, 3, 100);
-	solong->oeuil.ms = 4;
+	solong->oeuil.ms = 1;
 	if (solong->oeuil.rd_dir == 0)
 		move_oeuil(solong, solong->oeuil.o->up, 0, 0);
 	else if (solong->oeuil.rd_dir == 1)

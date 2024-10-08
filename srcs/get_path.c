@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 18:09:30 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 10:35:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ static void	check_ennemies(char *line, t_info *info)
 			info->nbr_a[20]++;
 		else if (ft_strnstr(line, "droite", ft_strlen(line)))
 			info->nbr_a[21]++;
+		else if (ft_strnstr(line, "dead", ft_strlen(line)))
+			info->nbr_a[22]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[6]++;
 	}
@@ -151,7 +153,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 static int	init_index(t_info *info)
 {
 	info->nbr_i = ft_calloc(7, sizeof(int));
-	info->nbr_a = ft_calloc(22, sizeof(int));
+	info->nbr_a = ft_calloc(23, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 

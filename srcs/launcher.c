@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 19:15:13 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 10:54:37 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,13 @@ static int	display_map(t_solong *solong, t_window *window)
 static int	looping(t_solong *solong)
 {
 	copy_ground_to_map(solong);
-	movement_handling(solong);
-	movement_handling_oeuil(solong);
-	action_handling(solong);
+	if (!solong->player.is_dead)
+	{
+		movement_handling(solong);
+		action_handling(solong);
+	}
+	if (!solong->oeuil.is_dead)
+		movement_handling_oeuil(solong);
 	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
 		solong->slime[solong->info.slime].y = solong->player.y;
@@ -132,7 +136,7 @@ int	launcher(t_solong *solong, char **av)
 	solong->player.animation = ft_calloc(9, sizeof(int));
 	if (!solong->player.animation)
 		return (0);
-	solong->oeuil.animation = ft_calloc(2, sizeof(int));
+	solong->oeuil.animation = ft_calloc(3, sizeof(int));
 	if (!solong->oeuil.animation)
 		return (0);
 	solong->slime = ft_calloc(solong->info.collectible, sizeof(t_slime));

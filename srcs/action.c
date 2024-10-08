@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/07 17:04:58 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 10:52:09 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ static int	attack(t_solong *solong, t_player *player)
 	{
 		solong->player.hero->is_visited = 2;
 		solong->deco.anim_jar = 1;
+	}
+	else if (solong->movement.index_move[3] && solong->player.hero->x_pxl == solong->oeuil.o->x_pxl)
+	{
+		solong->oeuil.index = 2;
+		solong->oeuil.anim = 0;
+		solong->oeuil.is_dead = 1;
 	}
 	return (1);
 }
