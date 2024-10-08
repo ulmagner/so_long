@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_xpm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 18:32:23 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 19:45:37 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	build_map(t_solong *solong)
 			copy_tile_to_map(&solong->tileset[0][0][0], &solong->ground, col);
 		else
 			copy_tile_to_map(&solong->tileset[0][0][1], &solong->ground, col);
-		if (col->index == '1' && col->y == 0)
+		if ((col->index == '1' || col->index == 'F') && col->y == 0)
 		{
 			if (col->x == 0)
 				solong->wall.anim = 0;
@@ -94,13 +94,13 @@ void	build_map(t_solong *solong)
 				solong->wall.anim = (solong->wall.anim + 1) % 3;
 			copy_tile_to_map(&solong->tileset[1][0][solong->wall.anim], &solong->ground, col);
 		}
-		else if (col->index == '1' && col->y == solong->info.nbr_line - 1)
+		else if ((col->index == '1' || col->index == 'F') && col->y == solong->info.nbr_line - 1)
 			copy_tile_to_map(&solong->tileset[1][1][0], &solong->ground, col);
-		else if (col->index == '1' && col->x == 0)
+		else if ((col->index == '1' || col->index == 'F') && col->x == 0)
 			copy_tile_to_map(&solong->tileset[1][2][0], &solong->ground, col);
-		else if (col->index == '1' && col->x == solong->info.nbr_column - 1)
+		else if ((col->index == '1' || col->index == 'F') && col->x == solong->info.nbr_column - 1)
 			copy_tile_to_map(&solong->tileset[1][3][0], &solong->ground, col);
-		else if (col->index == '1')
+		else if (col->index == '1' || col->index == 'F')
 			copy_tile_to_map(&solong->tileset[2][1][0], &solong->ground, col);
 		if (col->index == '1' && col->x == 0 && col->y == 0)
 			copy_tile_to_map(&solong->tileset[1][4][0], &solong->ground, col);

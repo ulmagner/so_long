@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 10:38:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:51:02 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	copy_oeuil_to_map(t_solong *solong)
 	int				anim;
 	int				index;
 
-	if (solong->i % 100 == 0 && !solong->oeuil.is_dead)
+	if (solong->i % 15000 == 0 && !solong->oeuil.is_dead)
 	{
 		solong->oeuil.animation[solong->oeuil.index] = (solong->oeuil.animation[solong->oeuil.index] + 1) % 6;
 		solong->oeuil.anim = (solong->oeuil.anim + 1) % 6;

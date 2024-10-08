@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 10:35:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:41:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,17 @@ static void	check_ennemies(char *line, t_info *info)
 	}
 }
 
+static void	check_trap(char *line, t_info *info)
+{
+	if (ft_strnstr(line, "lanceflamme", ft_strlen(line)))
+	{
+		if (ft_strnstr(line, "bas", ft_strlen(line)))
+			info->nbr_a[23]++;
+		if (line[0] == '-' || line[0] == '.')
+			info->nbr_i[7]++;
+	}
+}
+
 static int	parse_file(char **line, t_info *info, char **path)
 {
 	char	*tmp;
@@ -139,6 +150,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 	check_slime(*line, info);
 	check_player(*line, info);
 	check_ennemies(*line, info);
+	check_trap(*line, info);
 	if (*line[0] == '.')
 		info->nbr_image++;
 	tmp = ft_strjoin(*path, *line + 1);
@@ -152,8 +164,8 @@ static int	parse_file(char **line, t_info *info, char **path)
 
 static int	init_index(t_info *info)
 {
-	info->nbr_i = ft_calloc(7, sizeof(int));
-	info->nbr_a = ft_calloc(23, sizeof(int));
+	info->nbr_i = ft_calloc(8, sizeof(int));
+	info->nbr_a = ft_calloc(24, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 10:37:44 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:52:16 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ typedef struct s_player
 	int		*animation;
 	int		pv;
 	int		ms;
-	int		is_dead;
+	bool	is_dead;
+	int		interaction[4][2];
 	t_map	*hero;
 }	t_player;
 
@@ -95,9 +96,11 @@ typedef struct s_oeuil
 	int		*animation;
 	int		pv;
 	int		ms;
-	int		is_dead;
+	bool	is_dead;
+	bool	is_stun;
 	int		anim;
 	int		rd_dir;
+	int		interaction[4][2];
 	t_map	*o;
 }	t_oeuil;
 
@@ -175,6 +178,7 @@ typedef struct s_solong
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
+int		check_hitbox_player(int interaction[4][2], t_player *player);
 void	dir_up(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);

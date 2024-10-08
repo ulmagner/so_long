@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 10:07:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:11:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
 		movement->index_move[0] = true;
 		player->index = 0;
-		if (solong->i % player->ms == 0)
+		if (solong->i % 10000 == 0)
 		{
 			if ((player->animation[0] + 1) % 6 == 0)
 				player->animation[0] += 2;
@@ -43,7 +43,7 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
 		movement->index_move[1] = true;
 		player->index = 1;
-		if (solong->i % player->ms == 0)
+		if (solong->i % 10000 == 0)
 		{
 			if ((player->animation[1] + 1) % 6 == 0)
 				player->animation[1] += 2;
@@ -66,7 +66,7 @@ void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
 		movement->index_move[2] = true;
 		player->index = 2;
-		if (solong->i % player->ms == 0)
+		if (solong->i % 10000 == 0)
 		{
 			if ((player->animation[2] + 1) % 6 == 0)
 				player->animation[2] += 2;
@@ -89,7 +89,7 @@ void	dir_right(t_player *player, t_movement *movement, t_solong *solong)
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
 		movement->index_move[3] = 1;
 		player->index = 3;
-		if (solong->i % player->ms == 0)
+		if (solong->i % 10000 == 0)
 		{
 			if ((player->animation[3] + 1) % 6 == 0)
 				player->animation[3] += 2;

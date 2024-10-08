@@ -6,11 +6,31 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 10:57:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:53:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+int	check_hitbox_player(int interaction[4][2], t_player *player)
+{
+	int	x;
+	int	y;
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < 4)
+	{
+		x = interaction[i][0];
+		y = interaction[i][1];
+		if (x >= player->hero->x_pxl && x <= player->hero->x_pxl + 64 \
+			&& y >= player->hero->y_pxl && y <= player->hero->y_pxl + 64)
+			return (1);
+	}
+	return (0);
+}
 
 void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 {
@@ -37,9 +57,10 @@ void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 		if ((axis == 0 && ((increment > 0 && solong->oeuil.y >= direction->y_pxl) || (increment < 0 && solong->oeuil.y <= direction->y_pxl))) ||
 		    (axis == 1 && ((increment > 0 && solong->oeuil.x >= direction->x_pxl) || (increment < 0 && solong->oeuil.x <= direction->x_pxl))))
 			solong->oeuil.o = direction;
-		if ((solong->oeuil.o->x == solong->player.hero->x) && (solong->oeuil.o->y == solong->player.hero->y))
+		if (check_hitbox_player(solong->oeuil.interaction, &solong->player))
 		{
-			solong->player.is_dead = 1;
+			ft_printf(2, "oeuil:[%d:%d] player:[%d:%d]\n", solong->oeuil.o->x_pxl, solong->oeuil.o->y_pxl, solong->player.hero->x_pxl, solong->player.hero->y_pxl);
+			solong->player.is_dead = true;
 			solong->player.index = 8;
 		}
 	}
@@ -47,11 +68,9 @@ void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 
 int	movement_handling_oeuil(t_solong *solong)
 {
-	if (solong->i % 10 != 0)
-		return (0);
-	if (solong->i % 200 == 0)
+	if (solong->i % 10000 == 0)
 		solong->oeuil.rd_dir = get_randoms(0, 3, 100);
-	solong->oeuil.ms = 1;
+	solong->oeuil.ms = 4;
 	if (solong->oeuil.rd_dir == 0)
 		move_oeuil(solong, solong->oeuil.o->up, 0, 0);
 	else if (solong->oeuil.rd_dir == 1)

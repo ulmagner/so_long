@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 10:52:09 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:46:21 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,26 @@ int	action_r(int button, int x, int y, t_solong *solong)
 	return (0);
 }
 
+int	check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil)
+{
+	int	x;
+	int	y;
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < 4)
+	{
+		x = interaction[i][0];
+		y = interaction[i][1];
+		if (x >= oeuil->o->x_pxl && x <= oeuil->o->x_pxl + 64 \
+			&& y >= oeuil->o->y_pxl && y <= oeuil->o->y_pxl + 64)
+			return (1);
+	}
+	return (0);
+}
+
 static int	attack(t_solong *solong, t_player *player)
 {
 	if (solong->movement.index_move[0] || solong->movement.index_move[3])
@@ -81,11 +101,11 @@ static int	attack(t_solong *solong, t_player *player)
 		solong->player.hero->is_visited = 2;
 		solong->deco.anim_jar = 1;
 	}
-	else if (solong->movement.index_move[3] && solong->player.hero->x_pxl == solong->oeuil.o->x_pxl)
+	if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil) && solong->oeuil.is_stun)
 	{
 		solong->oeuil.index = 2;
 		solong->oeuil.anim = 0;
-		solong->oeuil.is_dead = 1;
+		solong->oeuil.is_dead = true;
 	}
 	return (1);
 }
@@ -104,18 +124,13 @@ static int	counter(t_solong *solong, t_player *player)
 		player->animation[player->index] = solong->counter.current_frame;
 		solong->counter.current_frame++;
 	}
-	// if (solong->player.hero->index == 'C')
-	// {
-	// 	solong->player.hero->is_visited = 2;
-	// 	solong->deco.anim_jar = 1;
-	// }
+	if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil))
+		solong->oeuil.is_stun = true;
 	return (1);
 }
 
 int	action_handling(t_solong *solong)
 {
-	if (solong->i % 20 != 0)
-		return (0);
 	if (solong->counter.button)
 		counter(solong, &solong->player);
 	if (solong->attack.button)

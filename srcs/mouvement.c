@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 16:07:52 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:49:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	movement_r(int keycode, t_solong *solong)
 
 int	movement_handling(t_solong *solong)
 {
-	if (solong->i % 10 != 0)
-		return (0);
 	solong->player.ms = 4;
 	if (!solong->attack.button && !solong->counter.button)
 	{
