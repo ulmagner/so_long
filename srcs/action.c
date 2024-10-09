@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/09 16:25:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:55:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	action_p(int button, int x, int y, t_solong *solong)
 	{
 		solong->attack.button = true;
 		solong->attack.is_action = true;
-		solong->attack.current_frame = 0;
-		solong->attack.total_frame = 5;
+		solong->attack.curr_frame = 0;
+		solong->attack.tot_frame = 5;
 		solong->attack.x = x;
 		solong->attack.y = y;
 	}
@@ -27,8 +27,8 @@ int	action_p(int button, int x, int y, t_solong *solong)
 	{
 		solong->counter.button = true;
 		solong->counter.is_action = true;
-		solong->counter.current_frame = 0;
-		solong->counter.total_frame = 4;
+		solong->counter.curr_frame = 0;
+		solong->counter.tot_frame = 4;
 		solong->counter.x = x;
 		solong->counter.y = y;
 	}
@@ -50,13 +50,13 @@ int	action_r(int button, int x, int y, t_solong *solong)
 	if (button == 1)
 	{
 		solong->attack.button = false;
-		solong->attack.current_frame = 0;
+		solong->attack.curr_frame = 0;
 		solong->attack.is_action = false;
 	}
 	if (button == 3)
 	{
 		solong->counter.button = false;
-		solong->counter.current_frame = 0;
+		solong->counter.curr_frame = 0;
 		solong->counter.is_action = false;
 	}
 	return (0);
@@ -112,13 +112,13 @@ static int	attack(t_solong *solong, t_player *player)
 		player->index = 4;
 	else
 		player->index = 5;
-	if (solong->counter.current_frame == solong->counter.total_frame)
-		solong->counter.current_frame = 0;
-	if (solong->attack.current_frame < solong->attack.total_frame \
+	if (solong->counter.curr_frame == solong->counter.tot_frame)
+		solong->counter.curr_frame = 0;
+	if (solong->attack.curr_frame < solong->attack.tot_frame \
 		&& solong->attack.is_action)
 	{
-		player->animation[player->index] = solong->attack.current_frame;
-		solong->attack.current_frame++;
+		player->animation[player->index] = solong->attack.curr_frame;
+		solong->attack.curr_frame++;
 	}
 	if (check_hitbox_jar(solong->player.interaction, solong->info))
 	{
@@ -146,13 +146,13 @@ static int	counter(t_solong *solong, t_player *player)
 		player->index = 6;
 	else
 		player->index = 7;
-	if (solong->counter.current_frame == solong->counter.total_frame)
-		solong->counter.current_frame = 0;
-	if (solong->counter.current_frame < solong->counter.total_frame \
+	if (solong->counter.curr_frame == solong->counter.tot_frame)
+		solong->counter.curr_frame = 0;
+	if (solong->counter.curr_frame < solong->counter.tot_frame \
 		&& solong->counter.is_action)
 	{
-		player->animation[player->index] = solong->counter.current_frame;
-		solong->counter.current_frame++;
+		player->animation[player->index] = solong->counter.curr_frame;
+		solong->counter.curr_frame++;
 	}
 	while (++i < solong->info.ennemies)
 	{

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 16:44:48 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:02:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ typedef struct s_trap
 {
 	int		x;
 	int		y;
-	int		current_frame;
-	int		total_frame;
+	int		curr_frame;
+	int		tot_frame;
 	int		index;
 	int		anim_trap;
 	bool	detect;
@@ -153,8 +153,8 @@ typedef struct s_movement
 
 typedef struct s_action
 {
-	int		current_frame;
-	int		total_frame;
+	int		curr_frame;
+	int		tot_frame;
 	int		x;
 	int		y;
 	bool	button;
@@ -221,6 +221,10 @@ void	build_map(t_solong *solong);
 void	build_game(t_solong *solong);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
+int		get_hitbox_player(t_player *player);
+int		get_hitbox_oeuil(t_oeuil *oeuil);
+int		trap_handling(t_solong *solong, t_trap *trap);
+int		slime_handling(t_solong *solong, t_slime *slime);
 int		get_randoms(int min, int max, int count);
 int		split_tileset(t_solong *solong, t_info *info);
 int		get_paths(char *file, t_info *info);
