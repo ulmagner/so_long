@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:14:20 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 21:44:29 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:16:37 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if (!get_paths(av[4], &solong.info))
 		return (EXIT_FAILURE);
-	if (!map_handling(&solong.info, &solong.map, &solong.player, &solong.oeuil))
+	if (!map_handling(&solong.info, &solong.map, &solong.player, &solong))
 		return (ft_clearall(&solong), EXIT_FAILURE);
 	if (!launcher(&solong, av))
 		return (ft_clearall(&solong), EXIT_FAILURE);

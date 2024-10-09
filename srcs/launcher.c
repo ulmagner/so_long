@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 14:35:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:15:05 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	move_slime(t_player player, t_slime *slime, int off_x, int off_y)
 {
-	if (slime->y > player.y + off_y)
+	if ((slime->y > player.y + off_y) && slime->y )
 		slime->y -= player.ms;
 	else if (slime->y < player.y + off_y)
 		slime->y += player.ms;
@@ -32,8 +32,10 @@ static int	display_map(t_solong *solong, t_window *window)
 	i = -1;
 
 	build_game(solong);
-	copy_oeuil_to_map(solong);
-	while (solong->slime[++i].is_free && i < solong->info.collectible)
+	while (++i < solong->info.ennemies)
+		copy_oeuil_to_map(solong, &solong->oeuil[i]);
+	i = -1;
+	while (++i < solong->info.collectible && solong->slime[i].is_free)
 	{
 		copy_slime_to_map(solong, &solong->slime[i]);
 		if (solong->i % 10000 == 0)
@@ -49,10 +51,19 @@ static int	display_map(t_solong *solong, t_window *window)
 	}
 	copy_player_to_map(solong);
 	i = -1;
-	while (solong->trap[++i].detect && i < solong->info.trap)
+	while ((++i < solong->info.trap && solong->trap[i].detect) \
+		|| (i < solong->info.trap && solong->trap[i].current_frame < solong->trap[i].total_frame))
 	{
-		if (solong->i % 10000 == 0)
-			solong->trap[i].anim_trap = (solong->trap[i].anim_trap + 1) % 30;
+		if (solong->trap[i].current_frame == solong->trap[i].total_frame)
+			solong->trap[i].current_frame = 0;
+		if (solong->trap[i].current_frame < solong->trap[i].total_frame)
+		{
+			if (solong->i % 10000 == 0)
+			{
+				solong->trap[i].anim_trap = (solong->trap[i].anim_trap + 1) % 30;
+				solong->trap[i].current_frame++;
+			}
+		}
 		copy_trap_to_map(solong, &solong->trap[i]);
 	}
 	mlx_put_image_to_window(window->mlx,
@@ -90,9 +101,9 @@ int	burn_hero(t_player *player, t_trap **trap, t_info info)
 {
 	if (player->hero->right->down->index == 'F' || player->hero->left->down->index == 'F')
 	{
-		ft_printf(2, "%d\n", info.trap);
 		(*trap[info.fire]).x = player->hero->right->down->x_pxl;
 		(*trap[info.fire]).y = player->hero->right->down->y_pxl;
+		(*trap[info.fire]).total_frame = 30;
 		(*trap[info.fire++]).detect = true;
 	}
 	else
@@ -103,21 +114,26 @@ int	burn_hero(t_player *player, t_trap **trap, t_info info)
 static int	looping(t_solong *solong)
 {
 	solong->i++;
-	if (solong->i % 5000 != 0)
+	if (solong->i % 2000 != 0)
 		return (0);
 	copy_ground_to_map(solong);
 	get_interaction_player(&solong->player);
-	get_interaction_oeuil(&solong->oeuil);
-	if (!solong->oeuil.is_dead && !solong->oeuil.is_stun && !solong->player.is_dead)
+	int i = -1;
+	while (++i < solong->info.ennemies && !solong->player.is_dead)
 	{
-		movement_handling_oeuil(solong);
+		if (!solong->oeuil[i].is_dead && !solong->oeuil[i].is_stun)
+		{
+			get_interaction_oeuil(&solong->oeuil[i]);
+			movement_handling_oeuil(solong, &solong->oeuil[i]);
+		}
 	}
 	if (!solong->player.is_dead)
 	{
 		movement_handling(solong);
 		action_handling(solong);
 	}
-	burn_hero(&solong->player, &solong->trap, solong->info);
+	if (solong->info.trap > 0)
+		burn_hero(&solong->player, &solong->trap, solong->info);
 	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
 		if (!solong->slime[solong->info.slime].is_free)
@@ -176,9 +192,9 @@ int	launcher(t_solong *solong, char **av)
 	solong->player.animation = ft_calloc(9, sizeof(int));
 	if (!solong->player.animation)
 		return (0);
-	solong->oeuil.animation = ft_calloc(3, sizeof(int));
-	if (!solong->oeuil.animation)
-		return (0);
+	// solong->oeuil.animation = ft_calloc(3, sizeof(int));
+	// if (!solong->oeuil.animation)
+	// 	return (0);
 	solong->slime = ft_calloc(solong->info.collectible, sizeof(t_slime));
 	if (!solong->slime)
 		return (0);

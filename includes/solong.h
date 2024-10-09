@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 14:10:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:44:48 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_info
 {
 	int				(*deco)[2];
 	int				fire;
+	int				oeuil;
+	int				ennemies;
 	int				trap;
 	int				coin;
 	int				collectible;
@@ -96,7 +98,7 @@ typedef struct s_oeuil
 	int		x;
 	int		y;
 	int		index;
-	int		*animation;
+	int		animation[3];
 	int		pv;
 	int		ms;
 	bool	is_dead;
@@ -135,6 +137,8 @@ typedef struct s_trap
 {
 	int		x;
 	int		y;
+	int		current_frame;
+	int		total_frame;
 	int		index;
 	int		anim_trap;
 	bool	detect;
@@ -175,7 +179,7 @@ typedef struct s_solong
 	t_window	window;
 	t_info		info;
 	t_player	player;
-	t_oeuil		oeuil;
+	t_oeuil		*oeuil;
 	t_deco		deco;
 	t_map		*map;
 	t_image		***tileset;
@@ -199,7 +203,7 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong);
 void	dir_right(t_player *player, t_movement *movement, t_solong *solong);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
-void	copy_oeuil_to_map(t_solong *solong);
+void	copy_oeuil_to_map(t_solong *solong, t_oeuil *oeuil);
 void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map);
 void	copy_ground_to_map(t_solong *solong);
 void	copy_slime_to_map(t_solong *solong, t_slime *slime);
@@ -207,8 +211,9 @@ void	copy_player_to_map(t_solong *solong);
 void	copy_trap_to_map(t_solong *solong, t_trap *trap);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
-void	ft_freeoeuil(t_oeuil *oeuil);
+void	ft_freeoeuil(t_oeuil **oeuil);
 void	ft_freeslime(t_solong *solong);
+void	ft_freestrap(t_solong *solong);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_solong *solong);
@@ -222,17 +227,17 @@ int		get_paths(char *file, t_info *info);
 int		launcher(t_solong *solong, char **av);
 int		movement_p(int keycode, t_solong *solong);
 int		movement_r(int keycode, t_solong *solong);
-int		movement_handling_oeuil(t_solong *solong);
+int		movement_handling_oeuil(t_solong *solong, t_oeuil *oeuil);
 int		movement_handling(t_solong *solong);
 int		action_p(int button, int x, int y, t_solong *solong);
 int		action_r(int button, int x, int y, t_solong *solong);
 int		action_handling(t_solong *solong);
 int		get_map(t_info *info, int *nbr_line, int *nbr_column);
 int		check_ep_doubles(t_info *info);
-int		check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil);
-int		make_list(t_info *info, int *i, t_map **node, t_map **hero, t_map **o);
+int		check_close_map(t_map **map, t_info *info, t_player **player, t_solong *solong);
+int		make_list(t_info *info, int *i, t_map **node, t_map **hero, t_solong *solong);
 int		empty_string(t_info *info);
-int		map_handling(t_info *info, t_map **map, t_player *player, t_oeuil *oeuil);
+int		map_handling(t_info *info, t_map **map, t_player *player, t_solong *solong);
 int		error_handling(int ac, char **av, t_info *info);
 int		main(int ac, char **av);
 #endif //SOLONG_H

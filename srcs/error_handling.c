@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 14:04:10 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:10:31 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	check_ep_doubles(t_info *info)
 	int	i;
 	int	e;
 	int	p;
+	int	o;
 
 	e = 0;
+	o = 0;
 	p = 0;
 	i = -1;
 	while (info->map[++i])
@@ -31,8 +33,10 @@ int	check_ep_doubles(t_info *info)
 			info->coin++;
 		if (info->map[i] == 'F')
 			info->trap++;
+		if (info->map[i] == 'O')
+			info->ennemies++;
 	}
-	if (e > 1 || e == 0 || p > 1 || p == 0)
+	if (e > 1 || !e || p > 1 || !p)
 		return (0);
 	return (1);
 }
@@ -62,12 +66,14 @@ void	floodfill(t_map *player, int *c, int *e, t_info *info)
 		floodfill(player->down, c, e, info);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil)
+int	check_close_map(t_map **map, t_info *info, t_player **player, t_solong *solong)
 {
 	t_map	*curr;
 	int		c;
 	int		e;
+	int		i;
 
+	i = -1;
 	c = 0;
 	e = 0;
 	curr = *map;
@@ -86,8 +92,11 @@ int	check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeui
 		}
 		if (curr->index == 'O')
 		{
-			(*oeuil)->x = curr->x * 64;
-			(*oeuil)->y = curr->y * 64;
+			while (++i < info->ennemies)
+			{
+				solong->oeuil[i].x = curr->x * 64;
+				solong->oeuil[i].y = curr->y * 64;
+			}
 		}
 		curr = curr->right;
 	}

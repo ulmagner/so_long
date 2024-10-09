@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/09 14:37:06 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:25:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ int	check_hitbox_jar(int interaction[4][2], t_info info)
 
 static int	attack(t_solong *solong, t_player *player)
 {
+	int	i;
+	
+	i = -1;
 	if (solong->movement.index_move[0] || solong->movement.index_move[3])
 		player->index = 4;
 	else
@@ -122,17 +125,23 @@ static int	attack(t_solong *solong, t_player *player)
 		solong->player.hero->is_visited = 2;
 		solong->deco.anim_jar = 1;
 	}
-	if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil) && solong->oeuil.is_stun)
+	while (++i < solong->info.ennemies)
 	{
-		solong->oeuil.index = 2;
-		solong->oeuil.anim = 0;
-		solong->oeuil.is_dead = true;
+		if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil[i]) && solong->oeuil[i].is_stun)
+		{
+			solong->oeuil[i].index = 2;
+			solong->oeuil[i].anim = 0;
+			solong->oeuil[i].is_dead = true;
+		}
 	}
 	return (1);
 }
 
 static int	counter(t_solong *solong, t_player *player)
 {
+	int	i;
+
+	i = -1;
 	if (solong->movement.index_move[0] || solong->movement.index_move[3])
 		player->index = 6;
 	else
@@ -145,8 +154,11 @@ static int	counter(t_solong *solong, t_player *player)
 		player->animation[player->index] = solong->counter.current_frame;
 		solong->counter.current_frame++;
 	}
-	if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil))
-		solong->oeuil.is_stun = true;
+	while (++i < solong->info.ennemies)
+	{
+		if (check_hitbox_oeuil(solong->player.interaction, &solong->oeuil[i]))
+			solong->oeuil[i].is_stun = true;
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 11:54:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:00:51 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	get_info(t_info *info)
 	return (1);
 }
 
-static int	fill_map(t_info *info, t_map **head, t_map **hero, t_map **o)
+static int	fill_map(t_info *info, t_map **head, t_map **hero, t_solong *solong)
 {
 	t_map	*curr;
 	t_map	*node;
@@ -55,7 +55,7 @@ static int	fill_map(t_info *info, t_map **head, t_map **hero, t_map **o)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(info, &i, &node, hero, o))
+		if (!make_list(info, &i, &node, hero, solong))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);
@@ -91,15 +91,18 @@ void	print_map(t_map **head, t_info *info)
 	}
 }
 
-int	map_handling(t_info *info, t_map **map, t_player *player, t_oeuil *oeuil)
+int	map_handling(t_info *info, t_map **map, t_player *player, t_solong *solong)
 {
 	if (!get_info(info))
 		return (0);
-	if (!fill_map(info, map, &player->hero, &oeuil->o))
+	solong->info.ennemies *= 3;
+	solong->oeuil = ft_calloc(solong->info.ennemies, sizeof(t_oeuil));
+	if (!solong->oeuil)
 		return (0);
-	if (!check_close_map(map, info, &player, &oeuil))
+	if (!fill_map(info, map, &player->hero, solong))
 		return (0);
-	ft_printf(2, "oui\n");
+	if (!check_close_map(map, info, &player, solong))
+		return (0);
 	print_map(map, info);
 	return (1);
 }

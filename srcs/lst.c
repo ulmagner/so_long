@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/05 21:19:44 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:58:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ t_map	**init_row_lst(t_info *info)
 	return (row);
 }
 
-static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_map **o)
+static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_solong *solong)
 {
 	t_map	*node;
+	int		j;
 
+	j = -1;
 	node = malloc(sizeof(t_map));
 	if (!node)
 		return (NULL);
@@ -45,8 +47,14 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_map **o)
 	node->down = NULL;
 	if (node->index == 'P')
 		*hero = node;
-	if (node->index == 'O')
-		*o = node;
+	while (++j < info->ennemies)
+	{
+		if (node->index == 'O')
+		{
+			(solong->oeuil[j]).o = node;
+			ft_printf(2, "%d\n", node->index);
+		}	
+	}
 	return (node);
 }
 
@@ -85,7 +93,7 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	*curr = node;
 }
 
-int	make_list(t_info *info, int *i, t_map **node, t_map **hero, t_map **o)
+int	make_list(t_info *info, int *i, t_map **node, t_map **hero, t_solong *solong)
 {
 	++info->i_x;
 	if (info->i_x == info->nbr_column)
@@ -94,7 +102,7 @@ int	make_list(t_info *info, int *i, t_map **node, t_map **hero, t_map **o)
 		info->i_y++;
 		(*i)++;
 	}
-	*node = ft_newnode(info, i, hero, o);
+	*node = ft_newnode(info, i, hero, solong);
 	if (!*node)
 		return (0);
 	return (1);

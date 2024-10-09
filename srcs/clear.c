@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/07 19:30:37 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:21:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 static void	ft_freewindow(t_window *window)
 {
-	mlx_destroy_window(window->mlx, window->main);
-	mlx_destroy_display(window->mlx);
-	free(window->mlx);
+	if (window->mlx)
+	{
+		if (window->main)
+			mlx_destroy_window(window->mlx, window->main);
+		mlx_destroy_display(window->mlx);
+		free(window->mlx);
+	}
 }
 
 static void	ft_freeimage(t_solong *solong)
@@ -55,6 +59,7 @@ void	ft_clearall(t_solong *solong)
 	ft_freeplayer(&solong->player);
 	ft_freeoeuil(&solong->oeuil);
 	ft_freeslime(solong);
+	ft_freestrap(solong);
 	ft_freeimage(solong);
 	ft_freeinfo(&solong->info);
 	ft_freewindow(&solong->window);
