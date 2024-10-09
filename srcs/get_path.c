@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 19:41:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,124 +19,6 @@ static char	*empty_stringe(char *path)
 		return (NULL);
 	path[0] = '\0';
 	return (path);
-}
-
-static void	check_floor(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "floor", ft_strlen(line)))
-	{
-		info->nbr_a[0]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[0]++;
-	}
-}
-
-static void	check_wall(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "wall", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "haut", ft_strlen(line)))
-			info->nbr_a[1]++;
-		else if (ft_strnstr(line, "bas", ft_strlen(line)))
-			info->nbr_a[2]++;
-		else if (ft_strnstr(line, "gauche", ft_strlen(line)))
-			info->nbr_a[3]++;
-		else if (ft_strnstr(line, "droite", ft_strlen(line)))
-			info->nbr_a[4]++;
-		else if (ft_strnstr(line, "corner", ft_strlen(line)))
-			info->nbr_a[5]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[1]++;
-	}
-}
-
-static void	check_deco(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "deco", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "jar", ft_strlen(line)))
-			info->nbr_a[6]++;
-		else if (ft_strnstr(line, "tree", ft_strlen(line)))
-			info->nbr_a[7]++;
-		else if (ft_strnstr(line, "loot", ft_strlen(line)))
-			info->nbr_a[8]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[2]++;
-	}
-}
-
-static void	check_exit(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "exit", ft_strlen(line)))
-	{
-		info->nbr_a[9]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[3]++;
-	}
-}
-
-static void	check_slime(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "slime", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "run", ft_strlen(line)))
-			info->nbr_a[10]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[4]++;
-	}
-}
-
-static void	check_player(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "player", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "haut", ft_strlen(line)))
-			info->nbr_a[11]++;
-		else if (ft_strnstr(line, "bas", ft_strlen(line)))
-			info->nbr_a[12]++;
-		else if (ft_strnstr(line, "gauche", ft_strlen(line)))
-			info->nbr_a[13]++;
-		else if (ft_strnstr(line, "droite", ft_strlen(line)))
-			info->nbr_a[14]++;
-		else if (ft_strnstr(line, "attack_", ft_strlen(line)))
-			info->nbr_a[15]++;
-		else if (ft_strnstr(line, "attackr", ft_strlen(line)))
-			info->nbr_a[16]++;
-		else if (ft_strnstr(line, "counter_", ft_strlen(line)))
-			info->nbr_a[17]++;
-		else if (ft_strnstr(line, "counterr", ft_strlen(line)))
-			info->nbr_a[18]++;
-		else if (ft_strnstr(line, "dead", ft_strlen(line)))
-			info->nbr_a[19]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[5]++;
-	}
-}
-
-static void	check_ennemies(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "ennemies", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "gauche", ft_strlen(line)))
-			info->nbr_a[20]++;
-		else if (ft_strnstr(line, "droite", ft_strlen(line)))
-			info->nbr_a[21]++;
-		else if (ft_strnstr(line, "dead", ft_strlen(line)))
-			info->nbr_a[22]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[6]++;
-	}
-}
-
-static void	check_trap(char *line, t_info *info)
-{
-	if (ft_strnstr(line, "lanceflamme", ft_strlen(line)))
-	{
-		if (ft_strnstr(line, "bas", ft_strlen(line)))
-			info->nbr_a[23]++;
-		if (line[0] == '-' || line[0] == '.')
-			info->nbr_i[7]++;
-	}
 }
 
 static int	parse_file(char **line, t_info *info, char **path)
@@ -162,7 +44,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 	return (1);
 }
 
-static int	init_index(t_info *info)
+static int	init_i(t_info *info)
 {
 	info->nbr_i = ft_calloc(8, sizeof(int));
 	info->nbr_a = ft_calloc(24, sizeof(int));
@@ -176,7 +58,7 @@ int	get_paths(char *file, t_info *info)
 	char	*path;
 
 	path = empty_stringe(NULL);
-	if (!path || !init_index(info))
+	if (!path || !init_i(info))
 		return (0);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)

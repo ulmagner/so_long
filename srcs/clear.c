@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 16:21:40 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,49 @@ static void	ft_freewindow(t_window *window)
 	}
 }
 
-static void	ft_freeimage(t_solong *solong)
+static void	ft_freeimage(t_all *all, int i)
 {
-	int	i;
 	int	j;
 	int	a;
 	int	b;
 
 	b = 0;
-	i = -1;
-	if (!solong->tileset || !*solong->tileset)
+	if (!all->tileset || !*all->tileset)
 		return ;
-	while (++i < solong->info.nbr_image)
+	while (++i < all->info.nbr_image)
 	{
 		j = -1;
-		while (++j < solong->info.nbr_i[i])
+		while (++j < all->info.nbr_i[i])
 		{
 			a = -1;
-			while (++a < solong->info.nbr_a[b])
-				mlx_destroy_image(solong->window.mlx,
-					solong->tileset[i][j][a].img);
+			while (++a < all->info.nbr_a[b])
+				mlx_destroy_image(all->window.mlx,
+					all->tileset[i][j][a].img);
 			b++;
-			free(solong->tileset[i][j]);
+			free(all->tileset[i][j]);
 		}
-		free(solong->tileset[i]);
+		free(all->tileset[i]);
 	}
-	free(solong->tileset);
-	mlx_destroy_image(solong->window.mlx, solong->ground.img);
-	mlx_destroy_image(solong->window.mlx, solong->game.img);
+	free(all->tileset);
+	mlx_destroy_image(all->window.mlx, all->ground.img);
+	mlx_destroy_image(all->window.mlx, all->game.img);
 }
 
-void	ft_clearall(t_solong *solong)
+void	ft_clearall(t_all *all)
 {
-	ft_freemap(&solong->map);
-	ft_freeplayer(&solong->player);
-	ft_freeoeuil(&solong->oeuil);
-	ft_freeslime(solong);
-	ft_freestrap(solong);
-	ft_freeimage(solong);
-	ft_freeinfo(&solong->info);
-	ft_freewindow(&solong->window);
-	close(solong->info.fd);
+	int	i;
+
+	i = -1;
+	ft_freemap(&all->map);
+	ft_freeplayer(&all->player);
+	if (all->trap)
+		free(all->trap);
+	if (all->slime)
+		free(all->slime);
+	if (all->oeuil)
+		free(all->oeuil);
+	ft_freeimage(all, i);
+	ft_freeinfo(&all->info);
+	ft_freewindow(&all->window);
+	close(all->info.fd);
 }

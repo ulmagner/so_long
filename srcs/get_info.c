@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:29:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 19:40:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:47:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	empty_string(t_info *info)
 	return (1);
 }
 
-int	get_map(t_info *info, int *nbr_line, int *nbr_column)
+int	get_map(t_info *info, int *l, int *c)
 {
 	char	*line;
 	char	*tmp;
 	int		i;
 
 	line = ft_get_next_line(info->fd);
-	*nbr_column = ft_strlen(line) - 1;
+	*c = ft_strlen(line) - 1;
 	while (line != NULL)
 	{
 		i = -1;
@@ -41,7 +41,7 @@ int	get_map(t_info *info, int *nbr_line, int *nbr_column)
 		free(info->map);
 		info->map = tmp;
 		free(line);
-		(*nbr_line)++;
+		(*l)++;
 		line = ft_get_next_line(info->fd);
 	}
 	if (!check_ep_doubles(info))

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 17:00:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static int	get_info(t_info *info)
 {
-	int		nbr_line;
-	int		nbr_column;
+	int		line;
+	int		column;
 
-	nbr_line = 0;
-	nbr_column = 0;
+	line = 0;
+	column = 0;
 	if (!empty_string(info))
 		return (0);
-	if (!get_map(info, &nbr_line, &nbr_column))
+	if (!get_map(info, &line, &column))
 		return (0);
 	info->i_x = -1;
 	info->i_y = 0;
 	info->size_map = ft_strlen(info->map);
-	info->nbr_line = nbr_line;
+	info->line = line;
 	if (info->map[info->size_map - 1] != '\n')
 		info->size_map++;
-	info->nbr_column = nbr_column;
-	if (info->nbr_column <= 1 || info->nbr_line <= 1
-		|| (info->nbr_column * info->nbr_line != info->size_map - nbr_line))
+	info->column = column;
+	if (info->column <= 1 || info->line <= 1
+		|| (info->column * info->line != info->size_map - line))
 		return (ft_printf(2, "Error\nInvalid map\n"), 0);
 	info->deco = malloc(sizeof(int *) * info->coin);
 	if (!info->deco)
@@ -39,7 +39,7 @@ static int	get_info(t_info *info)
 	return (1);
 }
 
-static int	fill_map(t_info *info, t_map **head, t_map **hero, t_solong *solong)
+static int	fill_map(t_info *info, t_map **head, t_map **h, t_all *all)
 {
 	t_map	*curr;
 	t_map	*node;
@@ -55,7 +55,7 @@ static int	fill_map(t_info *info, t_map **head, t_map **hero, t_solong *solong)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(info, &i, &node, hero, solong))
+		if (!make_list(info, &i, &node, h, all))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);
@@ -79,29 +79,29 @@ void	print_map(t_map **head, t_info *info)
 		col = row;
 		while (col)
 		{
-			ft_printf(2, "%c", col->index);
-			if (col->x == info->nbr_column - 1)
+			ft_printf(2, "%c", col->i);
+			if (col->x == info->column - 1)
 				break ;
 			col = col->right;
 		}
 		printf("\n");
-		if (col->y == info->nbr_line - 1)
+		if (col->y == info->line - 1)
 			break ;
 		row = row->down;
 	}
 }
 
-int	map_handling(t_info *info, t_map **map, t_player *player, t_solong *solong)
+int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 {
 	if (!get_info(info))
 		return (0);
-	solong->info.ennemies *= 3;
-	solong->oeuil = ft_calloc(solong->info.ennemies, sizeof(t_oeuil));
-	if (!solong->oeuil)
+	all->info.ennemies *= 3;
+	all->oeuil = ft_calloc(all->info.ennemies, sizeof(t_oeuil));
+	if (!all->oeuil)
 		return (0);
-	if (!fill_map(info, map, &player->hero, solong))
+	if (!fill_map(info, map, &player->h, all))
 		return (0);
-	if (!check_close_map(map, info, &player, solong))
+	if (!check_close_map(map, info, &player, all))
 		return (0);
 	print_map(map, info);
 	return (1);

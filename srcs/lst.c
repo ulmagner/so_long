@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 16:58:01 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ t_map	**init_row_lst(t_info *info)
 	int		i;
 
 	i = -1;
-	row = malloc(sizeof(t_map *) * info->nbr_column);
+	row = malloc(sizeof(t_map *) * info->column);
 	if (!row)
 		return (NULL);
-	while (++i < info->nbr_column)
+	while (++i < info->column)
 		row[i] = NULL;
 	return (row);
 }
 
-static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_solong *solong)
+static t_map	*ft_newnode(t_info *info, int *i, t_map **h, t_all *all)
 {
 	t_map	*node;
 	int		j;
@@ -35,7 +35,7 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_solong *solong)
 	node = malloc(sizeof(t_map));
 	if (!node)
 		return (NULL);
-	node->index = info->map[*i];
+	node->i = info->map[*i];
 	node->is_visited = 0;
 	node->x = info->i_x;
 	node->y = info->i_y;
@@ -45,15 +45,12 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **hero, t_solong *solong)
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
-	if (node->index == 'P')
-		*hero = node;
+	if (node->i == 'P')
+		*h = node;
 	while (++j < info->ennemies)
 	{
-		if (node->index == 'O')
-		{
-			(solong->oeuil[j]).o = node;
-			ft_printf(2, "%d\n", node->index);
-		}	
+		if (node->i == 'O')
+			(all->oeuil[j]).o = node;
 	}
 	return (node);
 }
@@ -93,16 +90,16 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	*curr = node;
 }
 
-int	make_list(t_info *info, int *i, t_map **node, t_map **hero, t_solong *solong)
+int	make_list(t_info *info, int *i, t_map **node, t_map **h, t_all *all)
 {
 	++info->i_x;
-	if (info->i_x == info->nbr_column)
+	if (info->i_x == info->column)
 	{
 		info->i_x = 0;
 		info->i_y++;
 		(*i)++;
 	}
-	*node = ft_newnode(info, i, hero, solong);
+	*node = ft_newnode(info, i, h, all);
 	if (!*node)
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 16:21:48 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,4 @@ void	ft_freeplayer(t_player *player)
 {
 	if (player->animation)
 		free(player->animation);
-}
-
-void	ft_freeoeuil(t_oeuil **oeuil)
-{
-	free(*oeuil);
-}
-
-void	ft_freeslime(t_solong *solong)
-{
-	free(solong->slime);
-}
-
-void	ft_freestrap(t_solong *solong)
-{
-	free(solong->trap);
 }

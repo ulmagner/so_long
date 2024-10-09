@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 17:10:31 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,30 @@ int	check_ep_doubles(t_info *info)
 
 void	floodfill(t_map *player, int *c, int *e, t_info *info)
 {
-	if (player->index == 'C')
+	if (player->i == 'C')
 	{
 		info->deco[*c][0] = player->x_pxl;
 		info->deco[*c][1] = player->y_pxl;
 		(*c)++;
 	}
-	if (player->index == 'E')
+	if (player->i == 'E')
 		(*e)++;
 	player->is_visited = 1;
-	if ((player->right->index != '1' && player->right->index != 'F') && player->right != NULL
-		&& !player->right->is_visited)
+	if ((player->right->i != '1' && player->right->i != 'F') \
+		&& player->right != NULL && !player->right->is_visited)
 		floodfill(player->right, c, e, info);
-	if ((player->left->index != '1' && player->left->index != 'F') && player->left != NULL
-		&& !player->left->is_visited)
+	if ((player->left->i != '1' && player->left->i != 'F') \
+		&& player->left != NULL && !player->left->is_visited)
 		floodfill(player->left, c, e, info);
-	if ((player->up->index != '1' && player->up->index != 'F') && player->up != NULL
-		&& !player->up->is_visited)
+	if ((player->up->i != '1' && player->up->i != 'F') \
+		&& player->up != NULL && !player->up->is_visited)
 		floodfill(player->up, c, e, info);
-	if ((player->down->index != '1' && player->down->index != 'F') && player->down != NULL
-		&& !player->down->is_visited)
+	if ((player->down->i != '1' && player->down->i != 'F') \
+		&& player->down != NULL && !player->down->is_visited)
 		floodfill(player->down, c, e, info);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_player **player, t_solong *solong)
+int	check_close_map(t_map **map, t_info *info, t_player **player, t_all *all)
 {
 	t_map	*curr;
 	int		c;
@@ -79,23 +79,23 @@ int	check_close_map(t_map **map, t_info *info, t_player **player, t_solong *solo
 	curr = *map;
 	while (curr)
 	{
-		if (((curr->x == 0 || curr->x == info->nbr_column - 1)
-				&& (curr->index != '1' && curr->index != 'F'))
-			|| ((curr->y == 0 || curr->y == info->nbr_line - 1)
-				&& (curr->index != '1' && curr->index != 'F')))
+		if (((curr->x == 0 || curr->x == info->column - 1)
+				&& (curr->i != '1' && curr->i != 'F'))
+			|| ((curr->y == 0 || curr->y == info->line - 1)
+				&& (curr->i != '1' && curr->i != 'F')))
 			return (0);
-		if (curr->index == 'P')
+		if (curr->i == 'P')
 		{
 			(*player)->x = curr->x * 64;
 			(*player)->y = curr->y * 64;
 			floodfill(curr, &c, &e, info);
 		}
-		if (curr->index == 'O')
+		if (curr->i == 'O')
 		{
 			while (++i < info->ennemies)
 			{
-				solong->oeuil[i].x = curr->x * 64;
-				solong->oeuil[i].y = curr->y * 64;
+				all->oeuil[i].x = curr->x * 64;
+				all->oeuil[i].y = curr->y * 64;
 			}
 		}
 		curr = curr->right;

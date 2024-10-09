@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:03:02 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/08/27 11:55:14 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:08:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	print_blank(int blank, int *nbr)
 {
-	int	index;
+	int	i;
 
-	index = 0;
-	while (index < blank)
+	i = 0;
+	while (i < blank)
 	{
 		ft_putchar(' ', nbr);
-		index++;
+		i++;
 	}
 }
 

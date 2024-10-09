@@ -6,100 +6,104 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/09 12:37:01 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
+void	dir_up(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_w] && (player->hero->up->index != '1' && player->hero->up->index != 'F') \
-		&& player->y >= player->hero->up->y_pxl)
+	if (movement->move[XK_w] && (player->h->up->i != '1' \
+		&& player->h->up->i != 'F') \
+		&& player->y >= player->h->up->y_pxl)
 	{
-		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
-		movement->index_move[0] = true;
-		player->index = 0;
-		if (solong->i % 10000 == 0)
+		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
+		movement->i_move[0] = true;
+		player->i = 0;
+		if (all->i % 10000 == 0)
 		{
 			if ((player->animation[0] + 1) % 6 == 0)
 				player->animation[0] += 2;
 			player->animation[0] = (player->animation[0] + 1) % 6;
 		}
 		player->y -= player->ms;
-		if (player->y <= player->hero->up->y_pxl)
+		if (player->y <= player->h->up->y_pxl)
 		{
 			ft_printf(2, "up: [x:y] [%d %d] pxl\n", player->x, player->y);
-			player->hero = player->hero->up;
+			player->h = player->h->up;
 		}
 	}
 }
 
-void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
+void	dir_down(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_s] && (player->hero->down->index != '1' && player->hero->down->index != 'F') \
-		&& player->y <= player->hero->down->y_pxl)
+	if (movement->move[XK_s] && (player->h->down->i != '1' \
+		&& player->h->down->i != 'F') \
+		&& player->y <= player->h->down->y_pxl)
 	{
-		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
-		movement->index_move[1] = true;
-		player->index = 1;
-		if (solong->i % 10000 == 0)
+		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
+		movement->i_move[1] = true;
+		player->i = 1;
+		if (all->i % 10000 == 0)
 		{
 			if ((player->animation[1] + 1) % 6 == 0)
 				player->animation[1] += 2;
 			player->animation[1] = (player->animation[1] + 1) % 6;
 		}
 		player->y += player->ms;
-		if (player->y >= player->hero->down->y_pxl)
+		if (player->y >= player->h->down->y_pxl)
 		{
 			ft_printf(2, "down: [x:y] [%d %d] pxl\n", player->x, player->y);
-			player->hero = player->hero->down;
+			player->h = player->h->down;
 		}
 	}
 }
 
-void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
+void	dir_left(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_a] && (player->hero->left->index != '1' && player->hero->left->index != 'F') \
-		&& player->x >= player->hero->left->x_pxl)
+	if (movement->move[XK_a] && (player->h->left->i != '1' \
+		&& player->h->left->i != 'F') \
+		&& player->x >= player->h->left->x_pxl)
 	{
-		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
-		movement->index_move[2] = true;
-		player->index = 2;
-		if (solong->i % 10000 == 0)
+		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
+		movement->i_move[2] = true;
+		player->i = 2;
+		if (all->i % 10000 == 0)
 		{
 			if ((player->animation[2] + 1) % 6 == 0)
 				player->animation[2] += 2;
 			player->animation[2] = (player->animation[2] + 1) % 6;
 		}
 		player->x -= player->ms;
-		if (player->x <= player->hero->left->x_pxl)
+		if (player->x <= player->h->left->x_pxl)
 		{
 			ft_printf(2, "left: [x:y] [%d %d] pxl\n", player->x, player->y);
-			player->hero = player->hero->left;
+			player->h = player->h->left;
 		}
 	}
 }
 
-void	dir_right(t_player *player, t_movement *movement, t_solong *solong)
+void	dir_right(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_d] && (player->hero->right->index != '1' && player->hero->right->index != 'F') \
-		&& player->x <= player->hero->right->x_pxl)
+	if (movement->move[XK_d] && (player->h->right->i != '1' \
+		&& player->h->right->i != 'F') \
+		&& player->x <= player->h->right->x_pxl)
 	{
-		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
-		movement->index_move[3] = 1;
-		player->index = 3;
-		if (solong->i % 10000 == 0)
+		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
+		movement->i_move[3] = 1;
+		player->i = 3;
+		if (all->i % 10000 == 0)
 		{
 			if ((player->animation[3] + 1) % 6 == 0)
 				player->animation[3] += 2;
 			player->animation[3] = (player->animation[3] + 1) % 6;
 		}
 		player->x += player->ms;
-		if (player->x >= player->hero->right->x_pxl)
+		if (player->x >= player->h->right->x_pxl)
 		{
 			ft_printf(2, "right: [x:y] [%d %d] pxl\n", player->x, player->y);
-			player->hero = player->hero->right;
+			player->h = player->h->right;
 		}
 	}
 }
