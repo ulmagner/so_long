@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 21:42:59 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:37:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	action_r(int button, int x, int y, t_solong *solong)
 	(void) x;
 	(void) y;
 	i = -1;
-	while (++i < 4)
+	while (++i < 4 && !solong->player.is_dead)
 	{
 		if (solong->movement.index_move[i] == 1)
 			solong->player.index = i;
@@ -73,9 +73,32 @@ int	check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil)
 	{
 		x = interaction[i][0];
 		y = interaction[i][1];
-		if (x >= oeuil->o->x_pxl && x <= oeuil->o->x_pxl + 64 \
-			&& y >= oeuil->o->y_pxl && y <= oeuil->o->y_pxl + 64)
+		if (x >= oeuil->x && x <= oeuil->x + 64 \
+			&& y >= oeuil->y && y <= oeuil->y + 64)
 			return (1);
+	}
+	return (0);
+}
+
+int	check_hitbox_jar(int interaction[4][2], t_info info)
+{
+	int	x;
+	int	y;
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < info.collectible)
+	{
+		i = -1;
+		while (++i < 4)
+		{
+			x = interaction[i][0];
+			y = interaction[i][1];
+			if (x >= info.deco[j][0] && x <= info.deco[j][0] + 64 \
+				&& y >= info.deco[j][1] && y <= info.deco[j][1] + 64)
+				return (1);
+		}
 	}
 	return (0);
 }
@@ -94,7 +117,7 @@ static int	attack(t_solong *solong, t_player *player)
 		player->animation[player->index] = solong->attack.current_frame;
 		solong->attack.current_frame++;
 	}
-	if (solong->player.hero->index == 'C')
+	if (check_hitbox_jar(solong->player.interaction, solong->info))
 	{
 		solong->player.hero->is_visited = 2;
 		solong->deco.anim_jar = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement_oeuil.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 21:43:11 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 12:39:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	check_hitbox_player(int interaction[4][2], t_player *player)
 	{
 		x = interaction[i][0];
 		y = interaction[i][1];
-		if (x >= player->hero->x_pxl && x <= player->hero->x_pxl + 64 \
-			&& y >= player->hero->y_pxl && y <= player->hero->y_pxl + 64)
+		if (x >= player->x && x <= player->x + 64 \
+			&& y >= player->y && y <= player->y + 64)
 			return (1);
 	}
 	return (0);
@@ -37,7 +37,7 @@ void	move_oeuil(t_solong *solong, t_map *direction, int new_index, int axis)
 	increment = solong->oeuil.ms;
 	if (new_index == 0)
 		increment = -increment;
-	if (direction->index != '1')
+	if (direction->index != '1' && direction->index != 'F')
 	{
 		solong->oeuil.index = new_index;
 		if (axis == 0)

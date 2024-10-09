@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+         #
+#    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/10/07 15:31:32 by ulysse           ###   ########.fr        #
+#    Updated: 2024/10/09 11:07:11 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ clean:
 	rm -f $(OFILES) $(OFILES_B)
 	@rm -rf $(ODIRS) $(ODIRS_B)
 	$(MAKE) -C $(DIRS_LFT) clean
-	$(MAKE) -C $(DIRS_MLX) clean
+	# $(MAKE) -C $(DIRS_MLX) clean
 
 fclean:	clean
 	rm -f $(NAME)

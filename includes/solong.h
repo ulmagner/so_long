@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 15:52:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:10:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ typedef struct s_map
 
 typedef struct s_info
 {
+	int				(*deco)[2];
+	int				fire;
+	int				trap;
 	int				coin;
 	int				collectible;
 	int				slime;
@@ -115,6 +118,8 @@ typedef struct s_deco
 	int		index;
 	int		anim_jar;
 	int		is_break;
+	int		x_pxl;
+	int		y_pxl;
 }	t_deco;
 
 typedef struct s_slime
@@ -123,8 +128,17 @@ typedef struct s_slime
 	int		y;
 	int		index;
 	int		anim_slime;
-	int		is_free;
+	bool	is_free;
 }	t_slime;
+
+typedef struct s_trap
+{
+	int		x;
+	int		y;
+	int		index;
+	int		anim_trap;
+	bool	detect;
+}	t_trap;
 
 typedef struct s_movement
 {
@@ -173,6 +187,7 @@ typedef struct s_solong
 	t_random	random;
 	t_wall		wall;
 	t_slime		*slime;
+	t_trap		*trap;
 	int			i;
 }	t_solong;
 
@@ -189,6 +204,7 @@ void	copy_tile_to_map(t_image *image, t_image *ground, t_map *map);
 void	copy_ground_to_map(t_solong *solong);
 void	copy_slime_to_map(t_solong *solong, t_slime *slime);
 void	copy_player_to_map(t_solong *solong);
+void	copy_trap_to_map(t_solong *solong, t_trap *trap);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
 void	ft_freeoeuil(t_oeuil *oeuil);

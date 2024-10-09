@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 21:50:54 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:35:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ static int	display_map(t_solong *solong, t_window *window)
 			move_slime(solong->player, &solong->slime[i], (-32 - (i * 32)), 0);
 	}
 	copy_player_to_map(solong);
+	i = -1;
+	while (solong->trap[++i].detect && i < solong->info.trap)
+	{
+		if (solong->i % 10000 == 0)
+			solong->trap[i].anim_trap = (solong->trap[i].anim_trap + 1) % 30;
+		copy_trap_to_map(solong, &solong->trap[i]);
+	}
 	mlx_put_image_to_window(window->mlx,
 		window->main, solong->game.img, 0, 0);
 	return (1);
@@ -55,47 +62,62 @@ static int	display_map(t_solong *solong, t_window *window)
 
 int	get_interaction_player(t_player *player)
 {
-	player->interaction[0][0] = player->hero->x_pxl + 32;
-	player->interaction[0][1] = player->hero->y_pxl;
-	player->interaction[1][0] = player->hero->x_pxl + 32;
-	player->interaction[1][1] = player->hero->y_pxl + 64;
-	player->interaction[2][0] = player->hero->x_pxl;
-	player->interaction[2][1] = player->hero->y_pxl + 32;
-	player->interaction[3][0] = player->hero->x_pxl + 64;
-	player->interaction[3][1] = player->hero->y_pxl + 32;
+	player->interaction[0][0] = player->x + 32;
+	player->interaction[0][1] = player->y;
+	player->interaction[1][0] = player->x + 32;
+	player->interaction[1][1] = player->y + 64;
+	player->interaction[2][0] = player->x;
+	player->interaction[2][1] = player->y + 32;
+	player->interaction[3][0] = player->x + 64;
+	player->interaction[3][1] = player->y + 32;
 	return (1);
 }
 
 int	get_interaction_oeuil(t_oeuil *oeuil)
 {
-	oeuil->interaction[0][0] = oeuil->o->x_pxl + 32;
-	oeuil->interaction[0][1] = oeuil->o->y_pxl + 16;
-	oeuil->interaction[1][0] = oeuil->o->x_pxl + 32;
-	oeuil->interaction[1][1] = oeuil->o->y_pxl + 48;
-	oeuil->interaction[2][0] = oeuil->o->x_pxl + 16;
-	oeuil->interaction[2][1] = oeuil->o->y_pxl + 32;
-	oeuil->interaction[3][0] = oeuil->o->x_pxl + 48;
-	oeuil->interaction[3][1] = oeuil->o->y_pxl + 32;
+	oeuil->interaction[0][0] = oeuil->x + 32;
+	oeuil->interaction[0][1] = oeuil->y + 16;
+	oeuil->interaction[1][0] = oeuil->x + 32;
+	oeuil->interaction[1][1] = oeuil->y + 48;
+	oeuil->interaction[2][0] = oeuil->x + 16;
+	oeuil->interaction[2][1] = oeuil->y + 32;
+	oeuil->interaction[3][0] = oeuil->x + 48;
+	oeuil->interaction[3][1] = oeuil->y + 32;
+	return (1);
+}
+
+int	burn_hero(t_player *player, t_trap **trap, t_info info)
+{
+	if (player->hero->right->down->index == 'F' || player->hero->left->down->index == 'F')
+	{
+		ft_printf(2, "%d\n", info.trap);
+		(*trap[info.fire]).x = player->hero->right->down->x_pxl;
+		(*trap[info.fire]).y = player->hero->right->down->y_pxl;
+		(*trap[info.fire++]).detect = true;
+	}
+	else
+		(*trap[info.fire]).detect = false;
 	return (1);
 }
 
 static int	looping(t_solong *solong)
 {
 	solong->i++;
-	if (solong->i % 500 != 0)
+	if (solong->i % 5000 != 0)
 		return (0);
 	copy_ground_to_map(solong);
 	get_interaction_player(&solong->player);
 	get_interaction_oeuil(&solong->oeuil);
+	if (!solong->oeuil.is_dead && !solong->oeuil.is_stun && !solong->player.is_dead)
+	{
+		movement_handling_oeuil(solong);
+	}
 	if (!solong->player.is_dead)
 	{
 		movement_handling(solong);
 		action_handling(solong);
 	}
-	if (!solong->oeuil.is_dead && !solong->oeuil.is_stun && !solong->player.is_dead)
-	{
-		movement_handling_oeuil(solong);
-	}
+	burn_hero(&solong->player, &solong->trap, solong->info);
 	if (solong->player.hero->is_visited == 2 && solong->player.hero->index == 'C')
 	{
 		if (!solong->slime[solong->info.slime].is_free)
@@ -108,7 +130,7 @@ static int	looping(t_solong *solong)
 			solong->slime[solong->info.slime].x = solong->player.x;
 			solong->player.hero->index = '0';
 			solong->info.coin--;
-			solong->slime[solong->info.slime].is_free = 1;
+			solong->slime[solong->info.slime].is_free = true;
 		}
 	}
 	if (solong->info.coin == 0)
@@ -159,6 +181,9 @@ int	launcher(t_solong *solong, char **av)
 		return (0);
 	solong->slime = ft_calloc(solong->info.collectible, sizeof(t_slime));
 	if (!solong->slime)
+		return (0);
+	solong->trap = ft_calloc(solong->info.trap, sizeof(t_trap));
+	if (!solong->trap)
 		return (0);
 	build_map(solong);
 	mlx_hook(solong->window.main, 2, 1L << 0, movement_p, solong);

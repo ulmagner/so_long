@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 16:51:02 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:08:52 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,29 @@ void	copy_ground_to_map(t_solong *solong)
 			color = get_pixel_color(&solong->ground, x, y);
 			ft_pixel_put(&solong->game, x,
 				y, color);
+		}
+	}
+}
+
+void	copy_trap_to_map(t_solong *solong, t_trap *trap)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+	int				anim;
+	int				index;
+
+	anim = trap->anim_trap;
+	index = trap->index;
+	y = -1;
+	while (++y < solong->tileset[7][index][anim].height)
+	{
+		x = -1;
+		while (++x < solong->tileset[7][index][anim].width)
+		{
+			color = get_pixel_color(&solong->tileset[7][index][anim], x, y);
+			ft_pixel_put(&solong->game, trap->x + x,
+				trap->y + y, color);
 		}
 	}
 }

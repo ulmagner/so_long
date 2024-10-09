@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulysse <ulysse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/08 21:47:37 by ulysse           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:04:10 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,37 @@ int	check_ep_doubles(t_info *info)
 			p++;
 		if (info->map[i] == 'C')
 			info->coin++;
+		if (info->map[i] == 'F')
+			info->trap++;
 	}
 	if (e > 1 || e == 0 || p > 1 || p == 0)
 		return (0);
 	return (1);
 }
 
-void	floodfill(t_map *player, int *c, int *e)
+void	floodfill(t_map *player, int *c, int *e, t_info *info)
 {
 	if (player->index == 'C')
+	{
+		info->deco[*c][0] = player->x_pxl;
+		info->deco[*c][1] = player->y_pxl;
 		(*c)++;
+	}
 	if (player->index == 'E')
 		(*e)++;
 	player->is_visited = 1;
 	if ((player->right->index != '1' && player->right->index != 'F') && player->right != NULL
 		&& !player->right->is_visited)
-		floodfill(player->right, c, e);
+		floodfill(player->right, c, e, info);
 	if ((player->left->index != '1' && player->left->index != 'F') && player->left != NULL
 		&& !player->left->is_visited)
-		floodfill(player->left, c, e);
+		floodfill(player->left, c, e, info);
 	if ((player->up->index != '1' && player->up->index != 'F') && player->up != NULL
 		&& !player->up->is_visited)
-		floodfill(player->up, c, e);
+		floodfill(player->up, c, e, info);
 	if ((player->down->index != '1' && player->down->index != 'F') && player->down != NULL
 		&& !player->down->is_visited)
-		floodfill(player->down, c, e);
+		floodfill(player->down, c, e, info);
 }
 
 int	check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeuil)
@@ -76,7 +82,7 @@ int	check_close_map(t_map **map, t_info *info, t_player **player, t_oeuil **oeui
 		{
 			(*player)->x = curr->x * 64;
 			(*player)->y = curr->y * 64;
-			floodfill(curr, &c, &e);
+			floodfill(curr, &c, &e, info);
 		}
 		if (curr->index == 'O')
 		{

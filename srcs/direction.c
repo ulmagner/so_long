@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/08 17:11:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:37:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement->move[XK_w] && (player->hero->up->index != '1' \
-		&& player->y >= player->hero->up->y_pxl))
+	if (movement->move[XK_w] && (player->hero->up->index != '1' && player->hero->up->index != 'F') \
+		&& player->y >= player->hero->up->y_pxl)
 	{
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
 		movement->index_move[0] = true;
@@ -37,7 +37,7 @@ void	dir_up(t_player *player, t_movement *movement, t_solong *solong)
 
 void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement->move[XK_s] && player->hero->down->index != '1' \
+	if (movement->move[XK_s] && (player->hero->down->index != '1' && player->hero->down->index != 'F') \
 		&& player->y <= player->hero->down->y_pxl)
 	{
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
@@ -60,7 +60,7 @@ void	dir_down(t_player *player, t_movement *movement, t_solong *solong)
 
 void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement->move[XK_a] && player->hero->left->index != '1' \
+	if (movement->move[XK_a] && (player->hero->left->index != '1' && player->hero->left->index != 'F') \
 		&& player->x >= player->hero->left->x_pxl)
 	{
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
@@ -83,7 +83,7 @@ void	dir_left(t_player *player, t_movement *movement, t_solong *solong)
 
 void	dir_right(t_player *player, t_movement *movement, t_solong *solong)
 {
-	if (movement->move[XK_d] && player->hero->right->index != '1' \
+	if (movement->move[XK_d] && (player->hero->right->index != '1' && player->hero->right->index != 'F') \
 		&& player->x <= player->hero->right->x_pxl)
 	{
 		ft_memset(movement->index_move, 0, sizeof(movement->index_move));
