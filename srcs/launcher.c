@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:00:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,32 @@ static int	looping(t_all *all)
 	return (1);
 }
 
-int	launcher(t_all *all, char **av)
+int	init_bg(t_image *ground, t_image *game, t_info *info, t_window *window)
 {
 	int	map_width_in_pixels;
 	int	map_height_in_pixels;
 
+	map_width_in_pixels = info->column * TILE_SIZE;
+	map_height_in_pixels = info->line * TILE_SIZE;
+	ground->width = map_width_in_pixels;
+	ground->height = map_height_in_pixels;
+	game->width = map_width_in_pixels;
+	game->height = map_height_in_pixels;
+	ground->img = mlx_new_image(window->mlx,
+			map_width_in_pixels, map_height_in_pixels);
+	ground->addr = mlx_get_data_addr(ground->img,
+			&ground->bits_per_pixel,
+			&ground->line_length, &ground->endian);
+	game->img = mlx_new_image(window->mlx,
+			map_width_in_pixels, map_height_in_pixels);
+	game->addr = mlx_get_data_addr(game->img,
+			&game->bits_per_pixel,
+			&game->line_length, &game->endian);
+	return (1);
+}
+
+int	init_window(t_all *all, char **av)
+{
 	all->window.main_width = ft_atoi(av[2]);
 	all->window.main_height = ft_atoi(av[3]);
 	all->window.mlx = mlx_init();
@@ -71,24 +92,14 @@ int	launcher(t_all *all, char **av)
 		return (0);
 	all->window.main = mlx_new_window(all->window.mlx, \
 		all->window.main_width, all->window.main_height, "So_long");
+}
+
+int	launcher(t_all *all, char **av)
+{
+	init_window(all, av);
 	if (!split_tileset(all, &all->info))
 		return (0);
-	map_width_in_pixels = all->info.column * TILE_SIZE;
-	map_height_in_pixels = all->info.line * TILE_SIZE;
-	all->ground.width = map_width_in_pixels;
-	all->ground.height = map_height_in_pixels;
-	all->game.width = map_width_in_pixels;
-	all->game.height = map_height_in_pixels;
-	all->ground.img = mlx_new_image(all->window.mlx,
-			map_width_in_pixels, map_height_in_pixels);
-	all->ground.addr = mlx_get_data_addr(all->ground.img,
-			&all->ground.bits_per_pixel,
-			&all->ground.line_length, &all->ground.endian);
-	all->game.img = mlx_new_image(all->window.mlx,
-			map_width_in_pixels, map_height_in_pixels);
-	all->game.addr = mlx_get_data_addr(all->game.img,
-			&all->game.bits_per_pixel,
-			&all->game.line_length, &all->game.endian);
+	init_bg(&all->ground, &all->game, &all->info, &all->window);
 	all->deco.i = 2;
 	all->random.rd_floor = get_randoms(0, 1, 2);
 	all->info.collectible = all->info.coin;
