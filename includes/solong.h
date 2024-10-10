@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:49:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:40:31 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ typedef struct s_image {
 	int		line_length;
 	int		endian;
 	char	*img_path;
-	int		width;
-	int		height;
+	int		w;
+	int		h;
 }	t_image;
 
 typedef struct s_player
@@ -165,8 +165,8 @@ typedef struct s_window
 {
 	void	*mlx;
 	void	*main;
-	int		main_width;
-	int		main_height;
+	int		main_w;
+	int		main_h;
 }	t_window;
 
 typedef struct s_random

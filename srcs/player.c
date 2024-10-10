@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:54:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	copy_player_to_map(t_all *all)
 	anim = all->player.animation[all->player.i];
 	i = all->player.i;
 	y = -1;
-	while (++y < all->tileset[5][i][anim].height)
+	while (++y < all->tileset[5][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[5][i][anim].width)
+		while (++x < all->tileset[5][i][anim].w)
 		{
 			color = get_pixel_color(&all->tileset[5][i][anim], x, y);
 			ft_pixel_put(&all->game, all->player.x + x,
@@ -51,10 +51,10 @@ void	copy_oeuil_to_map(t_all *all, t_oeuil *oeuil)
 	anim = oeuil->anim;
 	i = oeuil->i;
 	y = -1;
-	while (++y < all->tileset[6][i][anim].height)
+	while (++y < all->tileset[6][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[6][i][anim].width)
+		while (++x < all->tileset[6][i][anim].w)
 		{
 			color = get_pixel_color(&all->tileset[6][i][anim], x, y);
 			ft_pixel_put(&all->game, oeuil->x + x,
@@ -74,10 +74,10 @@ void	copy_slime_to_map(t_all *all, t_slime *slime)
 	anim = slime->anim_slime;
 	i = slime->i;
 	y = -1;
-	while (++y < all->tileset[4][i][anim].height)
+	while (++y < all->tileset[4][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[4][i][anim].width)
+		while (++x < all->tileset[4][i][anim].w)
 		{
 			color = get_pixel_color(&all->tileset[4][i][anim], x, y);
 			ft_pixel_put(&all->game, slime->x + x,
@@ -93,10 +93,10 @@ void	copy_ground_to_map(t_all *all)
 	int				y;
 
 	y = -1;
-	while (++y < all->ground.height)
+	while (++y < all->ground.h)
 	{
 		x = -1;
-		while (++x < all->ground.width)
+		while (++x < all->ground.w)
 		{
 			color = get_pixel_color(&all->ground, x, y);
 			ft_pixel_put(&all->game, x,
@@ -116,10 +116,10 @@ void	copy_trap_to_map(t_all *all, t_trap *trap)
 	anim = trap->anim_trap;
 	i = trap->i;
 	y = -1;
-	while (++y < all->tileset[7][i][anim].height)
+	while (++y < all->tileset[7][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[7][i][anim].width)
+		while (++x < all->tileset[7][i][anim].w)
 		{
 			color = get_pixel_color(&all->tileset[7][i][anim], x, y);
 			ft_pixel_put(&all->game, trap->x + x,

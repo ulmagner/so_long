@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:49:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:46:35 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	slime_handling(t_all *all, t_slime *slime)
 	while (++i < all->info.collectible && slime[i].is_free)
 	{
 		copy_slime_to_map(all, &slime[i]);
-		if (all->i % 10000 == 0)
+		if (all->i % 1000 == 0)
 			slime[i].anim_slime = (slime[i].anim_slime + 1) % 5;
 		if (all->movement.i_move[0])
 			move_slime(all->player, &slime[i], 0, (32 + (i * 32)));

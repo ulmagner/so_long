@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:46:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	trap_handling(t_all *all, t_trap *trap)
 			trap->curr_frame = 0;
 		if (trap->curr_frame < trap->tot_frame)
 		{
-			if (all->i % 10000 == 0)
+			if (all->i % 1000 == 0)
 			{
 				trap->anim_trap = (trap->anim_trap + 1) % 30;
 				trap->curr_frame++;

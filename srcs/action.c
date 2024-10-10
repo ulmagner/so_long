@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:50:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	animation_attack(t_all *all, t_player *player)
 		player->i = 4;
 	else
 		player->i = 5;
-	if (all->counter.curr_frame == all->counter.tot_frame)
-		all->counter.curr_frame = 0;
+	if (all->attack.curr_frame == all->attack.tot_frame)
+		all->attack.curr_frame = 0;
 	if (all->attack.curr_frame < all->attack.tot_frame \
 		&& all->attack.is_action)
 	{

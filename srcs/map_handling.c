@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:06:09 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,17 @@ void	print_map(t_map **head, t_info *info)
 
 int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 {
+	int	i;
+
+	i = -1;
 	if (!get_info(info))
 		return (0);
-	all->info.ennemies *= 3;
+	all->info.ennemies *= 100;
 	all->oeuil = ft_calloc(all->info.ennemies, sizeof(t_oeuil));
 	if (!all->oeuil)
 		return (0);
+	while (++i < all->info.ennemies)
+		all->oeuil[i].anim = get_randoms(0, 5, 7);
 	if (!fill_map(info, map, &player->h, all))
 		return (0);
 	if (!check_close_map(map, info, &player, all))

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:40:38 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	create_image(t_image *image, t_window *window)
 {
 	image->img = mlx_xpm_file_to_image(window->mlx,
-			image->img_path, &image->width, &image->height);
+			image->img_path, &image->w, &image->h);
 	if (!image->img)
 		return (ft_printf(2, "Error\nTexture_path\n"), 0);
 	image->addr = mlx_get_data_addr(image->img,
