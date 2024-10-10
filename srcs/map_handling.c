@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 11:06:09 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:11:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 	i = -1;
 	if (!get_info(info))
 		return (0);
-	all->info.ennemies *= 100;
+	all->info.ennemies *= 10;
 	all->oeuil = ft_calloc(all->info.ennemies, sizeof(t_oeuil));
 	if (!all->oeuil)
 		return (0);

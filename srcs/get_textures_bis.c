@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:38:11 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:36:08 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,16 @@ void	check_trap(char *line, t_info *info)
 			info->nbr_a[23]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[7]++;
+	}
+}
+
+void	check_game(char *line, t_info *info)
+{
+	if (ft_strnstr(line, "game", ft_strlen(line)))
+	{
+		if (ft_strnstr(line, "died", ft_strlen(line)))
+			info->nbr_a[24]++;
+		if (line[0] == '-' || line[0] == '.')
+			info->nbr_i[8]++;
 	}
 }

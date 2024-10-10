@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 10:40:38 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:44:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,26 @@ void	copy_to_map(t_image *image, t_image *ground, t_map *map)
 				0 * image->w + x, 0 * image->h + y);
 			ft_pixel_put(ground, \
 				map->x * image->w + x, map->y * image->h + y, color);
+		}
+	}
+}
+
+void	copy_game_map(t_image *image, t_image *bg, t_all *all)
+{
+	(void) all;
+	unsigned int	color;
+	int				x;
+	int				y;
+
+	y = -1;
+	while (++y < image->h)
+	{
+		x = -1;
+		while (++x < image->w)
+		{
+			color = get_pixel_color(image, \
+				0 * image->w + x, 0 * image->h + y);
+			ft_pixel_put(bg, x + ((bg->w / 2) - (image->w / 2)), y + ((bg->h / 2) - (image->h / 2)), color);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 10:40:31 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:56:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <math.h>
 # include "libft.h"
 # include "mlx.h"
 # include <X11/keysym.h>
@@ -169,6 +170,19 @@ typedef struct s_window
 	int		main_h;
 }	t_window;
 
+typedef struct s_color
+{
+	unsigned char	a;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;	
+}	t_color;
+
+typedef struct s_fog
+{
+	float	distance;
+}	t_fog;
+
 typedef struct s_random
 {
 	int	rd_floor;
@@ -192,6 +206,8 @@ typedef struct s_all
 	t_wall		wall;
 	t_slime		*slime;
 	t_trap		*trap;
+	t_color		argb;
+	t_fog		fog;
 	int			i;
 }	t_all;
 
@@ -205,6 +221,7 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all);
 void	dir_left(t_player *player, t_movement *movement, t_all *all);
 void	dir_right(t_player *player, t_movement *movement, t_all *all);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
+void	copy_game_map(t_image *image, t_image *bg, t_all *all);
 void	copy_oeuil_to_map(t_all *all, t_oeuil *oeuil);
 void	copy_to_map(t_image *image, t_image *ground, t_map *map);
 void	copy_ground_to_map(t_all *all);
@@ -220,6 +237,7 @@ void	build_map(t_all *all);
 void	build_game(t_all *all);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
+void	check_game(char *line, t_info *info);
 void	check_floor(char *line, t_info *info);
 void	check_wall(char *line, t_info *info);
 void	check_deco(char *line, t_info *info);
