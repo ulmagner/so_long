@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/11 16:15:52 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:32:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	attack(t_all *all, t_player *player)
 	{
 		if (all->dist.p_c[i] <= all->slime[i].r + player->r)
 		{
-			ft_printf(2, "%f\n", all->dist.p_c[i]);
 			all->slime[i].c->is_visited = 2;
 			all->slime[i].anim_slime = 1;
 		}

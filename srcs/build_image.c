@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 14:55:24 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:50:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,26 @@ void	build_game(t_all *all)
 	col = all->map;
 	while (col)
 	{
+		if (col->i == 'E' && all->info.exit)
+			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
+		col = col->right;
+	}
+}
+
+void	build_minimap(t_all *all)
+{
+	t_map	*col;
+	int		i;
+
+	i = -1;
+	col = all->map;
+	while (col)
+	{
+		if (++i % 2 == 0)
+			copy_to_map(&all->tileset[0][0][0], &all->ground, col);
+		else
+			copy_to_map(&all->tileset[0][0][1], &all->ground, col);
+		wall_management(all, col);
 		if (col->i == 'E' && all->info.exit)
 			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
 		col = col->right;

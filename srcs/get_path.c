@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 13:36:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:23:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 static int	init_i(t_info *info)
 {
 	info->nbr_i = ft_calloc(9, sizeof(int));
-	info->nbr_a = ft_calloc(25, sizeof(int));
+	info->nbr_a = ft_calloc(26, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 

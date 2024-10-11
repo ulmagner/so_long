@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:33:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:42:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct s_all
 	t_image		***tileset;
 	t_image		ground;
 	t_image		game;
+	t_image		minimap;
 	t_movement	movement;
 	t_action	attack;
 	t_action	counter;

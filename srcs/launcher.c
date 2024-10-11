@@ -6,11 +6,32 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:33:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:54:05 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+void	copy_minimap_map(t_image *image, t_image *bg, t_all *all)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+
+	(void) all;
+	y = -1;
+	while (++y < image->h)
+	{
+		x = -1;
+		while (++x < image->w)
+		{
+			color = get_pixel_color(image, \
+				0 * image->w + x, 0 * image->h + y);
+			ft_pixel_put(bg, x + ((bg->w / 6) - (image->w / 6)), \
+				y + ((bg->h / 6) - (image->h / 6)), color);
+		}
+	}
+}
 
 static int	display_map(t_all *all, t_window *window)
 {
@@ -30,6 +51,8 @@ static int	display_map(t_all *all, t_window *window)
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
 	copy_fog_map(all);
+	// if (all->movement.move[XK_m])
+	// 	build_map();
 	if (all->player.is_dead)
 		copy_game_map(&all->tileset[8][0][0], &all->game, all);
 	mlx_put_image_to_window(window->mlx,
@@ -68,7 +91,7 @@ static int	looping(t_all *all)
 	return (1);
 }
 
-int	init_bg(t_image *ground, t_image *game, t_all *all, t_window *window)
+int	init_bg(t_image *ground, t_image *game, t_image *minimap, t_all *all, t_window *window)
 {
 	int	map_w_in_pixels;
 	int	map_h_in_pixels;
@@ -77,6 +100,8 @@ int	init_bg(t_image *ground, t_image *game, t_all *all, t_window *window)
 	map_h_in_pixels = all->info.line * TILE_SIZE;
 	ground->w = map_w_in_pixels;
 	ground->h = map_h_in_pixels;
+	minimap->w = map_w_in_pixels / TILE_SIZE;
+	minimap->h = map_h_in_pixels / TILE_SIZE;
 	game->w = map_w_in_pixels;
 	game->h = map_h_in_pixels;
 	ground->img = mlx_new_image(window->mlx,
@@ -84,6 +109,11 @@ int	init_bg(t_image *ground, t_image *game, t_all *all, t_window *window)
 	ground->addr = mlx_get_data_addr(ground->img,
 			&ground->bits_per_pixel,
 			&ground->line_length, &ground->endian);
+	minimap->img = mlx_new_image(window->mlx,
+			minimap->w, minimap->h);
+	minimap->addr = mlx_get_data_addr(minimap->img,
+			&minimap->bits_per_pixel,
+			&minimap->line_length, &minimap->endian);
 	game->img = mlx_new_image(window->mlx,
 			map_w_in_pixels, map_h_in_pixels);
 	game->addr = mlx_get_data_addr(game->img,
