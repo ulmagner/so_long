@@ -10,12 +10,12 @@
 +textures/wall/wall_corner2.xpm
 +textures/wall/wall_corner3.xpm
 +textures/wall/wall_corner4.xpm
-.textures/deco/jar1.xpm
-+textures/deco/jar2.xpm
--textures/deco/tree1.xpm
+.textures/deco/tree1.xpm
 -textures/deco/loot_indicator.xpm
 .textures/exit/exit1.xpm
-.textures/slime/slime_run1.xpm
+.textures/slime/jar1.xpm
++textures/slime/jar2.xpm
+-textures/slime/slime_run1.xpm
 +textures/slime/slime_run2.xpm
 +textures/slime/slime_run3.xpm
 +textures/slime/slime_run4.xpm

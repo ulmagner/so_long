@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 11:07:34 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:33:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_player
 	int		*animation;
 	int		pv;
 	int		ms;
+	float	r;
 	bool	is_dead;
 	int		interaction[4][2];
 	t_map	*h;
@@ -102,6 +103,7 @@ typedef struct s_oeuil
 	int		animation[3];
 	int		pv;
 	int		ms;
+	float	r;
 	bool	is_dead;
 	bool	is_stun;
 	int		anim;
@@ -131,7 +133,9 @@ typedef struct s_slime
 	int		y;
 	int		i;
 	int		anim_slime;
+	float	r;
 	bool	is_free;
+	t_map	*c;
 }	t_slime;
 
 typedef struct s_trap
@@ -141,8 +145,10 @@ typedef struct s_trap
 	int		curr_frame;
 	int		tot_frame;
 	int		i;
+	float	r;
 	int		anim_trap;
 	bool	detect;
+	t_map	*t;
 }	t_trap;
 
 typedef struct s_movement
@@ -175,13 +181,17 @@ typedef struct s_color
 	unsigned char	a;
 	unsigned char	r;
 	unsigned char	g;
-	unsigned char	b;	
+	unsigned char	b;
 }	t_color;
 
-typedef struct s_fog
+typedef struct s_distance
 {
-	float	distance;
-}	t_fog;
+	float	*p_o;
+	float	*p_c;
+	float	*p_t;
+	float	p_e;
+	float	p_f;
+}	t_distance;
 
 typedef struct s_random
 {
@@ -207,16 +217,18 @@ typedef struct s_all
 	t_slime		*slime;
 	t_trap		*trap;
 	t_color		argb;
-	t_fog		fog;
+	t_distance	dist;
 	int			i;
 }	t_all;
 
 t_map	**init_row_lst(t_info *info);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
+float	calculate_distance(t_player *player, float obj_x, float obj_y, int off);
+int		calcul_dist(t_all *all);
+int		init_distances(t_all *all);
 int		check_hitbox_player(int interaction[4][2], t_player *player);
 int		check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil);
 int		check_hitbox_jar(int interaction[4][2], t_info info);
-float	calculate_distance(t_player *player, float obj_x, float obj_y);
 void	copy_fog_map(t_all *all);
 void	dir_up(t_player *player, t_movement *movement, t_all *all);
 void	dir_down(t_player *player, t_movement *movement, t_all *all);
@@ -250,7 +262,7 @@ void	check_ennemies(char *line, t_info *info);
 void	check_trap(char *line, t_info *info);
 int		get_hitbox_player(t_player *player);
 int		get_hitbox_oeuil(t_oeuil *oeuil);
-int		trap_handling(t_all *all, t_trap *trap);
+int		trap_handling(t_all *all, t_trap *trap, int i);
 int		slime_handling(t_all *all, t_slime *slime);
 int		get_randoms(int min, int max, int count);
 int		split_tileset(t_all *all, t_info *info);
@@ -258,7 +270,7 @@ int		get_paths(char *file, t_info *info);
 int		launcher(t_all *all, char **av);
 int		movement_p(int keycode, t_all *all);
 int		movement_r(int keycode, t_all *all);
-int		movement_handling_oeuil(t_all *all, t_oeuil *oeuil);
+int		movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i);
 int		movement_handling(t_all *all);
 int		action_p(int button, int x, int y, t_all *all);
 int		action_r(int button, int x, int y, t_all *all);

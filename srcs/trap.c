@@ -6,19 +6,16 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 10:46:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:57:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-static int	burn_h(t_player *player, t_trap *trap)
+static int	burn_h(t_player *player, t_trap *trap, t_all *all, int i)
 {
-	if (player->h->right->down->i == 'F' \
-		|| player->h->left->down->i == 'F')
+	if (all->dist.p_t[i] <= player->r + trap->r)
 	{
-		trap->x = player->h->right->down->x_pxl;
-		trap->y = player->h->right->down->y_pxl;
 		trap->tot_frame = 30;
 		trap->detect = true;
 	}
@@ -27,9 +24,9 @@ static int	burn_h(t_player *player, t_trap *trap)
 	return (1);
 }
 
-int	trap_handling(t_all *all, t_trap *trap)
+int	trap_handling(t_all *all, t_trap *trap, int i)
 {
-	burn_h(&all->player, trap);
+	burn_h(&all->player, trap, all, i);
 	if (trap->detect || trap->curr_frame < trap->tot_frame)
 	{
 		if (trap->curr_frame == trap->tot_frame)

@@ -6,20 +6,11 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:50:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:55:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-
-static void	deco_management(t_all *all, t_deco *deco, t_map **col)
-{
-	if ((*col)->i == 'C' && (*col)->is_visited == 2)
-		copy_to_map(&all->tileset[2][0][deco->anim_jar], \
-			&all->ground, *col);
-	if ((*col)->i == 'C' && (*col)->is_visited != 2)
-		copy_to_map(&all->tileset[2][0][0], &all->ground, *col);
-}
 
 static void	wall_management(t_all *all, t_map *col)
 {
@@ -38,7 +29,7 @@ static void	wall_management(t_all *all, t_map *col)
 	else if ((col->i == '1' || col->i == 'F') && col->x == all->info.column - 1)
 		copy_to_map(&all->tileset[1][3][0], &all->ground, col);
 	else if (col->i == '1' || col->i == 'F')
-		copy_to_map(&all->tileset[2][1][0], &all->ground, col);
+		copy_to_map(&all->tileset[2][0][0], &all->ground, col);
 	if (col->i == '1' && col->x == 0 && col->y == 0)
 		copy_to_map(&all->tileset[1][4][0], &all->ground, col);
 	if (col->i == '1' && col->x == 0 && col->y == all->info.line - 1)
@@ -64,7 +55,6 @@ void	build_map(t_all *all)
 		else
 			copy_to_map(&all->tileset[0][0][1], &all->ground, col);
 		wall_management(all, col);
-		deco_management(all, &all->deco, &col);
 		if (col->i == 'E' && all->info.exit)
 			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
 		col = col->right;
@@ -78,7 +68,6 @@ void	build_game(t_all *all)
 	col = all->map;
 	while (col)
 	{
-		deco_management(all, &all->deco, &col);
 		if (col->i == 'E' && all->info.exit)
 			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
 		col = col->right;

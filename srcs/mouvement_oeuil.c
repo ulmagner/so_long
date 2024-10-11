@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/10 14:43:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:38:30 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	move_oeuil(t_oeuil *oeuil, t_map *direction, int axis, t_all *all)
 	}
 }
 
-int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil)
+int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i)
 {
 	if (all->i % 10000 == 0)
 		oeuil->rd_dir = get_randoms(0, 3, 100);
 	oeuil->ms = 4;
-	if (check_hitbox_player(oeuil->interaction, &all->player))
+	if (all->dist.p_o[i] <= oeuil->r + all->player.r && !all->counter.button)
 	{
 		all->player.is_dead = true;
 		all->player.i = 8;

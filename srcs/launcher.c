@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 11:08:46 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:33:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ static int	display_map(t_all *all, t_window *window)
 
 	i = -1;
 	build_game(all);
-	while (++i < all->info.ennemies \
-		&& calculate_distance(&all->player, all->oeuil[i].x, \
-		all->oeuil[i].y) < 300.0)
-		copy_oeuil_to_map(all, &all->oeuil[i]);
+	while (++i < all->info.ennemies)
+	{
+		if (all->dist.p_o[i] <= 300.0f)
+			copy_oeuil_to_map(all, &all->oeuil[i]);
+	}
 	i = -1;
 	slime_handling(all, all->slime);
 	copy_player_to_map(all);
 	i = -1;
 	while (++i < all->info.trap)
-		trap_handling(all, &all->trap[i]);
+		trap_handling(all, &all->trap[i], i);
 	copy_fog_map(all);
 	if (all->player.is_dead)
 		copy_game_map(&all->tileset[8][0][0], &all->game, all);
@@ -43,17 +44,18 @@ static int	looping(t_all *all)
 	int	i;
 
 	i = -1;
-	all->i++;
-	if (all->i % 1500 != 0)
+	if (++(all->i) % 1500 != 0)
 		return (0);
+	calcul_dist(all);
 	copy_ground_to_map(all);
 	get_hitbox_player(&all->player);
-	while (++i < all->info.ennemies && !all->player.is_dead)
+	while (++i < all->info.ennemies)
 	{
-		if (!all->oeuil[i].is_dead && !all->oeuil[i].is_stun)
+		if (!all->oeuil[i].is_dead && !all->oeuil[i].is_stun \
+			&& !all->player.is_dead)
 		{
 			get_hitbox_oeuil(&all->oeuil[i]);
-			movement_handling_oeuil(all, &all->oeuil[i]);
+			movement_handling_oeuil(all, &all->oeuil[i], i);
 		}
 	}
 	if (!all->player.is_dead)
@@ -115,14 +117,9 @@ int	launcher(t_all *all, char **av)
 	all->player.animation = ft_calloc(9, sizeof(int));
 	if (!all->player.animation)
 		return (0);
-	all->slime = ft_calloc(all->info.collectible, sizeof(t_slime));
-	if (!all->slime)
-		return (0);
-	all->trap = ft_calloc(all->info.trap, sizeof(t_trap));
-	if (!all->trap)
-		return (0);
 	build_map(all);
-	copy_game_map(&all->tileset[8][0][0], &all->game, all);
+	init_distances(all);
+	all->player.ms = 4;
 	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);
 	mlx_hook(all->window.main, 3, 1L << 1, movement_r, all);
 	mlx_hook(all->window.main, 4, 1L << 2, action_p, all);

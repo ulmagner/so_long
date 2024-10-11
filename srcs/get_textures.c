@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:35:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:06:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ void	check_deco(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "deco", ft_strlen(line)))
 	{
-		if (ft_strnstr(line, "jar", ft_strlen(line)))
+		if (ft_strnstr(line, "tree", ft_strlen(line)))
 			info->nbr_a[6]++;
-		else if (ft_strnstr(line, "tree", ft_strlen(line)))
-			info->nbr_a[7]++;
 		else if (ft_strnstr(line, "loot", ft_strlen(line)))
-			info->nbr_a[8]++;
+			info->nbr_a[7]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[2]++;
 	}
@@ -60,7 +58,7 @@ void	check_exit(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "exit", ft_strlen(line)))
 	{
-		info->nbr_a[9]++;
+		info->nbr_a[8]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[3]++;
 	}
@@ -70,7 +68,9 @@ void	check_slime(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "slime", ft_strlen(line)))
 	{
-		if (ft_strnstr(line, "run", ft_strlen(line)))
+		if (ft_strnstr(line, "jar", ft_strlen(line)))
+			info->nbr_a[9]++;
+		else if (ft_strnstr(line, "run", ft_strlen(line)))
 			info->nbr_a[10]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[4]++;

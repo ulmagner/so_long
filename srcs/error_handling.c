@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 11:04:24 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:29:35 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 	{
 		all->player.x = curr->x * 64;
 		all->player.y = curr->y * 64;
+		all->player.r = 31.0;
 		floodfill(curr, c, e, &all->info);
 	}
 	if (curr->i == 'O')
@@ -83,7 +84,20 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 		{
 			all->oeuil[i].x = curr->x * 64;
 			all->oeuil[i].y = curr->y * 64;
+			all->oeuil[i].r = 18.0;
 		}
+	}
+	if (curr->i == 'C')
+	{
+		all->slime[all->info.slime].x = curr->x * 64;
+		all->slime[all->info.slime].y = curr->y * 64;
+		all->slime[all->info.slime++].r = 11.0;
+	}
+	if (curr->i == 'F')
+	{
+		all->trap[all->info.fire].x = curr->x * 64;
+		all->trap[all->info.fire].y = curr->y * 64;
+		all->trap[all->info.fire++].r = 64.0;
 	}
 	return (1);
 }

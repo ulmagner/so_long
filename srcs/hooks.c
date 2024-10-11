@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:15:06 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:41:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	action_p(int button, int x, int y, t_all *all)
 		all->counter.tot_frame = 4;
 		all->counter.x = x;
 		all->counter.y = y;
+		all->player.ms = 2;
 	}
 	return (0);
 }
@@ -58,6 +59,7 @@ int	action_r(int button, int x, int y, t_all *all)
 		all->counter.button = false;
 		all->counter.curr_frame = 0;
 		all->counter.is_action = false;
+		all->player.ms = 4;
 	}
 	return (0);
 }

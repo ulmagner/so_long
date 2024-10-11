@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:40:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	movement_r(int keycode, t_all *all)
 
 int	movement_handling(t_all *all)
 {
-	all->player.ms = 4;
-	if (!all->attack.button && !all->counter.button)
+	if (!all->attack.button)
 	{
 		dir_up(&all->player, &all->movement, all);
 		dir_down(&all->player, &all->movement, all);

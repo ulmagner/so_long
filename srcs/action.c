@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/10 11:50:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:15:52 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,19 @@ static int	attack(t_all *all, t_player *player)
 
 	i = -1;
 	animation_attack(all, player);
-	if (check_hitbox_jar(all->player.interaction, all->info))
+	while (++i < all->info.collectible)
 	{
-		all->player.h->is_visited = 2;
-		all->deco.anim_jar = 1;
+		if (all->dist.p_c[i] <= all->slime[i].r + player->r)
+		{
+			ft_printf(2, "%f\n", all->dist.p_c[i]);
+			all->slime[i].c->is_visited = 2;
+			all->slime[i].anim_slime = 1;
+		}
 	}
+	i = -1;
 	while (++i < all->info.ennemies)
 	{
-		if (check_hitbox_oeuil(all->player.interaction, &all->oeuil[i]) \
+		if (all->dist.p_o[i] <= all->oeuil[i].r + player->r \
 			&& all->oeuil[i].is_stun)
 		{
 			all->oeuil[i].i = 2;
@@ -72,7 +77,7 @@ static int	counter(t_all *all, t_player *player)
 	}
 	while (++i < all->info.ennemies)
 	{
-		if (check_hitbox_oeuil(all->player.interaction, &all->oeuil[i]))
+		if (all->dist.p_o[i] <= all->oeuil[i].r + player->r)
 			all->oeuil[i].is_stun = true;
 	}
 	return (1);
