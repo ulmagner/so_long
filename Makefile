@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/10/11 11:08:00 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MLX_NAME	= libmlx.a
 SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
 map_xpm.c tileset.c mouvement.c launcher.c clear.c player.c get_path.c \
 action.c direction.c mouvement_oeuil.c slime.c trap.c hitbox.c hooks.c \
-get_textures.c get_textures_bis.c build_image.c \
+get_textures.c get_textures_bis.c build_image.c fog.c \
 
 SRCS_B		= main_bonus.c \
 

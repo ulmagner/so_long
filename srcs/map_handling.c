@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 14:11:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:57:14 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 		all->oeuil[i].anim = get_randoms(0, 5, 7);
 	if (!fill_map(info, map, &player->h, all))
 		return (0);
-	if (!check_close_map(map, info, &player, all))
+	if (!check_close_map(map, info, all))
 		return (0);
 	print_map(map, info);
 	return (1);

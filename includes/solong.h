@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 16:56:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:07:34 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,8 @@ unsigned int	get_pixel_color(t_image *image, int x, int y);
 int		check_hitbox_player(int interaction[4][2], t_player *player);
 int		check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil);
 int		check_hitbox_jar(int interaction[4][2], t_info info);
+float	calculate_distance(t_player *player, float obj_x, float obj_y);
+void	copy_fog_map(t_all *all);
 void	dir_up(t_player *player, t_movement *movement, t_all *all);
 void	dir_down(t_player *player, t_movement *movement, t_all *all);
 void	dir_left(t_player *player, t_movement *movement, t_all *all);
@@ -263,7 +265,7 @@ int		action_r(int button, int x, int y, t_all *all);
 int		action_handling(t_all *all);
 int		get_map(t_info *info, int *line, int *column);
 int		check_ep_doubles(t_info *info);
-int		check_close_map(t_map **map, t_info *info, t_player **player, t_all *all);
+int		check_close_map(t_map **map, t_info *info, t_all *all);
 int		make_list(t_info *info, int *i, t_map **node, t_map **h, t_all *all);
 int		empty_string(t_info *info);
 int		map_handling(t_info *info, t_map **map, t_player *player, t_all *all);

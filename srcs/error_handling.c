@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:04:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,34 @@ void	floodfill(t_map *player, int *c, int *e, t_info *info)
 		floodfill(player->down, c, e, info);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_player **player, t_all *all)
+int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
+{
+	int	i;
+
+	i = -1;
+	if (curr->i == 'P')
+	{
+		all->player.x = curr->x * 64;
+		all->player.y = curr->y * 64;
+		floodfill(curr, c, e, &all->info);
+	}
+	if (curr->i == 'O')
+	{
+		while (++i < all->info.ennemies)
+		{
+			all->oeuil[i].x = curr->x * 64;
+			all->oeuil[i].y = curr->y * 64;
+		}
+	}
+	return (1);
+}
+
+int	check_close_map(t_map **map, t_info *info, t_all *all)
 {
 	t_map	*curr;
 	int		c;
 	int		e;
-	int		i;
 
-	i = -1;
 	c = 0;
 	e = 0;
 	curr = *map;
@@ -84,20 +104,7 @@ int	check_close_map(t_map **map, t_info *info, t_player **player, t_all *all)
 			|| ((curr->y == 0 || curr->y == info->line - 1)
 				&& (curr->i != '1' && curr->i != 'F')))
 			return (0);
-		if (curr->i == 'P')
-		{
-			(*player)->x = curr->x * 64;
-			(*player)->y = curr->y * 64;
-			floodfill(curr, &c, &e, info);
-		}
-		if (curr->i == 'O')
-		{
-			while (++i < info->ennemies)
-			{
-				all->oeuil[i].x = curr->x * 64;
-				all->oeuil[i].y = curr->y * 64;
-			}
-		}
+		start_floodfill(curr, all, &c, &e);
 		curr = curr->right;
 	}
 	if (c != info->coin || !e)

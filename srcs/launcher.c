@@ -6,74 +6,11 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/10 17:07:37 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:08:46 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-
-float calculate_distance(t_player *player, float obj_x, float obj_y)
-{
-    return sqrt(pow(player->x - obj_x, 2) + pow(player->y - obj_y, 2));
-}
-
-int lerp_color(int color, t_color fog_color, float fog_factor)
-{
-    // Extract RGB components from the color (assuming it's in ARGB format)
-	int a = (color >> 24) &  0xFF;
-    int r = (color >> 16) & 0xFF;
-    int g = (color >> 8) & 0xFF;
-    int b = color & 0xFF;
-
-    // Interpolate each channel
-	a = (1.0f - fog_factor) * a + fog_factor * fog_color.a;
-    r = (1.0f - fog_factor) * r + fog_factor * fog_color.r;
-    g = (1.0f - fog_factor) * g + fog_factor * fog_color.g;
-    b = (1.0f - fog_factor) * b + fog_factor * fog_color.b;
-
-	if (a > 255) a = 255;
-	if (a < 0) a = 0;
-    // Repack into a single int (assuming no transparency is used)
-    return (a << 24) | (r << 16) | (g << 8) | b;
-}
-
-int apply_fog(int color, t_all *all, t_color fog_color)
-{
-    float fog_factor;
-
-	fog_factor = 0.0;
-    if (all->fog.distance >= 100.0)
-	{
-		color = (color >> 1) & 8355711;
-        if (all->fog.distance >= 300.0)
-            fog_factor = 0.7;
-        else
-            fog_factor = (all->fog.distance - 100.0) / (300.0 - 100.0) - 0.3;
-    	return lerp_color(color, fog_color, fog_factor);	
-    }
-	return (color);
-}
-
-void copy_fog_map(t_all *all)
-{
-    int	x;
-	int	y;
-    int original_color;
-	int fogged_color;
-
-	y = -1;
-    while (++y < all->game.h)
-	{
-		x = -1;
-        while (++x < all->game.w)
-		{
-            original_color = get_pixel_color(&all->game, x, y);
-            all->fog.distance = calculate_distance(&all->player, x, y);
-            fogged_color = apply_fog(original_color, all, all->argb);
-            ft_pixel_put(&all->game, x, y, fogged_color);
-        }
-    }
-}
 
 static int	display_map(t_all *all, t_window *window)
 {
@@ -81,7 +18,9 @@ static int	display_map(t_all *all, t_window *window)
 
 	i = -1;
 	build_game(all);
-	while (++i < all->info.ennemies && calculate_distance(&all->player, all->oeuil[i].x, all->oeuil[i].y) < 300.0)
+	while (++i < all->info.ennemies \
+		&& calculate_distance(&all->player, all->oeuil[i].x, \
+		all->oeuil[i].y) < 300.0)
 		copy_oeuil_to_map(all, &all->oeuil[i]);
 	i = -1;
 	slime_handling(all, all->slime);
@@ -161,7 +100,7 @@ int	init_window(t_all *all, char **av)
 		return (0);
 	all->window.main = mlx_new_window(all->window.mlx, \
 		all->window.main_w, all->window.main_h, "So_long");
-		return (1);
+	return (1);
 }
 
 int	launcher(t_all *all, char **av)
