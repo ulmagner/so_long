@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:50:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:06:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y)
 	return (*(unsigned int *)src);
 }
 
-void	copy_to_map(t_image *image, t_image *ground, t_map *map)
+void	copy_to_ground(t_image *image, t_image *ground, t_map *map)
 {
 	unsigned int	color;
 	int				x;
@@ -71,7 +71,7 @@ void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref)
 	}
 }
 
-void	copy_plan_map(t_image *image, t_image *bg, t_all *all)
+void	copy_death_plan(t_image *image, t_image *bg, t_all *all)
 {
 	unsigned int	color;
 	int				x;

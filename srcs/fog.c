@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:06:36 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:01:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	apply_fog(int color, t_all *all, t_color fog_color)
 	return (color);
 }
 
-void	copy_fog_map(t_all *all)
+void	copy_fog_plan(t_all *all)
 {
 	int	x;
 	int	y;

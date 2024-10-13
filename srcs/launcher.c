@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:05:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ static int	display_map(t_all *all, t_window *window)
 	while (++i < all->info.ennemies)
 	{
 		if (all->dist.p_o[i] <= 300.0f)
-			copy_oeuil_to_map(all, &all->oeuil[i]);
+			copy_oeuil_plan(all, &all->oeuil[i]);
 	}
 	i = -1;
 	slime_handling(all, all->slime);
-	copy_player_to_map(all);
+	copy_player_plan(all);
 	i = -1;
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
-	copy_fog_map(all);
+	copy_fog_plan(all);
 	if (all->player.is_dead)
-		copy_plan_map(&all->tileset[8][0][0], &all->plan, all);
-	copy_game_to_map(all);
+		copy_death_plan(&all->tileset[8][0][0], &all->plan, all);
+	copy_plan_to_game(all);
 	if (all->movement.move[XK_m])
-		build_game(all);
+		build_minimap(all);
 	mlx_put_image_to_window(window->mlx,
 		window->main, all->game.img, 0, 0);
 	return (1);
@@ -69,7 +69,7 @@ static int	looping(t_all *all)
 	if (++(all->i) % 1500 != 0)
 		return (0);
 	calcul_dist(all);
-	copy_ground_to_map(all);
+	copy_ground_plan(all);
 	get_hitbox_player(&all->player);
 	while (++i < all->info.ennemies)
 	{

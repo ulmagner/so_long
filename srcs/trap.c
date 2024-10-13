@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:58:06 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:02:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	trap_handling(t_all *all, t_trap *trap, int i)
 				trap->curr_frame++;
 			}
 		}
-		copy_trap_to_map(all, trap);
+		copy_trap_plan(all, trap);
 	}
 	return (1);
 }
 
-void	copy_trap_to_map(t_all *all, t_trap *trap)
+void	copy_trap_plan(t_all *all, t_trap *trap)
 {
 	unsigned int	color;
 	int				x;

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:51:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:09:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	split_tileset(t_all *all, t_info *info)
 		while (++j < info->nbr_i[i])
 		{
 			a = -1;
-			all->tileset[i][j] = malloc(sizeof(t_image) * info->nbr_a[b]);
+			all->tileset[i][j] = malloc(sizeof(t_image) * info->nbr_a[++b]);
 			while (++a < info->nbr_a[b])
 			{
 				all->tileset[i][j][a].img_path = info->path_texture[++k];

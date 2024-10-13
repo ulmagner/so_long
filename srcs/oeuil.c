@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/13 22:53:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:02:38 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i)
 	return (1);
 }
 
-void	copy_oeuil_to_map(t_all *all, t_oeuil *oeuil)
+void	copy_oeuil_plan(t_all *all, t_oeuil *oeuil)
 {
 	unsigned int	color;
 	int				x;

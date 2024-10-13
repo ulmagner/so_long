@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:06:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,27 +235,27 @@ int		init_distances(t_all *all);
 int		check_hitbox_player(int interaction[4][2], t_player *player);
 int		check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil);
 int		check_hitbox_jar(int interaction[4][2], t_info info);
-void	copy_fog_map(t_all *all);
+void	copy_fog_plan(t_all *all);
 void	dir_up(t_player *player, t_movement *movement, t_all *all);
 void	dir_down(t_player *player, t_movement *movement, t_all *all);
 void	dir_left(t_player *player, t_movement *movement, t_all *all);
 void	dir_right(t_player *player, t_movement *movement, t_all *all);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
 void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref);
-void	copy_plan_map(t_image *image, t_image *bg, t_all *all);
-void	copy_oeuil_to_map(t_all *all, t_oeuil *oeuil);
-void	copy_to_map(t_image *image, t_image *ground, t_map *map);
-void	copy_game_to_map(t_all *all);
-void	copy_ground_to_map(t_all *all);
-void	copy_slime_to_map(t_all *all, t_slime *slime);
-void	copy_player_to_map(t_all *all);
-void	copy_trap_to_map(t_all *all, t_trap *trap);
+void	copy_death_plan(t_image *image, t_image *bg, t_all *all);
+void	copy_oeuil_plan(t_all *all, t_oeuil *oeuil);
+void	copy_to_ground(t_image *image, t_image *ground, t_map *map);
+void	copy_plan_to_game(t_all *all);
+void	copy_ground_plan(t_all *all);
+void	copy_slime_plan(t_all *all, t_slime *slime);
+void	copy_player_plan(t_all *all);
+void	copy_trap_plan(t_all *all, t_trap *trap);
 void	ft_freeinfo(t_info *info);
 void	ft_freeplayer(t_player *player);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_all *all);
-void	build_game(t_all *all);
+void	build_minimap(t_all *all);
 void	build_ground(t_all *all);
 void	build_plan(t_all *all);
 void	chain_map(t_map **curr, t_map **head, t_map *node);

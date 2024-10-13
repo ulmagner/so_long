@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:58:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:05:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	copy_ground_to_map(t_all *all)
+void	copy_ground_plan(t_all *all)
 {
 	unsigned int	color;
 	int				x;
@@ -31,7 +31,7 @@ void	copy_ground_to_map(t_all *all)
 	}
 }
 
-void	copy_game_to_map(t_all *all)
+void	copy_plan_to_game(t_all *all)
 {
 	unsigned int	color;
 	int				x;

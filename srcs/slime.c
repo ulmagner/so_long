@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:53:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:06:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	free_the_slimes(t_all *all, t_slime *slime)
 	if (slime->c->is_visited == 2)
 	{
 		if (!slime->is_free)
-			copy_to_map(&all->tileset[2][1][0], \
+			copy_to_ground(&all->tileset[2][1][0], \
 				&all->plan, slime->c);
 		if (all->movement.move[XK_e] && !slime->is_free)
 		{
@@ -66,14 +66,14 @@ int	slime_handling(t_all *all, t_slime *slime)
 			else if (all->movement.i_move[3])
 				move_slime(all->player, &slime[i], (-32 - (i * 32)), 0);
 		}
-		copy_slime_to_map(all, &slime[i]);
+		copy_slime_plan(all, &slime[i]);
 	}
 	if (all->info.coin == 0)
 		all->info.exit = 1;
 	return (1);
 }
 
-void	copy_slime_to_map(t_all *all, t_slime *slime)
+void	copy_slime_plan(t_all *all, t_slime *slime)
 {
 	unsigned int	color;
 	int				x;
