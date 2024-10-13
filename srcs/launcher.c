@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:05:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 00:17:16 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static int	display_map(t_all *all, t_window *window)
 	}
 	i = -1;
 	slime_handling(all, all->slime);
-	copy_player_plan(all);
 	i = -1;
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
 	copy_fog_plan(all);
+	copy_player_plan(all);
 	if (all->player.is_dead)
 		copy_death_plan(&all->tileset[8][0][0], &all->plan, all);
 	copy_plan_to_game(all);

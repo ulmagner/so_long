@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:02:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 00:18:04 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	trap_handling(t_all *all, t_trap *trap, int i)
 				trap->curr_frame++;
 			}
 		}
+		if (all->player.h->down->i == 'F' && (trap->curr_frame >= 0 && trap->curr_frame <= 20))
+		{
+			all->player.is_dead = 1;
+			all->player.i = 8;
+		}
 		copy_trap_plan(all, trap);
 	}
 	return (1);
@@ -61,8 +66,7 @@ void	copy_trap_plan(t_all *all, t_trap *trap)
 		while (++x < all->tileset[7][i][anim].w)
 		{
 			color = get_pixel_color(&all->tileset[7][i][anim], x, y);
-			ft_pixel_put(&all->plan, trap->x + x,
-				trap->y + y, color);
+			ft_pixel_put(&all->plan, trap->x + x, trap->y + y - 64, color);
 		}
 	}
 }
