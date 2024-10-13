@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 00:18:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 00:36:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	trap_handling(t_all *all, t_trap *trap, int i)
 				trap->curr_frame++;
 			}
 		}
-		if (all->player.h->down->i == 'F' && (trap->curr_frame >= 0 && trap->curr_frame <= 20))
+		if (trap->detect && ((trap->curr_frame >= 0 && trap->curr_frame <= 15)) && (all->player.x >= trap->x + 10 && all->player.x <= trap->x + 50) && all->player.y < trap->y)
 		{
 			all->player.is_dead = 1;
 			all->player.i = 8;
