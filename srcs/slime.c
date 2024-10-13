@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:19:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:53:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	free_the_slimes(t_all *all, t_slime *slime)
 	{
 		if (!slime->is_free)
 			copy_to_map(&all->tileset[2][1][0], \
-				&all->game, slime->c);
+				&all->plan, slime->c);
 		if (all->movement.move[XK_e] && !slime->is_free)
 		{
 			slime->y = all->player.y;
@@ -71,4 +71,27 @@ int	slime_handling(t_all *all, t_slime *slime)
 	if (all->info.coin == 0)
 		all->info.exit = 1;
 	return (1);
+}
+
+void	copy_slime_to_map(t_all *all, t_slime *slime)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+	int				anim;
+	int				i;
+
+	anim = slime->anim_slime;
+	i = slime->i;
+	y = -1;
+	while (++y < all->tileset[4][i][anim].h)
+	{
+		x = -1;
+		while (++x < all->tileset[4][i][anim].w)
+		{
+			color = get_pixel_color(&all->tileset[4][i][anim], x, y);
+			ft_pixel_put(&all->plan, slime->x + x,
+				slime->y + y, color);
+		}
+	}
 }

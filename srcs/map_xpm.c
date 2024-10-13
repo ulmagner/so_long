@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:27:28 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:50:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,26 @@ void	copy_to_map(t_image *image, t_image *ground, t_map *map)
 	}
 }
 
-void	copy_game_map(t_image *image, t_image *bg, t_all *all)
+void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+
+	y = -1;
+	while (++y < image->h)
+	{
+		x = -1;
+		while (++x < image->w)
+		{
+			color = get_pixel_color(image, x, y);
+			ft_pixel_put(ground, \
+				(x_ref) + x, (y_ref) + y, color);
+		}
+	}
+}
+
+void	copy_plan_map(t_image *image, t_image *bg, t_all *all)
 {
 	unsigned int	color;
 	int				x;
@@ -71,16 +90,4 @@ void	copy_game_map(t_image *image, t_image *bg, t_all *all)
 				y + ((bg->h / 2) - (image->h / 2)), color);
 		}
 	}
-}
-
-int	get_randoms(int min, int max, int count)
-{
-	int	i;
-	int	rd_num;
-
-	i = -1;
-	rd_num = -1;
-	while (++i < count)
-		rd_num = rand() % (max - min + 1) + min;
-	return (rd_num);
 }

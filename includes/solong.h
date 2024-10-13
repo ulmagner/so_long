@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:42:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_info
 	int				collectible;
 	int				slime;
 	bool			exit;
+	int				exit_x;
+	int				exit_y;
 	int				fd;
 	int				i_x;
 	int				i_y;
@@ -208,8 +210,8 @@ typedef struct s_all
 	t_map		*map;
 	t_image		***tileset;
 	t_image		ground;
+	t_image		plan;
 	t_image		game;
-	t_image		minimap;
 	t_movement	movement;
 	t_action	attack;
 	t_action	counter;
@@ -223,6 +225,9 @@ typedef struct s_all
 }	t_all;
 
 t_map	**init_row_lst(t_info *info);
+int		init_window(t_all *all, char **av);
+int		init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window);
+int		init_game(t_image *game, t_window *window);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 float	calculate_distance(t_player *player, float obj_x, float obj_y, int off);
 int		calcul_dist(t_all *all);
@@ -236,9 +241,11 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all);
 void	dir_left(t_player *player, t_movement *movement, t_all *all);
 void	dir_right(t_player *player, t_movement *movement, t_all *all);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
-void	copy_game_map(t_image *image, t_image *bg, t_all *all);
+void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref);
+void	copy_plan_map(t_image *image, t_image *bg, t_all *all);
 void	copy_oeuil_to_map(t_all *all, t_oeuil *oeuil);
 void	copy_to_map(t_image *image, t_image *ground, t_map *map);
+void	copy_game_to_map(t_all *all);
 void	copy_ground_to_map(t_all *all);
 void	copy_slime_to_map(t_all *all, t_slime *slime);
 void	copy_player_to_map(t_all *all);
@@ -248,11 +255,12 @@ void	ft_freeplayer(t_player *player);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_all *all);
-void	build_map(t_all *all);
 void	build_game(t_all *all);
+void	build_ground(t_all *all);
+void	build_plan(t_all *all);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
-void	check_game(char *line, t_info *info);
+void	check_plan(char *line, t_info *info);
 void	check_floor(char *line, t_info *info);
 void	check_wall(char *line, t_info *info);
 void	check_deco(char *line, t_info *info);

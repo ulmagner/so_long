@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:23:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 	check_player(*line, info);
 	check_ennemies(*line, info);
 	check_trap(*line, info);
-	check_game(*line, info);
+	check_plan(*line, info);
 	if (*line[0] == '.')
 		info->nbr_image++;
 	tmp = ft_strjoin(*path, *line + 1);
@@ -48,7 +48,7 @@ static int	parse_file(char **line, t_info *info, char **path)
 static int	init_i(t_info *info)
 {
 	info->nbr_i = ft_calloc(9, sizeof(int));
-	info->nbr_a = ft_calloc(26, sizeof(int));
+	info->nbr_a = ft_calloc(30, sizeof(int));
 	return (info->nbr_i && info->nbr_a);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:38:11 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:23:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	check_ennemies(char *line, t_info *info)
 
 void	check_trap(char *line, t_info *info)
 {
-	if (ft_strnstr(line, "lanceflamme", ft_strlen(line)))
+	if (ft_strnstr(line, "trap", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "bas", ft_strlen(line)))
 			info->nbr_a[23]++;
@@ -65,7 +65,7 @@ void	check_trap(char *line, t_info *info)
 	}
 }
 
-void	check_game(char *line, t_info *info)
+void	check_plan(char *line, t_info *info)
 {
 	if (ft_strnstr(line, "game", ft_strlen(line)))
 	{
@@ -73,6 +73,14 @@ void	check_game(char *line, t_info *info)
 			info->nbr_a[24]++;
 		else if (ft_strnstr(line, "minimap", ft_strlen(line)))
 			info->nbr_a[25]++;
+		else if (ft_strnstr(line, "red", ft_strlen(line)))
+			info->nbr_a[26]++;
+		else if (ft_strnstr(line, "bleu", ft_strlen(line)))
+			info->nbr_a[27]++;
+		else if (ft_strnstr(line, "green", ft_strlen(line)))
+			info->nbr_a[28]++;
+		else if (ft_strnstr(line, "hero", ft_strlen(line)))
+			(printf("KEK: %d\n", info->nbr_a[29]), info->nbr_a[29]++);
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[8]++;
 	}

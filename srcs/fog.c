@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:06:36 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:57:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ void	copy_fog_map(t_all *all)
 	int	fogged_color;
 
 	y = -1;
-	while (++y < all->game.h)
+	while (++y < all->plan.h)
 	{
 		x = -1;
-		while (++x < all->game.w)
+		while (++x < all->plan.w)
 		{
-			original_color = get_pixel_color(&all->game, x, y);
+			original_color = get_pixel_color(&all->plan, x, y);
 			all->dist.p_f = calculate_distance(&all->player, x, y, 32);
 			fogged_color = apply_fog(original_color, all, all->argb);
-			ft_pixel_put(&all->game, x, y, fogged_color);
+			ft_pixel_put(&all->plan, x, y, fogged_color);
 		}
 	}
 }

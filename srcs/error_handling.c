@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:29:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ int	error_handling(int ac, char **av, t_info *info)
 		return (0);
 	info->fd = open(av[1], O_RDWR);
 	if (info->fd < 0)
-		return (ft_printf(2, "Error\nCarte can't be open\n"), 0);
+		return (ft_printf(2, "Error\nplan can't be open\n"), 0);
 	return (1);
 }

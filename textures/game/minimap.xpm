@@ -1,5 +1,5 @@
 /* XPM */
-static char * minimap_xpm[] = {
+static char * game_xpm[] = {
 "400 305 2802 2",
 "  	c None",
 ". 	c #908885",

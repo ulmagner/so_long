@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:54:05 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	copy_minimap_map(t_image *image, t_image *bg, t_all *all)
+void	copy_game_map(t_image *image, t_image *bg, t_all *all)
 {
 	unsigned int	color;
 	int				x;
@@ -38,7 +38,7 @@ static int	display_map(t_all *all, t_window *window)
 	int	i;
 
 	i = -1;
-	build_game(all);
+	build_plan(all);
 	while (++i < all->info.ennemies)
 	{
 		if (all->dist.p_o[i] <= 300.0f)
@@ -51,14 +51,13 @@ static int	display_map(t_all *all, t_window *window)
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
 	copy_fog_map(all);
-	// if (all->movement.move[XK_m])
-	// 	build_map();
 	if (all->player.is_dead)
-		copy_game_map(&all->tileset[8][0][0], &all->game, all);
+		copy_plan_map(&all->tileset[8][0][0], &all->plan, all);
+	copy_game_to_map(all);
+	if (all->movement.move[XK_m])
+		build_game(all);
 	mlx_put_image_to_window(window->mlx,
-		window->main, all->game.img, \
-		((all->window.main_w / 2) - ((all->info.column * 64) / 2)), \
-		((all->window.main_h / 2) - ((all->info.line * 64) / 2)));
+		window->main, all->game.img, 0, 0);
 	return (1);
 }
 
@@ -91,63 +90,20 @@ static int	looping(t_all *all)
 	return (1);
 }
 
-int	init_bg(t_image *ground, t_image *game, t_image *minimap, t_all *all, t_window *window)
-{
-	int	map_w_in_pixels;
-	int	map_h_in_pixels;
-
-	map_w_in_pixels = all->info.column * TILE_SIZE;
-	map_h_in_pixels = all->info.line * TILE_SIZE;
-	ground->w = map_w_in_pixels;
-	ground->h = map_h_in_pixels;
-	minimap->w = map_w_in_pixels / TILE_SIZE;
-	minimap->h = map_h_in_pixels / TILE_SIZE;
-	game->w = map_w_in_pixels;
-	game->h = map_h_in_pixels;
-	ground->img = mlx_new_image(window->mlx,
-			map_w_in_pixels, map_h_in_pixels);
-	ground->addr = mlx_get_data_addr(ground->img,
-			&ground->bits_per_pixel,
-			&ground->line_length, &ground->endian);
-	minimap->img = mlx_new_image(window->mlx,
-			minimap->w, minimap->h);
-	minimap->addr = mlx_get_data_addr(minimap->img,
-			&minimap->bits_per_pixel,
-			&minimap->line_length, &minimap->endian);
-	game->img = mlx_new_image(window->mlx,
-			map_w_in_pixels, map_h_in_pixels);
-	game->addr = mlx_get_data_addr(game->img,
-			&game->bits_per_pixel,
-			&game->line_length, &game->endian);
-	all->argb = (t_color){0, 0, 0, 0};
-	return (1);
-}
-
-int	init_window(t_all *all, char **av)
-{
-	all->window.main_w = ft_atoi(av[2]);
-	all->window.main_h = ft_atoi(av[3]) - 70;
-	all->window.mlx = mlx_init();
-	if (!all->window.mlx)
-		return (0);
-	all->window.main = mlx_new_window(all->window.mlx, \
-		all->window.main_w, all->window.main_h, "So_long");
-	return (1);
-}
-
 int	launcher(t_all *all, char **av)
 {
 	init_window(all, av);
 	if (!split_tileset(all, &all->info))
 		return (0);
-	init_bg(&all->ground, &all->game, all, &all->window);
+	init_bg(&all->ground, &all->plan, all, &all->window);
+	init_game(&all->game, &all->window);
 	all->deco.i = 2;
 	all->random.rd_floor = get_randoms(0, 1, 2);
 	all->info.collectible = all->info.coin;
 	all->player.animation = ft_calloc(9, sizeof(int));
 	if (!all->player.animation)
 		return (0);
-	build_map(all);
+	build_ground(all);
 	init_distances(all);
 	all->player.ms = 4;
 	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);

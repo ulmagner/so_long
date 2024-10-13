@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_freeimage(t_all *all, int i)
 	}
 	free(all->tileset);
 	mlx_destroy_image(all->window.mlx, all->ground.img);
-	mlx_destroy_image(all->window.mlx, all->game.img);
+	mlx_destroy_image(all->window.mlx, all->plan.img);
 }
 
 void	ft_clearall(t_all *all)

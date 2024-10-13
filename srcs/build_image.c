@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 17:50:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	wall_management(t_all *all, t_map *col)
 		copy_to_map(&all->tileset[1][4][3], &all->ground, col);
 }
 
-void	build_map(t_all *all)
+void	build_ground(t_all *all)
 {
 	t_map	*col;
 	int		i;
@@ -57,39 +57,51 @@ void	build_map(t_all *all)
 		wall_management(all, col);
 		if (col->i == 'E' && all->info.exit)
 			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
+		col = col->right;
+	}
+}
+
+void	build_plan(t_all *all)
+{
+	t_map	*col;
+
+	col = all->map;
+	while (col)
+	{
+		if (col->i == 'E' && all->info.exit)
+		{
+			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
+			all->info.exit_x = col->x;
+			all->info.exit_y = col->y;
+		}
 		col = col->right;
 	}
 }
 
 void	build_game(t_all *all)
 {
-	t_map	*col;
+	int	i;
+	int	mini_x;
+	int	mini_y;
 
-	col = all->map;
-	while (col)
-	{
-		if (col->i == 'E' && all->info.exit)
-			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
-		col = col->right;
-	}
-}
-
-void	build_minimap(t_all *all)
-{
-	t_map	*col;
-	int		i;
-
+	mini_y = all->tileset[8][1][0].h - 40;
+	mini_x = all->tileset[8][1][0].w - 46;
 	i = -1;
-	col = all->map;
-	while (col)
-	{
-		if (++i % 2 == 0)
-			copy_to_map(&all->tileset[0][0][0], &all->ground, col);
-		else
-			copy_to_map(&all->tileset[0][0][1], &all->ground, col);
-		wall_management(all, col);
-		if (col->i == 'E' && all->info.exit)
-			copy_to_map(&all->tileset[3][0][0], &all->ground, col);
-		col = col->right;
-	}
+	copy_to_game(&all->tileset[8][1][0], &all->game, 0, 0);
+	while (++i < all->info.ennemies)
+		copy_to_game(&all->tileset[8][2][0], &all->game, \
+			((all->oeuil[i].x * mini_x) / all->plan.w), \
+			((all->oeuil[i].y * mini_y) / all->plan.h));
+	i = -1;
+	while (++i < all->info.collectible)
+		copy_to_game(&all->tileset[8][3][0], &all->game, \
+			((all->slime[i].x * mini_x) / all->plan.w), \
+			((all->slime[i].y * mini_y) / all->plan.h));
+	copy_to_game(&all->tileset[8][5][0], &all->game, \
+		((all->player.x * mini_x) / all->plan.w), \
+		((all->player.y * mini_y) / all->plan.h));
+	if (all->info.exit)
+		copy_to_game(&all->tileset[8][4][0], &all->game, \
+			(all->info.exit_x * mini_x / all->plan.w), \
+			(all->info.exit_y * mini_y / all->plan.h));
 }

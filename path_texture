@@ -108,3 +108,7 @@
 +textures/trap/lanceflamme_bas30.xpm
 .textures/game/you_died.xpm
 -textures/game/minimap.xpm
+-textures/game/red_dot.xpm
+-textures/game/bleu_dot.xpm
+-textures/game/green_dot.xpm
+-textures/game/hero_dot.xpm
