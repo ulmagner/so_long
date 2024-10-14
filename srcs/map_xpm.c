@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:06:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:05:52 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,14 @@ void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref)
 	}
 }
 
-void	copy_death_plan(t_image *image, t_image *bg, t_all *all)
+void	copy_death_view(t_image *image, t_image *bg, t_view * view, t_all *all)
 {
 	unsigned int	color;
 	int				x;
 	int				y;
 
 	(void) all;
+	(void) view;
 	y = -1;
 	while (++y < image->h)
 	{
@@ -86,8 +87,8 @@ void	copy_death_plan(t_image *image, t_image *bg, t_all *all)
 		{
 			color = get_pixel_color(image, \
 				0 * image->w + x, 0 * image->h + y);
-			ft_pixel_put(bg, x + ((bg->w / 2) - (image->w / 2)), \
-				y + ((bg->h / 2) - (image->h / 2)), color);
+			ft_pixel_put(bg, x + (bg->w / 2) - image->w / 2, \
+				y + (bg->h / 2) - image->h / 2, color);
 		}
 	}
 }

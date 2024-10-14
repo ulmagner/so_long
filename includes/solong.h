@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 00:03:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:18:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,16 @@ typedef struct s_random
 	int	rd_floor;
 }	t_random;
 
+typedef struct s_view
+{
+	int	w;
+	int	h;
+	int	x;
+	int	y;
+	int	off_px;
+	int	off_py;
+}	t_view;
+
 typedef struct s_all
 {
 	t_window	window;
@@ -221,6 +231,7 @@ typedef struct s_all
 	t_trap		*trap;
 	t_color		argb;
 	t_distance	dist;
+	t_view		view;
 	int			i;
 }	t_all;
 
@@ -242,7 +253,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all);
 void	dir_right(t_player *player, t_movement *movement, t_all *all);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
 void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref);
-void	copy_death_plan(t_image *image, t_image *bg, t_all *all);
+void	copy_death_view(t_image *image, t_image *bg, t_view *view, t_all *all);
 void	copy_oeuil_plan(t_all *all, t_oeuil *oeuil);
 void	copy_to_ground(t_image *image, t_image *ground, t_map *map);
 void	copy_plan_to_game(t_all *all);

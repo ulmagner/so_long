@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:05:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window)
 
 	map_w_in_pixels = all->info.column * TILE_SIZE;
 	map_h_in_pixels = all->info.line * TILE_SIZE;
-	printf("%d %d\n", map_h_in_pixels, map_w_in_pixels);
 	ground->w = map_w_in_pixels;
 	ground->h = map_h_in_pixels;
 	plan->w = map_w_in_pixels;

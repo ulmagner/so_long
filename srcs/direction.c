@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/13 23:50:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:41:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	dir_up(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_w] && (player->h->up->i != '1' \
+	if (movement->move[XK_w] && ((player->h->up->i != '1' \
 		&& player->h->up->i != 'F') \
-		&& player->y >= player->h->up->y_pxl)
+		|| player->y - 64 >= player->h->up->y_pxl))
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[0] = true;
@@ -38,9 +38,9 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_down(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_s] && (player->h->down->i != '1' \
+	if (movement->move[XK_s] && ((player->h->down->i != '1' \
 		&& player->h->down->i != 'F') \
-		&& player->y <= player->h->down->y_pxl)
+		|| player->y + 64 <= player->h->down->y_pxl))
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[1] = true;
@@ -62,9 +62,9 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_left(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_a] && (player->h->left->i != '1' \
+	if (movement->move[XK_a] && ((player->h->left->i != '1' \
 		&& player->h->left->i != 'F') \
-		&& player->x >= player->h->left->x_pxl)
+		|| player->x - 64 >= player->h->left->x_pxl))
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[2] = true;
@@ -86,9 +86,8 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_right(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_d] && (player->h->right->i != '1' \
-		&& player->h->right->i != 'F') \
-		&& player->x <= player->h->right->x_pxl)
+	if (movement->move[XK_d] && (((player->h->right->i != '1' \
+		&& player->h->right->i != 'F') || player->x + 64 <= player->h->right->x_pxl)))
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[3] = 1;

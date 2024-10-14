@@ -6,11 +6,41 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 00:17:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:03:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+int	init_view(t_all *all, t_view *view)
+{
+	view->w = (all->info.column * 64);
+	view->h = (all->info.line * 64);
+	view->x = all->player.x - (view->w / 2);
+	view->y = all->player.y - (view->h / 2);
+	return (1);
+}
+
+int	set_view_to_ppos(t_view *view, t_player *player, t_all *all)
+{
+	view->x = player->x - (view->w / 2);
+	view->y = player->y - (view->h / 2);
+	if (view->x < 0)
+		view->x = 0;
+	else if (view->x + view->w > all->plan.w)
+		view->x = all->plan.w - view->w;
+	if (view->y < 0)
+		view->y = 0;
+	else if (view->y + view->h > all->plan.h)
+		view->y = all->plan.h - view->h;
+	// view->w = all->game.w;
+	// view->h = all->game.h;
+
+	// // Center the player by calculating offset in view.
+	// view->x = player->x - (view->w / 2);
+	// view->y = player->y - (view->h / 2);
+	return (1);
+}
 
 void	copy_game_map(t_image *image, t_image *bg, t_all *all)
 {
@@ -51,11 +81,11 @@ static int	display_map(t_all *all, t_window *window)
 		trap_handling(all, &all->trap[i], i);
 	copy_fog_plan(all);
 	copy_player_plan(all);
-	if (all->player.is_dead)
-		copy_death_plan(&all->tileset[8][0][0], &all->plan, all);
 	copy_plan_to_game(all);
 	if (all->movement.move[XK_m])
 		build_minimap(all);
+	if (all->player.is_dead)
+		copy_death_view(&all->tileset[8][0][0], &all->game, &all->view, all);
 	mlx_put_image_to_window(window->mlx,
 		window->main, all->game.img, 0, 0);
 	return (1);
@@ -80,6 +110,7 @@ static int	looping(t_all *all)
 			movement_handling_oeuil(all, &all->oeuil[i], i);
 		}
 	}
+	set_view_to_ppos(&all->view, &all->player, all);
 	if (!all->player.is_dead)
 	{
 		movement_handling(all);
@@ -97,6 +128,7 @@ int	launcher(t_all *all, char **av)
 		return (0);
 	init_bg(&all->ground, &all->plan, all, &all->window);
 	init_game(&all->game, &all->window);
+	init_view(all, &all->view);
 	all->deco.i = 2;
 	all->random.rd_floor = get_randoms(0, 1, 2);
 	all->info.collectible = all->info.coin;
