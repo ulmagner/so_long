@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:23:37 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:34:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	display_map(t_all *all, t_window *window)
 	mlx_string_put(all->window.mlx, all->window.main, all->window.main_w / 2 \
 		- (all->view.x + all->view.w / 2) + all->player.x + 32, \
 		all->window.main_h / 2 - (all->view.y + all->view.h / 2) \
-		+ all->player.y - 5, 0XFFFFFF, ft_itoa(all->step));
+		+ all->player.y - 5, 0XFFFFFF, step);
 	free(step);
 	return (1);
 }
