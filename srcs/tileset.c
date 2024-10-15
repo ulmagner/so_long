@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tileset.c                                          :+:      :+:    :+:   */
+/*   tile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:40:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:09:15 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:21:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,60 +23,62 @@ static int	create_image(t_image *image, t_window *window)
 	return (1);
 }
 
-static int	free_failedimage(int i, int j, int a, t_all *all)
+static int	free_failedimage(t_fail *fail, t_all *all, t_image ****t)
 {
-	int	b;
-
-	b = 0;
-	while (a > 0)
-		mlx_destroy_image(all->window.mlx, all->tileset[i][j][--a].img);
-	free(all->tileset[i][j]);
-	while (i-- > 0)
+	while (--(fail->a) > 0)
+		mlx_destroy_image(all->window.mlx, (*t)[fail->i][fail->j][fail->a].img);
+	free((*t)[fail->i][fail->j]);
+	while (--(fail->j) >= 0)
 	{
-		j = all->info.nbr_i[i];
-		while (j > 0)
-		{
-			a = all->info.nbr_a[b];
-			while (a > 0)
-				mlx_destroy_image(all->window.mlx,
-					all->tileset[i][j][--a].img);
-			free(all->tileset[i][j--]);
-		}
-		free(all->tileset[i]);
+		fail->a = all->info.nbr_a[--(fail->b)];
+		while (--(fail->a) >= 0)
+			mlx_destroy_image(all->window.mlx,
+				(*t)[fail->i][fail->j][fail->a].img);
+		free((*t)[fail->i][fail->j]);
 	}
-	return (free(all->tileset), 0);
-}
-
-static void	init_i(int *i, int *k, int *b)
-{
-	*i = -1;
-	*k = -1;
-	*b = -1;
-}
-
-int	split_tileset(t_all *all, t_info *info)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		a;
-	int		b;
-
-	init_i(&i, &k, &b);
-	all->tileset = malloc(sizeof(t_image **) * info->nbr_image);
-	while (++i < info->nbr_image)
+	while (--(fail->i) >= 0)
 	{
-		j = -1;
-		all->tileset[i] = malloc(sizeof(t_image *) * info->nbr_i[i]);
-		while (++j < info->nbr_i[i])
+		fail->j = all->info.nbr_i[fail->i];
+		while (--(fail->j) >= 0)
 		{
-			a = -1;
-			all->tileset[i][j] = malloc(sizeof(t_image) * info->nbr_a[++b]);
-			while (++a < info->nbr_a[b])
+			fail->a = all->info.nbr_a[--(fail->b)];
+			while (--(fail->a) >= 0)
+				mlx_destroy_image(all->window.mlx,
+					(*t)[fail->i][fail->j][fail->a].img);
+			free((*t)[fail->i][fail->j]);
+		}
+		free((*t)[fail->i]);
+	}
+	return (free((*t)), (*t) = NULL, 0);
+}
+
+static void	init_fail(t_fail *fail)
+{
+	fail->i = -1;
+	fail->k = -1;
+	fail->b = -1;
+}
+
+int	split_tile(t_all *all, t_info *info, t_fail *fail)
+{
+	init_fail(&all->fail);
+	all->tile = malloc(sizeof(t_image **) * info->nbr_image);
+	while (++(fail->i) < info->nbr_image)
+	{
+		fail->j = -1;
+		all->tile[fail->i] = malloc(sizeof(t_image *) * info->nbr_i[fail->i]);
+		while (++(fail->j) < info->nbr_i[fail->i])
+		{
+			fail->a = -1;
+			all->tile[fail->i][fail->j] = malloc(sizeof(t_image) \
+				* info->nbr_a[++(fail->b)]);
+			while (++(fail->a) < info->nbr_a[fail->b])
 			{
-				all->tileset[i][j][a].img_path = info->path_texture[++k];
-				if (!create_image(&all->tileset[i][j][a], &all->window))
-					return (free_failedimage(i, j, a, all));
+				all->tile[fail->i][fail->j][fail->a].img_path \
+					= info->path_texture[++(fail->k)];
+				if (!create_image(&all->tile[fail->i][fail->j][fail->a], \
+					&all->window))
+					return (free_failedimage(&all->fail, all, &all->tile));
 			}
 		}
 	}

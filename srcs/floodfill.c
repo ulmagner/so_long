@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:25:55 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 14:28:07 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:39:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 static void	floodfill(t_map *player, int *c, int *e, t_info *info)
 {
 	if (player->i == 'C')
-	{
-		info->deco[*c][0] = player->x_pxl;
-		info->deco[*c][1] = player->y_pxl;
 		(*c)++;
-	}
 	if (player->i == 'E')
 		(*e)++;
 	player->is_visited = 1;
@@ -69,10 +65,10 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 	{
 		while (++i < all->info.ennemies)
 		{
-			all->oeuil[i].x = curr->x * 64;
-			all->oeuil[i].y = curr->y * 64;
-			all->oeuil[i].r = 18.0;
-			all->oeuil[i].reach = 100.0;
+			all->oeil[i].x = curr->x * 64;
+			all->oeil[i].y = curr->y * 64;
+			all->oeil[i].r = 18.0;
+			all->oeil[i].reach = 100.0;
 		}
 	}
 	get_c_p_info(curr, all);

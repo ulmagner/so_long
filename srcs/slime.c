@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 11:49:08 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	free_the_slimes(t_all *all, t_slime *slime)
 	if (slime->c->is_visited == 2)
 	{
 		if (!slime->is_free)
-			copy_to_ground(&all->tileset[2][1][0], \
+			copy_to_ground(&all->tile[2][1][0], \
 				&all->plan, slime->c);
 		if (all->movement.move[XK_e] && !slime->is_free)
 		{
@@ -84,12 +84,12 @@ void	copy_slime_plan(t_all *all, t_slime *slime)
 	anim = slime->anim_slime;
 	i = slime->i;
 	y = -1;
-	while (++y < all->tileset[4][i][anim].h)
+	while (++y < all->tile[4][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[4][i][anim].w)
+		while (++x < all->tile[4][i][anim].w)
 		{
-			color = get_pixel_color(&all->tileset[4][i][anim], x, y);
+			color = get_pixel_color(&all->tile[4][i][anim], x, y);
 			ft_pixel_put(&all->plan, slime->x + x,
 				slime->y + y, color);
 		}

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/14 11:41:06 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:17:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 		{
 			ft_printf(2, "up: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->up;
+			all->step++;
 		}
 	}
 }
@@ -56,6 +57,7 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 		{
 			ft_printf(2, "down: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->down;
+			all->step++;
 		}
 	}
 }
@@ -79,6 +81,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 		if (player->x <= player->h->left->x_pxl)
 		{
 			ft_printf(2, "left: [x:y] [%d %d] pxl\n", player->x, player->y);
+			all->step++;
 			player->h = player->h->left;
 		}
 	}
@@ -103,6 +106,7 @@ void	dir_right(t_player *player, t_movement *movement, t_all *all)
 		{
 			ft_printf(2, "right: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->right;
+			all->step++;
 		}
 	}
 }

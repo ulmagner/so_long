@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:44:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_freeimage(t_all *all, int i)
 	int	b;
 
 	b = 0;
-	if (!all->tileset || !*all->tileset)
+	if (!all->tile || !*all->tile)
 		return ;
 	while (++i < all->info.nbr_image)
 	{
@@ -40,15 +40,16 @@ static void	ft_freeimage(t_all *all, int i)
 			a = -1;
 			while (++a < all->info.nbr_a[b])
 				mlx_destroy_image(all->window.mlx,
-					all->tileset[i][j][a].img);
+					all->tile[i][j][a].img);
 			b++;
-			free(all->tileset[i][j]);
+			free(all->tile[i][j]);
 		}
-		free(all->tileset[i]);
+		free(all->tile[i]);
 	}
-	free(all->tileset);
+	free(all->tile);
 	mlx_destroy_image(all->window.mlx, all->ground.img);
 	mlx_destroy_image(all->window.mlx, all->plan.img);
+	mlx_destroy_image(all->window.mlx, all->game.img);
 }
 
 void	ft_clearall(t_all *all)
@@ -62,8 +63,11 @@ void	ft_clearall(t_all *all)
 		free(all->trap);
 	if (all->slime)
 		free(all->slime);
-	if (all->oeuil)
-		free(all->oeuil);
+	if (all->oeil)
+		free(all->oeil);
+	free(all->dist.p_c);
+	free(all->dist.p_t);
+	free(all->dist.p_o);
 	ft_freeimage(all, i);
 	ft_freeinfo(&all->info);
 	ft_freewindow(&all->window);

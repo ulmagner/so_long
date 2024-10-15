@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:49:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:41:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ static int	get_info(t_info *info)
 	if (info->column <= 1 || info->line <= 1
 		|| (info->column * info->line != info->size_map - line))
 		return (ft_printf(2, "Error\nInvalid map\n"), 0);
-	info->deco = malloc(sizeof(int *) * info->coin);
-	if (!info->deco)
-		return (0);
 	return (1);
 }
 
@@ -99,8 +96,8 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 	if (!get_info(info))
 		return (0);
 	all->info.ennemies *= 10;
-	all->oeuil = ft_calloc(all->info.ennemies, sizeof(t_oeuil));
-	if (!all->oeuil)
+	all->oeil = ft_calloc(all->info.ennemies, sizeof(t_oeil));
+	if (!all->oeil)
 		return (0);
 	all->slime = ft_calloc(all->info.coin, sizeof(t_slime));
 	if (!all->slime)
@@ -109,7 +106,7 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 	if (!all->trap)
 		return (0);
 	while (++i < all->info.ennemies)
-		all->oeuil[i].anim = get_randoms(0, 5, 7);
+		all->oeil[i].anim = get_randoms(0, 5, 7);
 	if (!fill_map(info, map, &player->h, all))
 		return (0);
 	info->slime = 0;

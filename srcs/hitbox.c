@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:59:51 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:41:07 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@ int	get_hitbox_player(t_player *player)
 	return (1);
 }
 
-int	get_hitbox_oeuil(t_oeuil *oeuil)
+int	get_hitbox_oeil(t_oeil *oeil)
 {
-	oeuil->interaction[0][0] = oeuil->x + 32;
-	oeuil->interaction[0][1] = oeuil->y + 16;
-	oeuil->interaction[1][0] = oeuil->x + 32;
-	oeuil->interaction[1][1] = oeuil->y + 48;
-	oeuil->interaction[2][0] = oeuil->x + 16;
-	oeuil->interaction[2][1] = oeuil->y + 32;
-	oeuil->interaction[3][0] = oeuil->x + 48;
-	oeuil->interaction[3][1] = oeuil->y + 32;
+	oeil->interaction[0][0] = oeil->x + 32;
+	oeil->interaction[0][1] = oeil->y + 16;
+	oeil->interaction[1][0] = oeil->x + 32;
+	oeil->interaction[1][1] = oeil->y + 48;
+	oeil->interaction[2][0] = oeil->x + 16;
+	oeil->interaction[2][1] = oeil->y + 32;
+	oeil->interaction[3][0] = oeil->x + 48;
+	oeil->interaction[3][1] = oeil->y + 32;
 	return (1);
 }
 
-int	check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil)
+int	check_hitbox_oeil(int interaction[4][2], t_oeil *oeil)
 {
 	int	x;
 	int	y;
@@ -49,32 +49,9 @@ int	check_hitbox_oeuil(int interaction[4][2], t_oeuil *oeuil)
 	{
 		x = interaction[i][0];
 		y = interaction[i][1];
-		if (x >= oeuil->x && x <= oeuil->x + 64 \
-			&& y >= oeuil->y && y <= oeuil->y + 64)
+		if (x >= oeil->x && x <= oeil->x + 64 \
+			&& y >= oeil->y && y <= oeil->y + 64)
 			return (1);
-	}
-	return (0);
-}
-
-int	check_hitbox_jar(int interaction[4][2], t_info info)
-{
-	int	x;
-	int	y;
-	int	i;
-	int	j;
-
-	j = -1;
-	while (++j < info.collectible)
-	{
-		i = -1;
-		while (++i < 4)
-		{
-			x = interaction[i][0];
-			y = interaction[i][1];
-			if (x >= info.deco[j][0] && x <= info.deco[j][0] + 64 \
-				&& y >= info.deco[j][1] && y <= info.deco[j][1] + 64)
-				return (1);
-		}
 	}
 	return (0);
 }

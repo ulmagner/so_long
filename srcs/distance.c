@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:59:30 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:25:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:16:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	calcul_dist(t_all *all)
 	i = -1;
 	while (++i < all->info.ennemies)
 		all->dist.p_o[i] = calculate_distance(&all->player, \
-			all->oeuil[i].x, all->oeuil[i].y, 0);
+			all->oeil[i].x, all->oeil[i].y, 0);
 	i = -1;
 	while (++i < all->info.collectible)
 		all->dist.p_c[i] = calculate_distance(&all->player, \

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:39:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/09 19:46:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:42:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	ft_freeinfo(t_info *info)
 		free(info->nbr_a);
 	if (info->path_texture)
 		ft_tabfree(info->path_texture);
-	if (info->deco)
-		free(info->deco);
 }
 
 void	ft_freeplayer(t_player *player)

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:02:03 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	copy_player_plan(t_all *all)
 	anim = all->player.animation[all->player.i];
 	i = all->player.i;
 	y = -1;
-	while (++y < all->tileset[5][i][anim].h)
+	while (++y < all->tile[5][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[5][i][anim].w)
+		while (++x < all->tile[5][i][anim].w)
 		{
-			color = get_pixel_color(&all->tileset[5][i][anim], x, y);
+			color = get_pixel_color(&all->tile[5][i][anim], x, y);
 			ft_pixel_put(&all->plan, all->player.x + x,
 				all->player.y + y, color);
 		}

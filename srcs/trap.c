@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 14:18:23 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	copy_trap_plan(t_all *all, t_trap *trap)
 	anim = trap->anim_trap;
 	i = trap->i;
 	y = -1;
-	while (++y < all->tileset[7][i][anim].h)
+	while (++y < all->tile[7][i][anim].h)
 	{
 		x = -1;
-		while (++x < all->tileset[7][i][anim].w)
+		while (++x < all->tile[7][i][anim].w)
 		{
-			color = get_pixel_color(&all->tileset[7][i][anim], x, y);
+			color = get_pixel_color(&all->tile[7][i][anim], x, y);
 			ft_pixel_put(&all->plan, trap->x + x, trap->y + y - 64, color);
 		}
 	}

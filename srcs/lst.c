@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:08 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/11 16:28:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:16:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **h, t_all *all)
 	while (++j < info->ennemies)
 	{
 		if (node->i == 'O')
-			(all->oeuil[j]).o = node;
+			(all->oeil[j]).o = node;
 	}
 	if (node->i == 'C')
 		(all->slime[info->slime++]).c = node;

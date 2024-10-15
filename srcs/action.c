@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/15 11:38:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:16:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static int	attack(t_all *all, t_player *player)
 	i = -1;
 	while (++i < all->info.ennemies)
 	{
-		if (all->dist.p_o[i] <= all->oeuil[i].r + player->r \
-			&& all->oeuil[i].is_stun)
+		if (all->dist.p_o[i] <= all->oeil[i].r + player->r \
+			&& all->oeil[i].is_stun)
 		{
-			all->oeuil[i].i = 2;
-			all->oeuil[i].anim = 0;
-			all->oeuil[i].is_dead = true;
+			all->oeil[i].i = 2;
+			all->oeil[i].anim = 0;
+			all->oeil[i].is_dead = true;
 		}
 	}
 	return (1);
@@ -76,8 +76,8 @@ static int	counter(t_all *all, t_player *player)
 	}
 	while (++i < all->info.ennemies)
 	{
-		if (all->dist.p_o[i] <= all->oeuil[i].r + player->r)
-			all->oeuil[i].is_stun = true;
+		if (all->dist.p_o[i] <= all->oeil[i].r + player->r)
+			all->oeil[i].is_stun = true;
 	}
 	return (1);
 }
