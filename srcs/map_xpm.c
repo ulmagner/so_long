@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 14:24:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:11:21 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	copy_to_ground(t_image *image, t_image *ground, t_map *map)
 		x = -1;
 		while (++x < image->w)
 		{
-			color = get_pixel_color(image, \
-				0 * image->w + x, 0 * image->h + y);
+			color = get_pixel_color(image, x, y);
 			ft_pixel_put(ground, \
 				map->x * image->w + x, map->y * image->h + y, color);
 		}

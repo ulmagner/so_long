@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:34:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:13:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ static int	display_map(t_all *all, t_window *window)
 		build_minimap(all, all->tile, &all->view, &all->plan);
 	if (all->player.is_dead)
 		copy_to_view(&all->tile[8][0][0], &all->game, &all->view, all);
-	mlx_put_image_to_window(window->mlx,
+	if (!mlx_put_image_to_window(window->mlx,
 		window->main, all->game.img, all->window.main_w / 2 \
 		- (all->view.x + all->view.w / 2), all->window.main_h / 2 \
-		- (all->view.y + all->view.h / 2));
+		- (all->view.y + all->view.h / 2)))
+		return (0);
 	step = ft_itoa(all->step);
-	mlx_string_put(all->window.mlx, all->window.main, all->window.main_w / 2 \
+	if (!mlx_string_put(all->window.mlx, all->window.main, all->window.main_w / 2 \
 		- (all->view.x + all->view.w / 2) + all->player.x + 32, \
 		all->window.main_h / 2 - (all->view.y + all->view.h / 2) \
-		+ all->player.y - 5, 0XFFFFFF, step);
+		+ all->player.y - 5, 0XFFFFFF, step))
+		return (0);
 	free(step);
 	return (1);
 }
@@ -60,7 +62,8 @@ static int	looping(t_all *all)
 	i = -1;
 	if (++(all->i) % 1500 != 0)
 		return (0);
-	mlx_clear_window(all->window.mlx, all->window.main);
+	if (!mlx_clear_window(all->window.mlx, all->window.main))
+		exit((ft_clearall(all), EXIT_FAILURE));
 	calcul_dist(all);
 	copy_ground_plan(all);
 	get_hitbox_player(&all->player);
@@ -81,13 +84,33 @@ static int	looping(t_all *all)
 	return (1);
 }
 
+int	hook_handling(t_all *all)
+{
+	if (!mlx_hook(all->window.main, 2, 1L << 0, movement_p, all))
+		return (0);
+	if (!mlx_hook(all->window.main, 3, 1L << 1, movement_r, all))
+		return (0);
+	if (!mlx_hook(all->window.main, 4, 1L << 2, action_p, all))
+		return (0);
+	if (!mlx_hook(all->window.main, 5, 1L << 3, action_r, all))
+		return (0);
+	if (!mlx_loop_hook(all->window.mlx, looping, all))
+		return (0);
+	if (!mlx_loop(all->window.mlx))
+		return (0);
+	return (1);
+}
+
 int	launcher(t_all *all, char **av)
 {
-	init_window(all, av);
+	if (!init_window(all, av))
+		return (0);
 	if (!split_tile(all, &all->info, &all->fail))
 		return (0);
-	init_bg(&all->ground, &all->plan, all, &all->window);
-	init_game(&all->game, &all->window);
+	if (!init_bg(&all->ground, &all->plan, all, &all->window))
+		return (0);
+	if (!init_game(&all->game, &all->window))
+		return (0);
 	init_view(all, &all->view);
 	all->random.rd_floor = get_randoms(0, 1, 2);
 	all->info.collectible = all->info.coin;
@@ -99,11 +122,7 @@ int	launcher(t_all *all, char **av)
 	all->player.ms = 4;
 	all->i = -1;
 	all->step = 0;
-	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);
-	mlx_hook(all->window.main, 3, 1L << 1, movement_r, all);
-	mlx_hook(all->window.main, 4, 1L << 2, action_p, all);
-	mlx_hook(all->window.main, 5, 1L << 3, action_r, all);
-	mlx_loop_hook(all->window.mlx, looping, all);
-	mlx_loop(all->window.mlx);
+	if (!hook_handling(all))
+		return (0);
 	return (1);
 }

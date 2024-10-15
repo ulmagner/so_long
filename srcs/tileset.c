@@ -20,6 +20,8 @@ static int	create_image(t_image *image, t_window *window)
 		return (ft_printf(2, "Error\nTexture_path\n"), 0);
 	image->addr = mlx_get_data_addr(image->img,
 			&image->bits_per_pixel, &image->line_length, &image->endian);
+	if (!image->addr)
+		return (0);
 	return (1);
 }
 
@@ -52,16 +54,11 @@ static int	free_failedimage(t_fail *fail, t_all *all, t_image ****t)
 	return (free((*t)), (*t) = NULL, 0);
 }
 
-static void	init_fail(t_fail *fail)
+int	split_tile(t_all *all, t_info *info, t_fail *fail)
 {
 	fail->i = -1;
 	fail->k = -1;
 	fail->b = -1;
-}
-
-int	split_tile(t_all *all, t_info *info, t_fail *fail)
-{
-	init_fail(&all->fail);
 	all->tile = malloc(sizeof(t_image **) * info->nbr_image);
 	while (++(fail->i) < info->nbr_image)
 	{
