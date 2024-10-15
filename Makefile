@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/10/13 22:57:50 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/10/15 14:28:24 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
 map_xpm.c tileset.c copy_bg.c launcher.c clear.c player.c get_path.c \
 action.c direction.c oeuil.c slime.c trap.c hitbox.c hooks.c \
 get_textures.c get_textures_bis.c build_image.c fog.c distance.c init.c \
+view.c floodfill.c \
 
 SRCS_B		= main_bonus.c \
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:37:30 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/14 11:47:31 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:23:42 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ void	move_oeuil(t_oeuil *oeuil, t_map *direction, int axis, t_all *all)
 	}
 }
 
-int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i)
+int	focus(t_all *all, t_oeuil *oeuil)
 {
 	if (all->i % 10000 == 0)
 		oeuil->rd_dir = get_randoms(0, 3, 100);
 	oeuil->ms = 4;
-	if (all->dist.p_o[i] <= oeuil->r + all->player.r && !all->counter.button)
-	{
-		all->player.is_dead = true;
-		all->player.i = 8;
-		return (1);
-	}
 	if (oeuil->rd_dir == 0)
 		move_oeuil(oeuil, oeuil->o->up, 0, all);
 	else if (oeuil->rd_dir == 1)
@@ -60,6 +54,35 @@ int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i)
 		move_oeuil(oeuil, oeuil->o->left, 1, all);
 	else if (oeuil->rd_dir == 3)
 		move_oeuil(oeuil, oeuil->o->right, 1, all);
+	return (1);
+}
+
+int	movement_handling_oeuil(t_all *all, t_oeuil *oeuil, int i)
+{
+	get_hitbox_oeuil(oeuil);
+	if (all->dist.p_o[i] <= oeuil->reach + all->player.r)
+	{
+		oeuil->focus = true;
+	}
+	if (all->dist.p_o[i] <= oeuil->r + all->player.r && !all->counter.button)
+	{
+		all->player.is_dead = true;
+		all->player.i = 8;
+		return (1);
+	}
+	if (!oeuil->focus)
+	{
+		focus(all, oeuil);
+		return (1);
+	}
+	if (oeuil->x <= all->player.x)
+		oeuil->x += oeuil->ms + 2;
+	else if (oeuil->x >= all->player.x)
+		oeuil->x -= oeuil->ms + 2;
+	if (oeuil->y <= all->player.y)
+		oeuil->y += oeuil->ms + 2;
+	else if (oeuil->y >= all->player.y)
+		oeuil->y -= oeuil->ms + 2;
 	return (1);
 }
 

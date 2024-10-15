@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:04:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 13:18:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:20:03 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ typedef struct s_oeuil
 	int		anim;
 	int		rd_dir;
 	int		interaction[4][2];
+	int		reach;
+	bool	focus;
 	t_map	*o;
 }	t_oeuil;
 
@@ -236,6 +238,8 @@ typedef struct s_all
 }	t_all;
 
 t_map	**init_row_lst(t_info *info);
+int		set_view_to_ppos(t_view *view, t_player *player, t_all *all);
+int		init_view(t_all *all, t_view *view);
 int		init_window(t_all *all, char **av);
 int		init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window);
 int		init_game(t_image *game, t_window *window);
@@ -253,7 +257,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all);
 void	dir_right(t_player *player, t_movement *movement, t_all *all);
 void	ft_pixel_put(t_image *image, int x, int y, int color);
 void	copy_to_game(t_image *image, t_image *ground, int x_ref, int y_ref);
-void	copy_death_view(t_image *image, t_image *bg, t_view *view, t_all *all);
+void	copy_to_view(t_image *image, t_image *bg, t_view *view, t_all *all);
 void	copy_oeuil_plan(t_all *all, t_oeuil *oeuil);
 void	copy_to_ground(t_image *image, t_image *ground, t_map *map);
 void	copy_plan_to_game(t_all *all);
@@ -266,7 +270,7 @@ void	ft_freeplayer(t_player *player);
 void	ft_freemap(t_map **map);
 void	ft_tabfree(char **tab);
 void	ft_clearall(t_all *all);
-void	build_minimap(t_all *all);
+void	build_minimap(t_all *all, t_image ***tileset, t_view *view, t_image *plan);
 void	build_ground(t_all *all);
 void	build_plan(t_all *all);
 void	chain_map(t_map **curr, t_map **head, t_map *node);

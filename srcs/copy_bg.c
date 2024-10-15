@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:50:31 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 12:38:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:09:45 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,15 @@ void	copy_plan_to_game(t_all *all)
 	unsigned int	color;
 	int				x;
 	int				y;
-	int				x_offset;
-	int				y_offset;
 
-	x_offset = (all->plan.w - all->game.w) / 2;
-	y_offset = (all->plan.h - all->game.h) / 2;
 	y = -1;
-	while (++y < all->game.h)
+	while (++y < all->plan.h)
 	{
 		x = -1;
-		while (++x < all->game.w)
+		while (++x < all->plan.w)
 		{
-			if (x_offset + x >= 0 && x_offset + x < all->plan.w \
-				&& y_offset + y >= 0 && y_offset + y < all->plan.h)
-			{
-				color = get_pixel_color(&all->plan, x_offset + x, y_offset + y);
-				ft_pixel_put(&all->game, x, y, color);
-			}
+			color = get_pixel_color(&all->plan, x, y);
+			ft_pixel_put(&all->game, x, y, color);
 		}
 	}
 }

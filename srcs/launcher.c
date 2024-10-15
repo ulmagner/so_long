@@ -6,41 +6,11 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/14 18:03:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:23:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-
-int	init_view(t_all *all, t_view *view)
-{
-	view->w = (all->info.column * 64);
-	view->h = (all->info.line * 64);
-	view->x = all->player.x - (view->w / 2);
-	view->y = all->player.y - (view->h / 2);
-	return (1);
-}
-
-int	set_view_to_ppos(t_view *view, t_player *player, t_all *all)
-{
-	view->x = player->x - (view->w / 2);
-	view->y = player->y - (view->h / 2);
-	if (view->x < 0)
-		view->x = 0;
-	else if (view->x + view->w > all->plan.w)
-		view->x = all->plan.w - view->w;
-	if (view->y < 0)
-		view->y = 0;
-	else if (view->y + view->h > all->plan.h)
-		view->y = all->plan.h - view->h;
-	// view->w = all->game.w;
-	// view->h = all->game.h;
-
-	// // Center the player by calculating offset in view.
-	// view->x = player->x - (view->w / 2);
-	// view->y = player->y - (view->h / 2);
-	return (1);
-}
 
 void	copy_game_map(t_image *image, t_image *bg, t_all *all)
 {
@@ -70,11 +40,8 @@ static int	display_map(t_all *all, t_window *window)
 	i = -1;
 	build_plan(all);
 	while (++i < all->info.ennemies)
-	{
 		if (all->dist.p_o[i] <= 300.0f)
 			copy_oeuil_plan(all, &all->oeuil[i]);
-	}
-	i = -1;
 	slime_handling(all, all->slime);
 	i = -1;
 	while (++i < all->info.trap)
@@ -83,11 +50,13 @@ static int	display_map(t_all *all, t_window *window)
 	copy_player_plan(all);
 	copy_plan_to_game(all);
 	if (all->movement.move[XK_m])
-		build_minimap(all);
+		build_minimap(all, all->tileset, &all->view, &all->plan);
 	if (all->player.is_dead)
-		copy_death_view(&all->tileset[8][0][0], &all->game, &all->view, all);
+		copy_to_view(&all->tileset[8][0][0], &all->game, &all->view, all);
 	mlx_put_image_to_window(window->mlx,
-		window->main, all->game.img, 0, 0);
+		window->main, all->game.img, all->window.main_w / 2 \
+		- (all->view.x + all->view.w / 2), all->window.main_h / 2 \
+		- (all->view.y + all->view.h / 2));
 	return (1);
 }
 
@@ -98,6 +67,7 @@ static int	looping(t_all *all)
 	i = -1;
 	if (++(all->i) % 1500 != 0)
 		return (0);
+	mlx_clear_window(all->window.mlx, all->window.main);
 	calcul_dist(all);
 	copy_ground_plan(all);
 	get_hitbox_player(&all->player);
@@ -105,10 +75,7 @@ static int	looping(t_all *all)
 	{
 		if (!all->oeuil[i].is_dead && !all->oeuil[i].is_stun \
 			&& !all->player.is_dead)
-		{
-			get_hitbox_oeuil(&all->oeuil[i]);
 			movement_handling_oeuil(all, &all->oeuil[i], i);
-		}
 	}
 	set_view_to_ppos(&all->view, &all->player, all);
 	if (!all->player.is_dead)
@@ -138,6 +105,7 @@ int	launcher(t_all *all, char **av)
 	build_ground(all);
 	init_distances(all);
 	all->player.ms = 4;
+	all->i = -1;
 	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);
 	mlx_hook(all->window.main, 3, 1L << 1, movement_r, all);
 	mlx_hook(all->window.main, 4, 1L << 2, action_p, all);
