@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 14:34:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:53:17 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ int	init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window)
 	if (!ground->img)
 		return (0);
 	ground->addr = mlx_get_data_addr(ground->img, &ground->bits_per_pixel,
-		&ground->line_length, &ground->endian);
+			&ground->line_length, &ground->endian);
 	if (!ground->addr)
 		return (0);
 	plan->img = mlx_new_image(window->mlx, map_w_in_pixels, map_h_in_pixels);
 	if (!plan->img)
 		return (0);
 	plan->addr = mlx_get_data_addr(plan->img, &plan->bits_per_pixel,
-		&plan->line_length, &plan->endian);
+			&plan->line_length, &plan->endian);
 	if (!plan->addr)
 		return (0);
 	all->argb = (t_color){0, 0, 0, 0};

@@ -17,9 +17,6 @@ void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
 	int	new_i;
 
 	new_i = 1;
-	oeil->ms = 2;
-	if (oeil->focus)
-		oeil->ms = 4;
 	if (oeil->o->up == direction || oeil->o->left == direction)
 	{
 		oeil->ms = -oeil->ms;
@@ -62,9 +59,20 @@ int	focus(t_all *all, t_oeil *oeil)
 
 int	movement_handling_oeil(t_all *all, t_oeil *oeil, int i)
 {
-	get_hitbox_oeil(oeil);
+	oeil->ms = 2;
 	if (all->dist.p_o[i] <= oeil->reach + all->player.r)
+	{
 		oeil->focus = true;
+		oeil->ms = 4;
+		if (oeil->x < all->player.x)
+			move_oeil(oeil, oeil->o->right, 1, all);
+		else if (oeil->x > all->player.x)
+			move_oeil(oeil, oeil->o->left, 1, all);
+		if (oeil->y < all->player.y)
+			move_oeil(oeil, oeil->o->down, 0, all);
+		else if (oeil->y > all->player.y)
+			move_oeil(oeil, oeil->o->up, 0, all);
+	}
 	if (all->dist.p_o[i] <= oeil->r + all->player.r && !all->counter.button)
 	{
 		all->player.is_dead = true;
@@ -72,18 +80,7 @@ int	movement_handling_oeil(t_all *all, t_oeil *oeil, int i)
 		return (1);
 	}
 	if (!oeil->focus)
-	{
 		focus(all, oeil);
-		return (1);
-	}
-	if (oeil->x < all->player.x)
-		move_oeil(oeil, oeil->o->right, 1, all);
-	else if (oeil->x > all->player.x)
-		move_oeil(oeil, oeil->o->left, 1, all);
-	if (oeil->y < all->player.y)
-		move_oeil(oeil, oeil->o->down, 0, all);
-	else if (oeil->y > all->player.y)
-		move_oeil(oeil, oeil->o->up, 0, all);
 	return (1);
 }
 

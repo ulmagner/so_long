@@ -35,7 +35,7 @@ static int	free_rest(t_fail *fail, t_all *all, t_image ****t)
 			fail->a = all->info.nbr_a[--(fail->b)];
 			while (--(fail->a) >= 0)
 				if (mlx_destroy_image(all->window.mlx,
-					(*t)[fail->i][fail->j][fail->a].img) < 0)
+						(*t)[fail->i][fail->j][fail->a].img) < 0)
 					return (0);
 			free((*t)[fail->i][fail->j]);
 		}
@@ -62,7 +62,7 @@ static int	free_failedimage(t_fail *fail, t_all *all, t_image ****t)
 		fail->a = all->info.nbr_a[--(fail->b)];
 		while (--(fail->a) >= 0)
 			if (mlx_destroy_image(all->window.mlx,
-				(*t)[fail->i][fail->j][fail->a].img) < 0)
+					(*t)[fail->i][fail->j][fail->a].img) < 0)
 				return (0);
 		free((*t)[fail->i][fail->j]);
 	}
@@ -102,7 +102,7 @@ int	split_tile(t_all *all, t_info *info, t_fail *fail)
 		if (!all->tile[fail->i])
 			return (free_failedimage(&all->fail, all, &all->tile));
 		while (++(fail->j) < info->nbr_i[fail->i])
-			if (!spliting_anim(fail, info,  all))
+			if (!spliting_anim(fail, info, all))
 				return (free_failedimage(&all->fail, all, &all->tile));
 	}
 	return (1);

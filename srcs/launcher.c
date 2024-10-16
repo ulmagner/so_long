@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:19:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:55:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	display_dynamique(t_all *all)
 		if (all->dist.p_o[i] <= 300.0f)
 			copy_oeil_plan(all, &all->oeil[i]);
 	slime_handling(all, all->slime);
+	if (all->info.coin == 0)
+		all->info.exit = 1;
 	i = -1;
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
@@ -41,7 +43,7 @@ static int	display_map(t_all *all, t_window *window)
 	if (all->player.is_dead)
 		copy_to_view(&all->tile[8][0][0], &all->game, &all->view, all);
 	if (mlx_put_image_to_window(window->mlx,
-		window->main, all->game.img, 0, 0) < 0)
+			window->main, all->game.img, 0, 0) < 0)
 		return (0);
 	step = ft_itoa(all->step);
 	if (mlx_string_put(all->window.mlx, all->window.main, \
@@ -62,18 +64,16 @@ static int	looping(t_all *all)
 	if (++(all->i) - all->frame < (int)(10000 / 60))
 		return (0);
 	all->frame = all->i;
-	ft_bzero(all->game.addr, (all->game.w * all->game.h * all->game.bits_per_pixel / 8));
+	ft_bzero(all->game.addr, \
+		(all->game.w * all->game.h * all->game.bits_per_pixel / 8));
 	if (mlx_clear_window(all->window.mlx, all->window.main) < 0)
 		exit((ft_clearall(all), EXIT_FAILURE));
 	calcul_dist(all);
 	copy_ground_plan(all);
-	get_hitbox_player(&all->player);
 	while (++i < all->info.ennemies)
-	{
 		if (!all->oeil[i].is_dead && !all->oeil[i].is_stun \
 			&& !all->player.is_dead)
 			movement_handling_oeil(all, &all->oeil[i], i);
-	}
 	set_view_to_ppos(&all->view, &all->player, all);
 	if (!all->player.is_dead)
 	{

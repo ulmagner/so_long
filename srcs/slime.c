@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:18:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:53:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	slime_handling(t_all *all, t_slime *slime)
 		}
 		copy_slime_plan(all, &slime[i]);
 	}
-	if (all->info.coin == 0)
-		all->info.exit = 1;
 	return (1);
 }
 

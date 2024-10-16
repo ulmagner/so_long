@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:11:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:57:34 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,8 +255,6 @@ float			calculate_distance(t_player *player, float obj_x, float obj_y,
 					int off);
 int				calcul_dist(t_all *all);
 int				init_distances(t_all *all);
-int				check_hitbox_player(int interaction[4][2], t_player *player);
-int				check_hitbox_oeil(int interaction[4][2], t_oeil *oeil);
 void			copy_fog_plan(t_all *all);
 void			dir_up(t_player *player, t_movement *movement, t_all *all);
 void			dir_down(t_player *player, t_movement *movement, t_all *all);
@@ -294,8 +292,6 @@ void			check_slime(char *line, t_info *info);
 void			check_player(char *line, t_info *info);
 void			check_ennemies(char *line, t_info *info);
 void			check_trap(char *line, t_info *info);
-int				get_hitbox_player(t_player *player);
-int				get_hitbox_oeil(t_oeil *oeil);
 int				trap_handling(t_all *all, t_trap *trap, int i);
 int				slime_handling(t_all *all, t_slime *slime);
 int				get_randoms(int min, int max, int count);
