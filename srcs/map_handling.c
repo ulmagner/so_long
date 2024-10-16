@@ -6,11 +6,25 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 16:41:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:05:53 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+static t_map	**init_row_lst(t_info *info)
+{
+	t_map	**row;
+	int		i;
+
+	i = -1;
+	row = malloc(sizeof(t_map *) * info->column);
+	if (!row)
+		return (NULL);
+	while (++i < info->column)
+		row[i] = NULL;
+	return (row);
+}
 
 static int	get_info(t_info *info)
 {
@@ -52,7 +66,7 @@ static int	fill_map(t_info *info, t_map **head, t_map **h, t_all *all)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(info, &i, &node, h, all))
+		if (!make_list(&i, &node, h, all))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);

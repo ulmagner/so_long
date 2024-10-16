@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:57:34 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:06:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,6 @@ typedef struct s_all
 	int			step;
 }	t_all;
 
-t_map			**init_row_lst(t_info *info);
 int				set_view_to_ppos(t_view *view, t_player *player, t_all *all);
 int				init_view(t_all *all, t_view *view);
 int				init_window(t_all *all, char **av);
@@ -308,8 +307,7 @@ int				action_handling(t_all *all);
 int				get_map(t_info *info, int *line, int *column);
 int				check_ep_doubles(t_info *info);
 int				check_close_map(t_map **map, t_info *info, t_all *all);
-int				make_list(t_info *info, int *i, t_map **node, t_map **h,
-					t_all *all);
+int				make_list(int *i, t_map **node, t_map **h, t_all *all);
 int				empty_string(t_info *info);
 int				map_handling(t_info *info, t_map **map, t_player *player,
 					t_all *all);

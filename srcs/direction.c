@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 09:57:02 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/16 15:54:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:09:50 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 void	dir_right(t_player *player, t_movement *movement, t_all *all)
 {
 	if (movement->move[XK_d] && (((player->h->right->i != '1' \
-		&& player->h->right->i != 'F') || player->x + 64 <= player->h->right->x_pxl)))
+		&& player->h->right->i != 'F') \
+		|| player->x + 64 <= player->h->right->x_pxl)))
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[3] = 1;
