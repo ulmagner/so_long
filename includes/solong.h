@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 17:06:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:34:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <math.h>
 # include "libft.h"
 # include "mlx.h"
+# include "miniaudio.h"
 # include <X11/keysym.h>
 # define TILE_SIZE 64
 # ifndef MANDATORY
