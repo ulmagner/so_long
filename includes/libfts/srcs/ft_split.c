@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:13:03 by ulysse            #+#    #+#             */
-/*   Updated: 2024/09/26 09:53:40 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:42:28 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static char	**spliting(char **split, char *str, int nbr_words, char c)
 		split[i] = malloc(sizeof(char) * ((j - k) + 1));
 		if (!split[i])
 		{
-			while (i > 0)
-				free(split[--i]);
+			while (--i >= 0)
+				free(split[i]);
 			return (free(split), NULL);
 		}
 		ft_strncpy(split[i], &str[k], (j - k));

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:42:53 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	build_plan(t_all *all)
 	}
 }
 
-void	build_minimap(t_all *all, t_image ***tile, t_view *view, t_image *plan)
+void	build_minimap(t_all *all, t_image ***tile, t_image *game)
 {
 	int	i;
 	int	mini_x;
@@ -87,22 +87,21 @@ void	build_minimap(t_all *all, t_image ***tile, t_view *view, t_image *plan)
 	mini_y = tile[8][1][0].h - 40;
 	mini_x = tile[8][1][0].w - 46;
 	i = -1;
-	copy_to_game(&tile[8][1][0], &all->game, \
-		(view->x - view->w / 2), (view->y - view->h / 2));
-	while (++i < all->info.ennemies)
-		copy_to_game(&tile[8][2][0], &all->game, \
-			(view->x - view->w / 2) + (all->oeil[i].x * mini_x / plan->w), \
-			(view->y - view->h / 2) + (all->oeil[i].y * mini_y / plan->h));
+	copy_to_game(&tile[8][1][0], game, 0, 0);
+	while (++i < all->info.ennemies && !all->oeil[i].is_dead)
+		copy_to_game(&tile[8][2][0], game, \
+			(all->oeil[i].x * mini_x / game->w), \
+			(all->oeil[i].y * mini_y / game->h));
 	i = -1;
-	while (++i < all->info.collectible)
-		copy_to_game(&tile[8][3][0], &all->game, \
-			(view->x - view->w / 2) + (all->slime[i].x * mini_x / plan->w), \
-			(view->y - view->h / 2) + (all->slime[i].y * mini_y / plan->h));
-	copy_to_game(&tile[8][5][0], &all->game, \
-		(view->x - view->w / 2) + (all->player.x * mini_x / plan->w), \
-		(view->y - view->h / 2) + (all->player.y * mini_y / plan->h));
+	while (++i < all->info.collectible && !all->slime[i].is_free)
+		copy_to_game(&tile[8][3][0], game, \
+			(all->slime[i].x * mini_x / game->w), \
+			(all->slime[i].y * mini_y / game->h));
+	copy_to_game(&tile[8][5][0], game, \
+		(all->player.x * mini_x / game->w), \
+		(all->player.y * mini_y / game->h));
 	if (all->info.exit)
-		copy_to_game(&tile[8][4][0], &all->game, \
-			(view->x - view->w / 2) + (all->info.exit_x * mini_x / plan->w), \
-			(view->y - view->h / 2) + (all->info.exit_y * mini_y / plan->h));
+		copy_to_game(&tile[8][4][0], game, \
+			(all->info.exit_x * mini_x / game->w), \
+			(all->info.exit_y * mini_y / game->h));
 }

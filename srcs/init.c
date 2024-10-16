@@ -6,16 +6,16 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 20:11:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:34:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-int	init_game(t_image *game, t_window *window)
+int	init_game(t_image *game, t_window *window, t_all *all)
 {
-	game->w = window->main_w;
-	game->h = window->main_h;
+	game->w = all->window.main_w;
+	game->h = all->window.main_h;
 	game->img = mlx_new_image(window->mlx, game->w, game->h);
 	if (!game->img)
 		return (0);
@@ -64,5 +64,7 @@ int	init_window(t_all *all, char **av)
 		return (0);
 	all->window.main = mlx_new_window(all->window.mlx, \
 		all->window.main_w, all->window.main_h, "So_long");
+	if (!all->window.main)
+		return (0);
 	return (1);
 }

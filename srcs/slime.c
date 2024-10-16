@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:18:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ int	slime_handling(t_all *all, t_slime *slime)
 		free_the_slimes(all, &slime[i]);
 		if (slime[i].is_free)
 		{
-			if (all->i % 1000 == 0)
+			if (all->i - slime[i].frameslime >= (int)(3000 / 60))
+			{
 				slime[i].anim_slime = (slime[i].anim_slime + 1) % 5;
+				slime[i].frameslime = all->i;
+			}
 			if (all->movement.i_move[0])
 				move_slime(all->player, &slime[i], 0, (32 + (i * 32)));
 			else if (all->movement.i_move[1])

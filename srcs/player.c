@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:55:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	movement_handling(t_all *all)
 		dir_down(&all->player, &all->movement, all);
 		dir_left(&all->player, &all->movement, all);
 		dir_right(&all->player, &all->movement, all);
+		all->frameplayer = all->i;
 	}
 	if (all->player.h->i == 'E' && all->info.exit \
 		&& all->movement.move[XK_e])

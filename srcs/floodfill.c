@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:25:55 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 16:39:59 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:13:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static void	get_c_p_info(t_map *curr, t_all *all)
 	if (curr->i == 'C')
 	{
 		all->slime[all->info.slime].x = curr->x * 64;
+		all->slime[all->info.slime].frameslime = 0;
 		all->slime[all->info.slime].y = curr->y * 64;
 		all->slime[all->info.slime++].r = 11.0;
 	}
 	if (curr->i == 'F')
 	{
 		all->trap[all->info.fire].x = curr->x * 64;
+		all->trap[all->info.fire].frametrap = 0;
 		all->trap[all->info.fire].y = curr->y * 64;
 		all->trap[all->info.fire++].r = 64.0;
 	}
@@ -69,6 +71,8 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 			all->oeil[i].y = curr->y * 64;
 			all->oeil[i].r = 18.0;
 			all->oeil[i].reach = 100.0;
+			all->oeil[i].frameoeil = 0;
+			all->oeil[i].frameoeill = 0;
 		}
 	}
 	get_c_p_info(curr, all);

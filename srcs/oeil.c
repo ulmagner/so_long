@@ -17,7 +17,9 @@ void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
 	int	new_i;
 
 	new_i = 1;
-	oeil->ms = 4;
+	oeil->ms = 2;
+	if (oeil->focus)
+		oeil->ms = 4;
 	if (oeil->o->up == direction || oeil->o->left == direction)
 	{
 		oeil->ms = -oeil->ms;
@@ -42,8 +44,11 @@ void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
 
 int	focus(t_all *all, t_oeil *oeil)
 {
-	if (all->i % 10000 == 0)
+	if (all->i - oeil->frameoeil >= (int)(100000 / 60))
+	{
 		oeil->rd_dir = get_randoms(0, 3, 100);
+		oeil->frameoeil = all->i;
+	}
 	if (oeil->rd_dir == 0)
 		move_oeil(oeil, oeil->o->up, 0, all);
 	else if (oeil->rd_dir == 1)
@@ -90,10 +95,11 @@ void	copy_oeil_plan(t_all *all, t_oeil *oeil)
 	int				anim;
 	int				i;
 
-	if (all->i % 15000 == 0 && !oeil->is_dead)
+	if (all->i - oeil->frameoeill >= (int)(20000 / 60) && !oeil->is_dead)
 	{
 		oeil->animation[oeil->i] = (oeil->animation[oeil->i] + 1) % 6;
 		oeil->anim = (oeil->anim + 1) % 6;
+		oeil->frameoeill = all->i;
 	}
 	anim = oeil->anim;
 	i = oeil->i;

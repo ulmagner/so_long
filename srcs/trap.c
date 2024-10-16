@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:58:41 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:22:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:16:08 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ int	trap_handling(t_all *all, t_trap *trap, int i)
 			trap->curr_frame = 0;
 		if (trap->curr_frame < trap->tot_frame)
 		{
-			if (all->i % 1000 == 0)
+			if (all->i - trap->frametrap >= (int)(3000 / 60))
 			{
 				trap->anim_trap = (trap->anim_trap + 1) % 30;
 				trap->curr_frame++;
 			}
+			trap->frametrap = all->i;
 		}
 		if (trap->detect && (trap->curr_frame >= 5 && trap->curr_frame <= 10)
 			&& (calculate_distance(&all->player, \

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:14:20 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 11:38:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:34:28 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	main(int ac, char **av)
 
 	all = (t_all){0};
 	if (!error_handling(ac, av, &all.info))
-		return (EXIT_FAILURE);
+		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!get_paths(av[4], &all.info))
-		return (EXIT_FAILURE);
+		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!map_handling(&all.info, &all.map, &all.player, &all))
 		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!launcher(&all, av))

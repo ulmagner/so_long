@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 20:11:21 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:23:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	copy_to_view(t_image *image, t_image *bg, t_view *view, t_all *all)
 	int				y;
 
 	(void) all;
+	(void) view;
 	y = -1;
 	while (++y < image->h)
 	{
@@ -84,8 +85,8 @@ void	copy_to_view(t_image *image, t_image *bg, t_view *view, t_all *all)
 		while (++x < image->w)
 		{
 			color = get_pixel_color(image, x, y);
-			ft_pixel_put(bg, x + (view->x + view->w / 2) - image->w / 2, \
-				y + (view->y + view->h / 2) - image->h / 2, color);
+			ft_pixel_put(bg, x + bg->w / 2 - image->w / 2, \
+				y + bg->h / 2 - image->h / 2, color);
 		}
 	}
 }

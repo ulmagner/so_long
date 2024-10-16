@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/15 19:23:19 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:11:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_oeil
 	int		reach;
 	bool	focus;
 	t_map	*o;
+	int 	frameoeil;
+	int		frameoeill;
 }	t_oeil;
 
 typedef struct s_wall
@@ -130,6 +132,7 @@ typedef struct s_slime
 	float	r;
 	bool	is_free;
 	t_map	*c;
+	int		frameslime;
 }	t_slime;
 
 typedef struct s_trap
@@ -143,6 +146,7 @@ typedef struct s_trap
 	int		anim_trap;
 	bool	detect;
 	t_map	*t;
+	int		frametrap;
 }	t_trap;
 
 typedef struct s_movement
@@ -234,6 +238,8 @@ typedef struct s_all
 	t_view		view;
 	t_fail		fail;
 	int			i;
+	int			frame;
+	int			frameplayer;
 	int			step;
 }	t_all;
 
@@ -243,7 +249,7 @@ int				init_view(t_all *all, t_view *view);
 int				init_window(t_all *all, char **av);
 int				init_bg(t_image *ground, t_image *plan, t_all *all,
 					t_window *window);
-int				init_game(t_image *game, t_window *window);
+int				init_game(t_image *game, t_window *window, t_all *all);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 float			calculate_distance(t_player *player, float obj_x, float obj_y,
 					int off);
@@ -251,7 +257,6 @@ int				calcul_dist(t_all *all);
 int				init_distances(t_all *all);
 int				check_hitbox_player(int interaction[4][2], t_player *player);
 int				check_hitbox_oeil(int interaction[4][2], t_oeil *oeil);
-int				check_hitbox_jar(int interaction[4][2], t_info info);
 void			copy_fog_plan(t_all *all);
 void			dir_up(t_player *player, t_movement *movement, t_all *all);
 void			dir_down(t_player *player, t_movement *movement, t_all *all);
@@ -274,8 +279,7 @@ void			ft_freeplayer(t_player *player);
 void			ft_freemap(t_map **map);
 void			ft_tabfree(char **tab);
 void			ft_clearall(t_all *all);
-void			build_minimap(t_all *all, t_image ***tile, t_view *view,
-					t_image *plan);
+void			build_minimap(t_all *all, t_image ***tile, t_image *plan);
 void			build_ground(t_all *all);
 void			build_plan(t_all *all);
 void			chain_map(t_map **curr, t_map **head, t_map *node);
