@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:40:44 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 19:40:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:11:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	movement_handling(t_all *all)
 			if (all->lvl == 2)
 				exit((ft_clearall(all), EXIT_SUCCESS));
 			ft_clearall(all);
-			launch_lvl(all, all->ac, all->av, all->lvl);
+			if (!launch_lvl(all, all->ac, all->av, all->lvl))
+				exit((ft_clearall(all), EXIT_FAILURE));
 		}
 	}
 	return (1);
