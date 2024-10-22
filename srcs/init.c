@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 13:20:37 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:26:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,18 @@ int	init_char(t_all *all, t_info *info)
 	if (!all->trap)
 		return (0);
 	return (1);
+}
+
+void	init_variables(t_all *all)
+{
+	all->player.ms = 4;
+	all->step = 0;
+	all->i = -1;
+	all->frame = 0;
+	all->frameplayer = 0;
+	all->vision = 300.0f;
+	all->counter.curr_frame_c = 0;
+	all->counter.tot_frame_c = 100;
+	all->attack.curr_frame_c = 0;
+	all->attack.tot_frame_c = 100;
 }

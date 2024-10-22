@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 18:41:40 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:36:04 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,7 @@ int				init_bg(t_image *ground, t_image *plan, t_all *all,
 int				init_char(t_all *all, t_info *info);
 int				init_distances(t_all *all, t_info *info);
 int				init_game(t_image *game, t_window *window, t_all *all);
+void			init_variables(t_all *all);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 float			calculate_distance(t_player *player, float obj_x, float obj_y,
 					int off);
@@ -320,7 +321,8 @@ int				movement_handling_oeil(t_all *all, t_oeil *oeil, int i);
 int				movement_handling(t_all *all);
 int				action_p(int button, int x, int y, t_all *all);
 int				action_r(int button, int x, int y, t_all *all);
-int				action_handling(t_all *all);
+void			action_handling(t_all *all, t_action *attack,
+					t_action *counter);
 int				get_map(t_info *info, int *line, int *column);
 int				check_ep_doubles(t_info *info);
 int				check_close_map(t_map **map, t_info *info, t_all *all);

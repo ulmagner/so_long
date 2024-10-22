@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 18:52:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:36:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,25 @@ static int	display_dynamique(t_all *all)
 	i = -1;
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
+	if (all->info.coin == 0)
+		all->info.exit = 1;
+	copy_fog_plan(all);
+	copy_player_plan(all);
 	return (1);
 }
 
 static int	display_map(t_all *all, t_window *window)
 {
-	char	*step;
-
+	char *(step) = ft_itoa(all->step);
 	build_plan(all);
 	display_dynamique(all);
-	if (all->info.coin == 0)
-		all->info.exit = 1;
-	copy_fog_plan(all);
-	copy_player_plan(all);
 	copy_plan_to_game(all);
 	copy_to_game(&all->tile[8][6][0], &all->game, 50, 600);
-	copy_countdowns(&all->tile[8][6][1], &all->game, all->attack.curr_frame_c, 600);
+	copy_countdowns(&all->tile[8][6][1], &all->game,
+		all->attack.curr_frame_c, 600);
 	copy_to_game(&all->tile[8][6][0], &all->game, 50, 500);
-	copy_countdowns(&all->tile[8][6][1], &all->game, all->counter.curr_frame_c, 500);
+	copy_countdowns(&all->tile[8][6][1], &all->game,
+		all->counter.curr_frame_c, 500);
 	if (all->movement.move[XK_m])
 		build_minimap(all, all->tile, &all->game);
 	if (all->player.is_dead)
@@ -59,7 +60,6 @@ static int	display_map(t_all *all, t_window *window)
 	if (mlx_put_image_to_window(window->mlx,
 			window->main, all->game.img, 0, 0) < 0)
 		return (0);
-	step = ft_itoa(all->step);
 	if (mlx_string_put(all->window.mlx, all->window.main, \
 		all->window.main_w / 2 - (all->view.x + all->view.w / 2) \
 		+ all->player.x + 32, all->window.main_h / 2 \
@@ -85,7 +85,7 @@ static int	looping(t_all *all)
 	if (!all->player.is_dead)
 	{
 		movement_handling(all);
-		action_handling(all);
+		action_handling(all, &all->attack, &all->counter);
 	}
 	if (!display_map(all, &all->window))
 		exit((ft_clearall(all), EXIT_FAILURE));
@@ -121,16 +121,7 @@ int	launcher(t_all *all)
 		return (0);
 	build_ground(all);
 	init_distances(all, &all->info);
-	all->player.ms = 4;
-	all->step = 0;
-	all->i = -1;
-	all->frame = 0;
-	all->frameplayer = 0;
-	all->vision = 300.0f;
-	all->counter.curr_frame_c = 0;
-	all->counter.tot_frame_c = 100;
-	all->attack.curr_frame_c = 0;
-	all->attack.tot_frame_c = 100;
+	init_variables(all);
 	if (!hook_handling(all))
 		return (0);
 	return (1);
