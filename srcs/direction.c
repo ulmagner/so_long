@@ -21,7 +21,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[0] = true;
 		player->i = 0;
-		if (all->i - all->frameplayer >= (int)(3000 / 60))
+		if (all->i - all->frameplayer >= (int)(100 / 60))
 		{
 			if ((player->animation[0] + 1) % 6 == 0)
 				player->animation[0] += 2;
@@ -46,7 +46,7 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[1] = true;
 		player->i = 1;
-		if (all->i - all->frameplayer >= (int)(3000 / 60))
+		if (all->i - all->frameplayer >= (int)(100 / 60))
 		{
 			if ((player->animation[1] + 1) % 6 == 0)
 				player->animation[1] += 2;
@@ -71,7 +71,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[2] = true;
 		player->i = 2;
-		if (all->i - all->frameplayer >= (int)(3000 / 60))
+		if (all->i - all->frameplayer >= (int)(100 / 60))
 		{
 			if ((player->animation[2] + 1) % 6 == 0)
 				player->animation[2] += 2;
@@ -96,7 +96,7 @@ void	dir_right(t_player *player, t_movement *movement, t_all *all)
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[3] = 1;
 		player->i = 3;
-		if (all->i - all->frameplayer >= (int)(3000 / 60))
+		if (all->i - all->frameplayer >= (int)(100 / 60))
 		{
 			if ((player->animation[3] + 1) % 6 == 0)
 				player->animation[3] += 2;

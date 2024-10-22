@@ -17,7 +17,7 @@ int	init_distances(t_all *all)
 	all->dist.p_c = ft_calloc(all->info.collectible, sizeof(float));
 	if (!all->dist.p_c)
 		return (0);
-	all->dist.p_o = ft_calloc(all->info.ennemies, sizeof(float));
+	all->dist.p_o = ft_calloc(all->info.ennemies * all->info.oeil, sizeof(float));
 	if (!all->dist.p_o)
 		return (0);
 	all->dist.p_t = ft_calloc(all->info.collectible, sizeof(float));
@@ -29,12 +29,20 @@ int	init_distances(t_all *all)
 int	calcul_dist(t_all *all)
 {
 	int	i;
+	int	j;
+	int	k;
 
 	i = -1;
-	while (++i < all->info.ennemies)
+	j = -1;
+	k = -1;
+	while (++j < all->info.oeil)
 	{
-		all->dist.p_o[i] = calculate_distance(&all->player, \
-			all->oeil[i].x, all->oeil[i].y, 0);
+		i = -1;
+		while (++i < all->info.ennemies)
+		{
+			all->dist.p_o[++k] = calculate_distance(&all->player, \
+				all->oeil[j][i].x, all->oeil[j][i].y, 0);
+		}
 	}
 	i = -1;
 	while (++i < all->info.collectible)

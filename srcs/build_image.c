@@ -81,17 +81,20 @@ void	build_plan(t_all *all)
 void	build_minimap(t_all *all, t_image ***tile, t_image *game)
 {
 	int	i;
+	int	j;
 	int	mini_x;
 	int	mini_y;
 
 	mini_y = tile[8][1][0].h - 40;
 	mini_x = tile[8][1][0].w - 46;
 	i = -1;
+	j = -1;
 	copy_to_game(&tile[8][1][0], game, 0, 0);
-	while (++i < all->info.ennemies && !all->oeil[i].is_dead)
-		copy_to_game(&tile[8][2][0], game, \
-			(all->oeil[i].x * mini_x / game->w), \
-			(all->oeil[i].y * mini_y / game->h));
+	while (++j < all->info.oeil)
+		while (++i < all->info.ennemies && !all->oeil[j][i].is_dead)
+			copy_to_game(&tile[8][2][0], game, \
+				(all->oeil[j][i].x * mini_x / game->w), \
+				(all->oeil[j][i].y * mini_y / game->h));
 	i = -1;
 	while (++i < all->info.collectible && !all->slime[i].is_free)
 		copy_to_game(&tile[8][3][0], game, \

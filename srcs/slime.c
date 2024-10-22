@@ -55,7 +55,7 @@ int	slime_handling(t_all *all, t_slime *slime)
 		free_the_slimes(all, &slime[i]);
 		if (slime[i].is_free)
 		{
-			if (all->i - slime[i].frameslime >= (int)(3000 / 60))
+			if (all->i - slime[i].frameslime >= (int)(100 / 60))
 			{
 				slime[i].anim_slime = (slime[i].anim_slime + 1) % 5;
 				slime[i].frameslime = all->i;

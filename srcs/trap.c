@@ -33,7 +33,7 @@ int	trap_handling(t_all *all, t_trap *trap, int i)
 			trap->curr_frame = 0;
 		if (trap->curr_frame < trap->tot_frame)
 		{
-			if (all->i - trap->frametrap >= (int)(3000 / 60))
+			if (all->i - trap->frametrap >= (int)(30 / 60))
 			{
 				trap->anim_trap = (trap->anim_trap + 1) % 30;
 				trap->curr_frame++;

@@ -14,34 +14,37 @@
 
 void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
 {
-	int	new_i;
+	int	new_i = 1;
 
-	new_i = 1;
+	if (direction->i == '1' || direction->i == 'F')
+		return;
 	if (oeil->o->up == direction || oeil->o->left == direction)
 	{
-		oeil->ms = -oeil->ms;
+		if (oeil->ms > 0)
+			oeil->ms = -oeil->ms;
 		new_i = 0;
 	}
-	if (direction->i != '1' && direction->i != 'F')
+	else
+		if (oeil->ms < 0)
+			oeil->ms = -oeil->ms;
+	if (axis == 0 && (oeil->y + oeil->ms >= 0 && oeil->y + oeil->ms < all->plan.h))
+		oeil->y += oeil->ms;
+	else if (axis == 1 && (oeil->x + oeil->ms >= 0 && oeil->x + oeil->ms < all->plan.w))
+		oeil->x += oeil->ms;
+	if ((axis == 0 && ((oeil->ms > 0 && oeil->y >= direction->y_pxl)
+		|| (oeil->ms < 0 && oeil->y <= direction->y_pxl)))
+		|| (axis == 1 && ((oeil->ms > 0 && oeil->x >= direction->x_pxl)
+		|| (oeil->ms < 0 && oeil->x <= direction->x_pxl))))
 	{
+		oeil->o = direction;
 		oeil->i = new_i;
-		if (axis == 0)
-			if (oeil->y + oeil->ms >= 0 && oeil->y + oeil->ms < all->plan.h)
-				oeil->y += oeil->ms;
-		if (axis == 1)
-			if (oeil->x + oeil->ms >= 0 && oeil->x + oeil->ms < all->plan.w)
-				oeil->x += oeil->ms;
-		if ((axis == 0 && ((oeil->ms > 0 && oeil->y >= direction->y_pxl) \
-			|| (oeil->ms < 0 && oeil->y <= direction->y_pxl))) \
-			|| (axis == 1 && ((oeil->ms > 0 && oeil->x >= direction->x_pxl) \
-			|| (oeil->ms < 0 && oeil->x <= direction->x_pxl))))
-			oeil->o = direction;
 	}
 }
 
+
 int	focus(t_all *all, t_oeil *oeil)
 {
-	if (all->i - oeil->frameoeil >= (int)(100000 / 60))
+	if (all->i - oeil->frameoeil >= (int)(1000 / 60))
 	{
 		oeil->rd_dir = get_randoms(0, 3, 100);
 		oeil->frameoeil = all->i;
@@ -57,30 +60,32 @@ int	focus(t_all *all, t_oeil *oeil)
 	return (1);
 }
 
-int	movement_handling_oeil(t_all *all, t_oeil *oeil, int i)
+int	movement_handling_oeil(t_all *all, t_oeil *oeil, int k)
 {
 	oeil->ms = 2;
-	if (all->dist.p_o[i] <= oeil->reach + all->player.r)
+	if (oeil->is_dead || oeil->is_stun)
+		return (1);
+	if (all->dist.p_o[k] <= oeil->reach + all->player.r)
 	{
 		oeil->focus = true;
 		oeil->ms = 4;
-		if (oeil->x < all->player.x)
-			move_oeil(oeil, oeil->o->right, 1, all);
-		else if (oeil->x > all->player.x)
-			move_oeil(oeil, oeil->o->left, 1, all);
-		if (oeil->y < all->player.y)
-			move_oeil(oeil, oeil->o->down, 0, all);
-		else if (oeil->y > all->player.y)
-			move_oeil(oeil, oeil->o->up, 0, all);
 	}
-	if (all->dist.p_o[i] <= oeil->r + all->player.r && !all->counter.button)
+	if (all->dist.p_o[k] <= oeil->r + all->player.r)
 	{
 		all->player.is_dead = true;
 		all->player.i = 8;
 		return (1);
 	}
 	if (!oeil->focus)
-		focus(all, oeil);
+		return (focus(all, oeil));
+	if (oeil->x < all->player.x)
+		move_oeil(oeil, oeil->o->right, 1, all);
+	else if (oeil->x > all->player.x)
+		move_oeil(oeil, oeil->o->left, 1, all);
+	if (oeil->y < all->player.y)
+		move_oeil(oeil, oeil->o->down, 0, all);
+	else if (oeil->y > all->player.y)
+		move_oeil(oeil, oeil->o->up, 0, all);
 	return (1);
 }
 
@@ -92,9 +97,8 @@ void	copy_oeil_plan(t_all *all, t_oeil *oeil)
 	int				anim;
 	int				i;
 
-	if (all->i - oeil->frameoeill >= (int)(20000 / 60) && !oeil->is_dead)
+	if (all->i - oeil->frameoeill >= (int)(200 / 60) && !oeil->is_dead)
 	{
-		oeil->animation[oeil->i] = (oeil->animation[oeil->i] + 1) % 6;
 		oeil->anim = (oeil->anim + 1) % 6;
 		oeil->frameoeill = all->i;
 	}

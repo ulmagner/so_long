@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:53:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:39:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window)
 	return (1);
 }
 
-int	init_window(t_all *all, char **av)
+int	init_window(t_all *all)
 {
-	all->window.main_w = ft_atoi(av[2]);
-	all->window.main_h = ft_atoi(av[3]) - 70;
+	all->window.main_w = 1920;
+	all->window.main_h = 1010;
 	all->window.mlx = mlx_init();
 	if (!all->window.mlx)
 		return (0);

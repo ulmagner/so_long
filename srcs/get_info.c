@@ -21,6 +21,33 @@ int	empty_string(t_info *info)
 	return (1);
 }
 
+int	check_ep_doubles(t_info *info)
+{
+	int	i;
+	int	e;
+	int	p;
+
+	e = 0;
+	p = 0;
+	i = -1;
+	while (info->map[++i])
+	{
+		if (info->map[i] == 'E')
+			e++;
+		if (info->map[i] == 'P')
+			p++;
+		if (info->map[i] == 'C')
+			info->coin++;
+		if (info->map[i] == 'F')
+			info->trap++;
+		if (info->map[i] == 'O')
+			info->oeil++;
+	}
+	if (e > 1 || !e || p > 1 || !p)
+		return (0);
+	return (1);
+}
+
 int	get_map(t_info *info, int *l, int *c)
 {
 	char	*line;

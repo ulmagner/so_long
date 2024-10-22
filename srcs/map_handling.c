@@ -90,12 +90,12 @@ void	print_map(t_map **head, t_info *info)
 		col = row;
 		while (col)
 		{
-			ft_printf(2, "%c", col->i);
+			ft_printf(1, "%c", col->i);
 			if (col->x == info->column - 1)
 				break ;
 			col = col->right;
 		}
-		printf("\n");
+		ft_printf(1, "\n");
 		if (col->y == info->line - 1)
 			break ;
 		row = row->down;
@@ -105,26 +105,38 @@ void	print_map(t_map **head, t_info *info)
 int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	if (!get_info(info))
 		return (0);
-	all->info.ennemies *= 10;
-	all->oeil = ft_calloc(all->info.ennemies, sizeof(t_oeil));
-	if (!all->oeil)
-		return (0);
-	all->slime = ft_calloc(all->info.coin, sizeof(t_slime));
+	all->info.ennemies = 10;
+	all->oeil = ft_calloc(info->oeil, sizeof(t_oeil *));
+	while (++i < info->oeil)
+	{
+		all->oeil[i] = ft_calloc(info->ennemies, sizeof(t_oeil));
+		if (!all->oeil[i])
+			return (0);
+	}
+	all->slime = ft_calloc(info->coin, sizeof(t_slime));
 	if (!all->slime)
 		return (0);
-	all->trap = ft_calloc(all->info.trap, sizeof(t_trap));
+	all->trap = ft_calloc(info->trap, sizeof(t_trap));
 	if (!all->trap)
 		return (0);
-	while (++i < all->info.ennemies)
-		all->oeil[i].anim = get_randoms(0, 5, 7);
+	i = -1;
+	j = -1;
+	while (++j < info->oeil)
+	{
+		i = -1;
+		while (++i < info->ennemies)
+			all->oeil[j][i].anim = get_randoms(0, 5, 7);
+	}
 	if (!fill_map(info, map, &player->h, all))
 		return (0);
 	info->slime = 0;
 	info->fire = 0;
+	info->o = 0;
 	if (!check_close_map(map, info, all))
 		return (0);
 	print_map(map, info);

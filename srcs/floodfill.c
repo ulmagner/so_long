@@ -67,13 +67,14 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 	{
 		while (++i < all->info.ennemies)
 		{
-			all->oeil[i].x = curr->x * 64;
-			all->oeil[i].y = curr->y * 64;
-			all->oeil[i].r = 18.0;
-			all->oeil[i].reach = 100.0;
-			all->oeil[i].frameoeil = 0;
-			all->oeil[i].frameoeill = 0;
+			all->oeil[all->info.o][i].x = curr->x * 64;
+			all->oeil[all->info.o][i].y = curr->y * 64;
+			all->oeil[all->info.o][i].r = 18.0;
+			all->oeil[all->info.o][i].reach = 100.0;
+			all->oeil[all->info.o][i].frameoeil = 0;
+			all->oeil[all->info.o][i].frameoeill = 0;
 		}
+		all->info.o++;
 	}
 	get_c_p_info(curr, all);
 	return (1);

@@ -19,9 +19,12 @@ static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
 	j = -1;
 	if (node->i == 'P')
 		*h = node;
-	while (++j < info->ennemies)
-		if (node->i == 'O')
-			(all->oeil[j]).o = node;
+	if (node->i == 'O')
+	{
+		while (++j < info->ennemies)
+				(all->oeil[all->info.o][j]).o = node;
+		all->info.o++;
+	}
 	if (node->i == 'C')
 		(all->slime[info->slime++]).c = node;
 	if (node->i == 'F')

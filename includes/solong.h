@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 17:34:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:34:46 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_info
 {
 	int				fire;
 	int				oeil;
+	int				o;
 	int				ennemies;
 	int				trap;
 	int				coin;
@@ -221,7 +222,7 @@ typedef struct s_all
 	t_window	window;
 	t_info		info;
 	t_player	player;
-	t_oeil		*oeil;
+	t_oeil		**oeil;
 	t_map		*map;
 	t_image		***tile;
 	t_image		ground;
@@ -242,11 +243,15 @@ typedef struct s_all
 	int			frame;
 	int			frameplayer;
 	int			step;
+	int			lvl;
+	int			ac;
+	char		**av;
 }	t_all;
 
+int				launch_lvl(t_all *all, int ac, char **av, int lvl);
 int				set_view_to_ppos(t_view *view, t_player *player, t_all *all);
 int				init_view(t_all *all, t_view *view);
-int				init_window(t_all *all, char **av);
+int				init_window(t_all *all);
 int				init_bg(t_image *ground, t_image *plan, t_all *all,
 					t_window *window);
 int				init_game(t_image *game, t_window *window, t_all *all);
@@ -297,7 +302,7 @@ int				slime_handling(t_all *all, t_slime *slime);
 int				get_randoms(int min, int max, int count);
 int				split_tile(t_all *all, t_info *info, t_fail *fail);
 int				get_paths(char *file, t_info *info);
-int				launcher(t_all *all, char **av);
+int				launcher(t_all *all);
 int				movement_p(int keycode, t_all *all);
 int				movement_r(int keycode, t_all *all);
 int				movement_handling_oeil(t_all *all, t_oeil *oeil, int i);
@@ -312,6 +317,6 @@ int				make_list(int *i, t_map **node, t_map **h, t_all *all);
 int				empty_string(t_info *info);
 int				map_handling(t_info *info, t_map **map, t_player *player,
 					t_all *all);
-int				error_handling(int ac, char **av, t_info *info);
+int				error_handling(int ac, char **av, t_info *info, int lvl);
 int				main(int ac, char **av);
 #endif //SOLONG_H
