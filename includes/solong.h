@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 15:27:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:41:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_slime
 	bool	is_free;
 	t_map	*c;
 	int		frameslime;
+	bool	waiting;
 }	t_slime;
 
 typedef struct s_trap
@@ -264,6 +265,9 @@ int				init_game(t_image *game, t_window *window, t_all *all);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 float			calculate_distance(t_player *player, float obj_x, float obj_y,
 					int off);
+float			calculate_distance_s(t_slime *slime, float obj_x, float obj_y,
+					int off);
+void			teleportation(t_slime *slime, t_all *all);
 int				calcul_dist(t_all *all);
 void			copy_fog_plan(t_all *all);
 void			dir_up(t_player *player, t_movement *movement, t_all *all);

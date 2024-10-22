@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 13:54:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:50:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ static int	free_the_slimes(t_all *all, t_slime *slime, int i)
 			slime->i = 1;
 			slime->c->is_visited = 3;
 			all->vision += 100.0f;
+			slime->waiting = 0;
 		}
 	}
-	return (1);
+	if (slime->is_free)
+		return (1);
+	return (0);
 }
 
 static int	move_slime(t_player player, t_slime *slime, int off_x, int off_y)
@@ -47,30 +50,34 @@ static int	move_slime(t_player player, t_slime *slime, int off_x, int off_y)
 	return (1);
 }
 
+void	if_free(int i, t_slime *slime, t_all *all)
+{
+	if (all->i - slime->frameslime >= (int)(100 / 60))
+	{
+		slime->anim_slime = (slime->anim_slime + 1) % 5;
+		slime->frameslime = all->i;
+	}
+	teleportation(slime, all);
+	if (!slime->waiting)
+	{
+		if (all->movement.i_move[0])
+			move_slime(all->player, slime, 0, (32 + (i * 32)));
+		else if (all->movement.i_move[1])
+			move_slime(all->player, slime, 0, (-32 - (i * 32)));
+		if (all->movement.i_move[2])
+			move_slime(all->player, slime, (32 + (i * 32)), 0);
+		else if (all->movement.i_move[3])
+			move_slime(all->player, slime, (-32 - (i * 32)), 0);
+	}
+}
+
 int	slime_handling(t_all *all, t_slime *slime)
 {
-	int	i;
-
-	i = -1;
+	int (i) = -1;
 	while (++i < all->info.collectible)
 	{
-		free_the_slimes(all, &slime[i], i);
-		if (slime[i].is_free)
-		{
-			if (all->i - slime[i].frameslime >= (int)(100 / 60))
-			{
-				slime[i].anim_slime = (slime[i].anim_slime + 1) % 5;
-				slime[i].frameslime = all->i;
-			}
-			if (all->movement.i_move[0])
-				move_slime(all->player, &slime[i], 0, (32 + (i * 32)));
-			else if (all->movement.i_move[1])
-				move_slime(all->player, &slime[i], 0, (-32 - (i * 32)));
-			if (all->movement.i_move[2])
-				move_slime(all->player, &slime[i], (32 + (i * 32)), 0);
-			else if (all->movement.i_move[3])
-				move_slime(all->player, &slime[i], (-32 - (i * 32)), 0);
-		}
+		if (free_the_slimes(all, &slime[i], i))
+			if_free(i, &slime[i], all);
 		copy_slime_plan(all, &slime[i]);
 	}
 	return (1);

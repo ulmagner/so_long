@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 15:36:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:52:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,9 @@
 static int	display_dynamique(t_all *all)
 {
 	int	i;
-	int	j;
-	int	k;
 
-	i = -1;
-	j = -1;
-	k = -1;
+	int (j) = -1;
+	int (k) = -1;
 	while (++j < all->info.oeil)
 	{
 		i = -1;

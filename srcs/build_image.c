@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 14:33:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:49:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ static void	wall_management(t_all *all, t_map *col)
 void	build_ground(t_all *all)
 {
 	t_map	*col;
-	int		i;
 
-	i = -1;
+	int (i) = -1;
 	col = all->map;
 	while (col)
 	{
@@ -81,20 +80,19 @@ void	build_plan(t_all *all)
 void	build_minimap(t_all *all, t_image ***tile, t_image *game)
 {
 	int	i;
-	int	j;
-	int	mini_x;
-	int	mini_y;
 
-	mini_y = tile[8][1][0].h - 40;
-	mini_x = tile[8][1][0].w - 46;
-	i = -1;
-	j = -1;
+	int (j) = -1;
+	int (mini_x) = tile[8][1][0].w - 46;
+	int (mini_y) = tile[8][1][0].h - 40;
 	copy_to_game(&tile[8][1][0], game, 0, 0);
 	while (++j < all->info.oeil)
+	{
+		i = -1;
 		while (++i < all->info.ennemies && !all->oeil[j][i].is_dead)
 			copy_to_game(&tile[8][2][0], game, \
 				(all->oeil[j][i].x * mini_x / game->w), \
 				(all->oeil[j][i].y * mini_y / game->h));
+	}
 	i = -1;
 	while (++i < all->info.collectible && !all->slime[i].is_free)
 		copy_to_game(&tile[8][3][0], game, (all->slime[i].x * mini_x / game->w),

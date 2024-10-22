@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:15:06 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 15:57:33 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:56:31 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	action_r(int button, int x, int y, t_all *all)
 	if (button == 1)
 	{
 		all->attack.button = false;
-		// all->attack.curr_frame = 0;
 		all->attack.is_action = false;
 	}
 	if (button == 3)
