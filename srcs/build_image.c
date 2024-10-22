@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:42:53 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:37:38 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,10 @@ void	build_minimap(t_all *all, t_image ***tile, t_image *game)
 				(all->oeil[j][i].y * mini_y / game->h));
 	i = -1;
 	while (++i < all->info.collectible && !all->slime[i].is_free)
-		copy_to_game(&tile[8][3][0], game, \
-			(all->slime[i].x * mini_x / game->w), \
+		copy_to_game(&tile[8][3][0], game, (all->slime[i].x * mini_x / game->w),
 			(all->slime[i].y * mini_y / game->h));
 	copy_to_game(&tile[8][5][0], game, \
-		(all->player.x * mini_x / game->w), \
-		(all->player.y * mini_y / game->h));
+		(all->player.x * mini_x / game->w), (all->player.y * mini_y / game->h));
 	if (all->info.exit)
 		copy_to_game(&tile[8][4][0], game, \
 			(all->info.exit_x * mini_x / game->w), \

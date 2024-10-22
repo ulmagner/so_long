@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 21:03:42 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:11:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	free_the_slimes(t_all *all, t_slime *slime, int i)
 {
 	if (slime->c->is_visited == 2)
 	{
-		if (!slime->is_free && all->dist.p_c[i] <= all->slime[i].r + all->player.r)
+		if (!slime->is_free && all->dist.p_c[i] \
+			<= all->slime[i].r + all->player.r)
 			copy_to_ground(&all->tile[2][1][0], \
 				&all->plan, slime->c);
 		if (all->movement.move[XK_e] && !slime->is_free)

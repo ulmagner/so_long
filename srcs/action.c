@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/18 17:47:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:38:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	animation_attack(t_all *all, t_player *player)
 {
 	int	i;
-	
+
 	i = -1;
 	if (all->movement.i_move[0] || all->movement.i_move[3])
 		player->i = 4;
@@ -30,11 +30,13 @@ static int	animation_attack(t_all *all, t_player *player)
 		all->attack.curr_frame++;
 	}
 	while (++i < all->info.collectible)
+	{
 		if (all->dist.p_c[i] <= all->slime[i].r + player->r)
 		{
 			all->slime[i].c->is_visited = 2;
 			all->slime[i].anim_slime = 1;
 		}
+	}
 	return (1);
 }
 
@@ -68,6 +70,7 @@ static int	attack(t_all *all, t_player *player)
 	{
 		i = -1;
 		while (++i < all->info.ennemies)
+		{
 			if (all->dist.p_o[++k] <= all->oeil[j][i].r + player->r \
 				&& all->oeil[j][i].is_stun)
 			{
@@ -75,6 +78,7 @@ static int	attack(t_all *all, t_player *player)
 				all->oeil[j][i].anim = 0;
 				all->oeil[j][i].is_dead = true;
 			}
+		}
 	}
 	return (1);
 }

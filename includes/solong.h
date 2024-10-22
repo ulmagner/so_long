@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 19:34:46 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:34:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,13 @@ int				init_view(t_all *all, t_view *view);
 int				init_window(t_all *all);
 int				init_bg(t_image *ground, t_image *plan, t_all *all,
 					t_window *window);
+int				init_char(t_all *all, t_info *info);
+int				init_distances(t_all *all, t_info *info);
 int				init_game(t_image *game, t_window *window, t_all *all);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 float			calculate_distance(t_player *player, float obj_x, float obj_y,
 					int off);
 int				calcul_dist(t_all *all);
-int				init_distances(t_all *all);
 void			copy_fog_plan(t_all *all);
 void			dir_up(t_player *player, t_movement *movement, t_all *all);
 void			dir_down(t_player *player, t_movement *movement, t_all *all);

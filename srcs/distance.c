@@ -6,21 +6,21 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:59:30 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:12:20 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:34:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-int	init_distances(t_all *all)
+int	init_distances(t_all *all, t_info *info)
 {
-	all->dist.p_c = ft_calloc(all->info.collectible, sizeof(float));
+	all->dist.p_c = ft_calloc(info->collectible, sizeof(float));
 	if (!all->dist.p_c)
 		return (0);
-	all->dist.p_o = ft_calloc(all->info.ennemies * all->info.oeil, sizeof(float));
+	all->dist.p_o = ft_calloc(info->ennemies * info->oeil, sizeof(float));
 	if (!all->dist.p_o)
 		return (0);
-	all->dist.p_t = ft_calloc(all->info.collectible, sizeof(float));
+	all->dist.p_t = ft_calloc(info->collectible, sizeof(float));
 	if (!all->dist.p_t)
 		return (0);
 	return (1);

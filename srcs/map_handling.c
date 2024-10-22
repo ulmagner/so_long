@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:27:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 17:05:53 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:20:23 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,24 +107,10 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 	int	i;
 	int	j;
 
-	i = -1;
 	if (!get_info(info))
 		return (0);
-	all->info.ennemies = 10;
-	all->oeil = ft_calloc(info->oeil, sizeof(t_oeil *));
-	while (++i < info->oeil)
-	{
-		all->oeil[i] = ft_calloc(info->ennemies, sizeof(t_oeil));
-		if (!all->oeil[i])
-			return (0);
-	}
-	all->slime = ft_calloc(info->coin, sizeof(t_slime));
-	if (!all->slime)
+	if (!init_char(all, info))
 		return (0);
-	all->trap = ft_calloc(info->trap, sizeof(t_trap));
-	if (!all->trap)
-		return (0);
-	i = -1;
 	j = -1;
 	while (++j < info->oeil)
 	{

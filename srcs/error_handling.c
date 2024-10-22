@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:37:27 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 20:06:38 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:33:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-int	error_handling(int ac, char **av, t_info *info, int	lvl)
+int	error_handling(int ac, char **av, t_info *info, int lvl)
 {
 	if (ac < 3)
 		return (0);

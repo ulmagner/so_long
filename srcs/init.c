@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 19:39:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:20:37 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,28 @@ int	init_window(t_all *all)
 	all->window.main = mlx_new_window(all->window.mlx, \
 		all->window.main_w, all->window.main_h, "So_long");
 	if (!all->window.main)
+		return (0);
+	return (1);
+}
+
+int	init_char(t_all *all, t_info *info)
+{
+	int	i;
+
+	i = -1;
+	all->info.ennemies = 10;
+	all->oeil = ft_calloc(info->oeil, sizeof(t_oeil *));
+	while (++i < info->oeil)
+	{
+		all->oeil[i] = ft_calloc(info->ennemies, sizeof(t_oeil));
+		if (!all->oeil[i])
+			return (0);
+	}
+	all->slime = ft_calloc(info->coin, sizeof(t_slime));
+	if (!all->slime)
+		return (0);
+	all->trap = ft_calloc(info->trap, sizeof(t_trap));
+	if (!all->trap)
 		return (0);
 	return (1);
 }

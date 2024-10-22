@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/18 19:34:32 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:39:34 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ static int	display_dynamique(t_all *all)
 	{
 		i = -1;
 		while (++i < all->info.ennemies)
-			if (all->dist.p_o[++k] <= 300.0f)
+		{
+			k++;
+			if (!all->player.is_dead)
+				movement_handling_oeil(all, &all->oeil[j][i], k);
+			if (all->dist.p_o[k] <= 300.0f)
 				copy_oeil_plan(all, &all->oeil[j][i]);
+		}
 	}
 	slime_handling(all, all->slime);
-	if (all->info.coin == 0)
-		all->info.exit = 1;
 	i = -1;
 	while (++i < all->info.trap)
 		trap_handling(all, &all->trap[i], i);
@@ -43,6 +46,8 @@ static int	display_map(t_all *all, t_window *window)
 
 	build_plan(all);
 	display_dynamique(all);
+	if (all->info.coin == 0)
+		all->info.exit = 1;
 	copy_fog_plan(all);
 	copy_player_plan(all);
 	copy_plan_to_game(all);
@@ -66,13 +71,6 @@ static int	display_map(t_all *all, t_window *window)
 
 static int	looping(t_all *all)
 {
-	int	i;
-	int	j;
-	int	k;
-
-	i = -1;
-	j = -1;
-	k = -1;
 	if (++(all->i) - all->frame < (int)(100 / 60))
 		return (0);
 	all->frame = all->i;
@@ -87,13 +85,6 @@ static int	looping(t_all *all)
 	{
 		movement_handling(all);
 		action_handling(all);
-	}
-	while (++j < all->info.oeil)
-	{
-		i = -1;
-		while (++i < all->info.ennemies)
-			if (!all->player.is_dead)
-				movement_handling_oeil(all, &all->oeil[j][i], ++k);
 	}
 	if (!display_map(all, &all->window))
 		exit((ft_clearall(all), EXIT_FAILURE));
@@ -128,7 +119,7 @@ int	launcher(t_all *all)
 	if (!all->player.animation)
 		return (0);
 	build_ground(all);
-	init_distances(all);
+	init_distances(all, &all->info);
 	all->player.ms = 4;
 	all->step = 0;
 	all->i = -1;

@@ -12,35 +12,41 @@
 
 #include "solong.h"
 
-void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
+void	update_pos(int axis, t_map *direction, int new_i, t_oeil *oeil)
 {
-	int	new_i = 1;
-
-	if (direction->i == '1' || direction->i == 'F')
-		return;
-	if (oeil->o->up == direction || oeil->o->left == direction)
-	{
-		if (oeil->ms > 0)
-			oeil->ms = -oeil->ms;
-		new_i = 0;
-	}
-	else
-		if (oeil->ms < 0)
-			oeil->ms = -oeil->ms;
-	if (axis == 0 && (oeil->y + oeil->ms >= 0 && oeil->y + oeil->ms < all->plan.h))
-		oeil->y += oeil->ms;
-	else if (axis == 1 && (oeil->x + oeil->ms >= 0 && oeil->x + oeil->ms < all->plan.w))
-		oeil->x += oeil->ms;
 	if ((axis == 0 && ((oeil->ms > 0 && oeil->y >= direction->y_pxl)
-		|| (oeil->ms < 0 && oeil->y <= direction->y_pxl)))
+				|| (oeil->ms < 0 && oeil->y <= direction->y_pxl)))
 		|| (axis == 1 && ((oeil->ms > 0 && oeil->x >= direction->x_pxl)
-		|| (oeil->ms < 0 && oeil->x <= direction->x_pxl))))
+				|| (oeil->ms < 0 && oeil->x <= direction->x_pxl))))
 	{
 		oeil->o = direction;
 		oeil->i = new_i;
 	}
 }
 
+void	move_oeil(t_oeil *oeil, t_map *direction, int axis, t_all *all)
+{
+	int	new_i;
+
+	new_i = 1;
+	if (direction->i == '1' || direction->i == 'F')
+		return ;
+	if (oeil->o->up == direction || oeil->o->left == direction)
+	{
+		if (oeil->ms > 0)
+			oeil->ms = -oeil->ms;
+		new_i = 0;
+	}
+	else if (oeil->ms < 0)
+			oeil->ms = -oeil->ms;
+	if (axis == 0 && (oeil->y + oeil->ms >= 0 \
+		&& oeil->y + oeil->ms < all->plan.h))
+		oeil->y += oeil->ms;
+	else if (axis == 1 && (oeil->x + oeil->ms >= 0 \
+		&& oeil->x + oeil->ms < all->plan.w))
+		oeil->x += oeil->ms;
+	update_pos(axis, direction, new_i, oeil);
+}
 
 int	focus(t_all *all, t_oeil *oeil)
 {
