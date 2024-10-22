@@ -112,3 +112,5 @@
 -textures/game/bleu_dot.xpm
 -textures/game/green_dot.xpm
 -textures/game/hero_dot.xpm
+-textures/game/countdown_empty.xpm
+-textures/game/countdown_full.xpm

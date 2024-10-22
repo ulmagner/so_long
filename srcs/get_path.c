@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 12:53:33 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:15:19 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	init_i(t_info *info)
 	info->nbr_i = ft_calloc(9, sizeof(int));
 	if (!info->nbr_i)
 		return (0);
-	info->nbr_a = ft_calloc(30, sizeof(int));
+	info->nbr_a = ft_calloc(31, sizeof(int));
 	if (!info->nbr_a)
 		return (free(info->nbr_i), 0);
 	return (info->nbr_i && info->nbr_a);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:38:11 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:13 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:15:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ void	check_plan(char *line, t_info *info)
 		else if (ft_strnstr(line, "green", ft_strlen(line)))
 			info->nbr_a[28]++;
 		else if (ft_strnstr(line, "hero", ft_strlen(line)))
-			(printf("KEK: %d\n", info->nbr_a[29]), info->nbr_a[29]++);
+			info->nbr_a[29]++;
+		else if (ft_strnstr(line, "countdown", ft_strlen(line)))
+			info->nbr_a[30]++;
 		if (line[0] == '-' || line[0] == '.')
 			info->nbr_i[8]++;
 	}

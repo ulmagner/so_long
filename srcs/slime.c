@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:57:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 13:11:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:54:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	free_the_slimes(t_all *all, t_slime *slime, int i)
 			slime->is_free = true;
 			slime->i = 1;
 			slime->c->is_visited = 3;
+			all->vision += 100.0f;
 		}
 	}
 	return (1);

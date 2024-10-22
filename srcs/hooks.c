@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:15:06 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:19:14 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:57:33 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int	action_p(int button, int x, int y, t_all *all)
 	if (button == 1)
 	{
 		all->attack.button = true;
-		all->attack.is_action = true;
 		all->attack.curr_frame = 0;
-		all->attack.tot_frame = 5;
+		all->attack.tot_frame = 4;
 		all->attack.x = x;
 		all->attack.y = y;
 	}
@@ -51,7 +50,7 @@ int	action_r(int button, int x, int y, t_all *all)
 	if (button == 1)
 	{
 		all->attack.button = false;
-		all->attack.curr_frame = 0;
+		// all->attack.curr_frame = 0;
 		all->attack.is_action = false;
 	}
 	if (button == 3)

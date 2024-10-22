@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:23:08 by ulysse            #+#    #+#             */
-/*   Updated: 2024/10/22 13:38:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:01:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int	animation_attack(t_all *all, t_player *player)
 		player->i = 5;
 	if (all->attack.curr_frame == all->attack.tot_frame)
 		all->attack.curr_frame = 0;
-	if (all->attack.curr_frame < all->attack.tot_frame \
-		&& all->attack.is_action)
+	if (all->attack.curr_frame <= all->attack.tot_frame)
 	{
 		player->animation[player->i] = all->attack.curr_frame;
 		all->attack.curr_frame++;
@@ -47,7 +46,7 @@ static int	animation_counter(t_all *all, t_player *player)
 		player->i = 6;
 	if (all->counter.curr_frame == all->counter.tot_frame)
 		all->counter.curr_frame = 0;
-	if (all->counter.curr_frame < all->counter.tot_frame \
+	if (all->counter.curr_frame <= all->counter.tot_frame \
 		&& all->counter.is_action)
 	{
 		player->animation[player->i] = all->counter.curr_frame;
@@ -92,6 +91,7 @@ static int	counter(t_all *all, t_player *player)
 	i = -1;
 	j = -1;
 	k = -1;
+	all->counter.curr_frame_c++;
 	animation_counter(all, player);
 	while (++j < all->info.oeil)
 	{
@@ -105,9 +105,32 @@ static int	counter(t_all *all, t_player *player)
 
 int	action_handling(t_all *all)
 {
-	if (all->counter.button)
+	if (all->counter.button \
+		&& (all->counter.curr_frame_c <= all->counter.tot_frame_c) && !all->counter.reload)
 		counter(all, &all->player);
+	else if (all->counter.curr_frame_c > 0)
+	{
+		all->counter.reload = 1;
+		if (all->counter.curr_frame_c <= 50)
+			all->counter.reload = 0;
+		all->counter.curr_frame_c--;
+	}
 	if (all->attack.button)
-		attack(all, &all->player);
+	{
+		if (!all->attack.is_action && all->attack.curr_frame_c <= 80)
+		{
+			all->attack.curr_frame_c += 20;
+			all->attack.is_action = 1;
+		}
+		if (((all->attack.curr_frame_c <= all->attack.tot_frame_c) && !all->attack.reload))
+			attack(all, &all->player);
+	}
+	else if (all->attack.curr_frame_c > 0)
+	{
+		all->attack.reload = 1;
+		if (all->attack.curr_frame_c <= 50)
+			all->attack.reload = 0;
+		all->attack.curr_frame_c--;
+	}
 	return (1);
 }

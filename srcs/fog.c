@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:06:36 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/13 23:01:43 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:52:46 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static int	apply_fog(int color, t_all *all, t_color fog_color)
 	if (all->dist.p_f >= 100.0)
 	{
 		color = (color >> 1) & 8355711;
-		if (all->dist.p_f >= 300.0)
+		if (all->dist.p_f >= all->vision)
 			fog_factor = 0.7;
 		else
-			fog_factor = (all->dist.p_f - 100.0) / (300.0 - 100.0) - 0.3;
+			fog_factor = (all->dist.p_f - 100.0) / (all->vision - 100.0) - 0.3;
 		return (lerp_color(color, fog_color, fog_factor));
 	}
 	return (color);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 13:34:22 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:27:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ typedef struct s_action
 {
 	int		curr_frame;
 	int		tot_frame;
+	int		curr_frame_c;
+	int		tot_frame_c;
+	bool	reload;
 	int		x;
 	int		y;
 	bool	button;
@@ -245,6 +248,7 @@ typedef struct s_all
 	int			step;
 	int			lvl;
 	int			ac;
+	float		vision;
 	char		**av;
 }	t_all;
 
@@ -267,6 +271,8 @@ void			dir_down(t_player *player, t_movement *movement, t_all *all);
 void			dir_left(t_player *player, t_movement *movement, t_all *all);
 void			dir_right(t_player *player, t_movement *movement, t_all *all);
 void			ft_pixel_put(t_image *image, int x, int y, int color);
+void			copy_countdowns(t_image *image, t_image *ground, int off,
+					int y_ref);
 void			copy_to_game(t_image *image, t_image *ground, int x_ref,
 					int y_ref);
 void			copy_to_view(t_image *image, t_image *bg, t_view *view,

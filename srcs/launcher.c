@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:42:33 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 13:39:34 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:36:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	display_dynamique(t_all *all)
 			k++;
 			if (!all->player.is_dead)
 				movement_handling_oeil(all, &all->oeil[j][i], k);
-			if (all->dist.p_o[k] <= 300.0f)
+			if (all->dist.p_o[k] <= all->vision)
 				copy_oeil_plan(all, &all->oeil[j][i]);
 		}
 	}
@@ -51,6 +51,10 @@ static int	display_map(t_all *all, t_window *window)
 	copy_fog_plan(all);
 	copy_player_plan(all);
 	copy_plan_to_game(all);
+	copy_to_game(&all->tile[8][6][0], &all->game, 50, 600);
+	copy_countdowns(&all->tile[8][6][1], &all->game, all->attack.curr_frame_c, 600);
+	copy_to_game(&all->tile[8][6][0], &all->game, 50, 500);
+	copy_countdowns(&all->tile[8][6][1], &all->game, all->counter.curr_frame_c, 500);
 	if (all->movement.move[XK_m])
 		build_minimap(all, all->tile, &all->game);
 	if (all->player.is_dead)
@@ -125,6 +129,11 @@ int	launcher(t_all *all)
 	all->i = -1;
 	all->frame = 0;
 	all->frameplayer = 0;
+	all->vision = 300.0f;
+	all->counter.curr_frame_c = 0;
+	all->counter.tot_frame_c = 100;
+	all->attack.curr_frame_c = 0;
+	all->attack.tot_frame_c = 100;
 	if (!hook_handling(all))
 		return (0);
 	return (1);

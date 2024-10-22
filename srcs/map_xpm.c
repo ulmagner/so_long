@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:09:50 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/16 16:23:44 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:31:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,25 @@ void	copy_to_ground(t_image *image, t_image *ground, t_map *map)
 			color = get_pixel_color(image, x, y);
 			ft_pixel_put(ground, \
 				map->x * image->w + x, map->y * image->h + y, color);
+		}
+	}
+}
+
+void	copy_countdowns(t_image *image, t_image *ground, int off, int y_ref)
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+
+	y = -1;
+	while (++y < image->h)
+	{
+		x = -1;
+		while (++x < image->w - off - 12)
+		{
+			color = get_pixel_color(image, x, y);
+			ft_pixel_put(ground, \
+				50 + x, y_ref + y, color);
 		}
 	}
 }
