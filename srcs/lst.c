@@ -90,7 +90,6 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 
 int	make_list(int *i, t_map **node, t_map **h, t_all *all)
 {
-	++(all->info.i_x);
 	if (all->info.i_x == all->info.column)
 	{
 		all->info.i_x = 0;
@@ -98,6 +97,7 @@ int	make_list(int *i, t_map **node, t_map **h, t_all *all)
 		(*i)++;
 	}
 	*node = ft_newnode(&all->info, i, h, all);
+	all->info.i_x++;
 	if (!*node)
 		return (0);
 	return (1);

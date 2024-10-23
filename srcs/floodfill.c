@@ -12,8 +12,13 @@
 
 #include "solong.h"
 
-static void	floodfill(t_map *player, int *c, int *e, t_info *info)
+static void	floodfill(t_map *player, int *c, int *e, t_all *all)
 {
+	if (((player->x == 0 || player->x == all->info.column - 1)
+			&& (player->i != '1' && player->i != 'F'))
+		|| ((player->y == 0 || player->y == all->info.line - 1)
+			&& (player->i != '1' && player->i != 'F')))
+		exit(((ft_clearall(all)), EXIT_FAILURE));
 	if (player->i == 'C')
 		(*c)++;
 	if (player->i == 'E')
@@ -21,16 +26,16 @@ static void	floodfill(t_map *player, int *c, int *e, t_info *info)
 	player->is_visited = 1;
 	if ((player->right->i != '1' && player->right->i != 'F') \
 		&& player->right != NULL && !player->right->is_visited)
-		floodfill(player->right, c, e, info);
+		floodfill(player->right, c, e, all);
 	if ((player->left->i != '1' && player->left->i != 'F') \
 		&& player->left != NULL && !player->left->is_visited)
-		floodfill(player->left, c, e, info);
+		floodfill(player->left, c, e, all);
 	if ((player->up->i != '1' && player->up->i != 'F') \
 		&& player->up != NULL && !player->up->is_visited)
-		floodfill(player->up, c, e, info);
+		floodfill(player->up, c, e, all);
 	if ((player->down->i != '1' && player->down->i != 'F') \
 		&& player->down != NULL && !player->down->is_visited)
-		floodfill(player->down, c, e, info);
+		floodfill(player->down, c, e, all);
 }
 
 static void	get_c_p_info(t_map *curr, t_all *all)
@@ -61,7 +66,7 @@ int	start_floodfill(t_map *curr, t_all *all, int *c, int *e)
 		all->player.x = curr->x * 64;
 		all->player.y = curr->y * 64;
 		all->player.r = 31.0;
-		floodfill(curr, c, e, &all->info);
+		floodfill(curr, c, e, all);
 	}
 	if (curr->i == 'O')
 	{
@@ -91,11 +96,6 @@ int	check_close_map(t_map **map, t_info *info, t_all *all)
 	curr = *map;
 	while (curr)
 	{
-		if (((curr->x == 0 || curr->x == info->column - 1)
-				&& (curr->i != '1' && curr->i != 'F'))
-			|| ((curr->y == 0 || curr->y == info->line - 1)
-				&& (curr->i != '1' && curr->i != 'F')))
-			return (0);
 		start_floodfill(curr, all, &c, &e);
 		curr = curr->right;
 	}

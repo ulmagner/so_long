@@ -64,7 +64,13 @@ void	ft_clearall(t_all *all)
 	if (all->slime)
 		free(all->slime);
 	if (all->oeil)
+	{
+		while (++i < all->info.oeil)
+			if (all->oeil[i])
+				free(all->oeil[i]);
 		free(all->oeil);
+	}
+	i = -1;
 	free(all->dist.p_c);
 	free(all->dist.p_t);
 	free(all->dist.p_o);

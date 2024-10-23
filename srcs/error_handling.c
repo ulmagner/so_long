@@ -20,6 +20,8 @@ int	error_handling(int ac, char **av, t_info *info, int lvl)
 		return (0);
 	info->fd = open(av[lvl], O_RDWR);
 	if (info->fd < 0)
-		return (ft_printf(2, "Error\nplan can't be open\n"), 0);
+		return (ft_printf(2, "Error\nfile can't be open\n"), 0);
+	if (access(av[lvl], R_OK) < 0)
+		return (ft_printf(2, "Error\nfile access\n"), 0);
 	return (1);
 }

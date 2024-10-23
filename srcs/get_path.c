@@ -58,25 +58,25 @@ static int	init_i(t_info *info)
 
 int	get_paths(char *file, t_info *info)
 {
-	char	*line;
-	int		fd;
-	char	*path;
-
-	path = empty_stringe(NULL);
+	char *(path) = empty_stringe(NULL);
+	int (nbr_line) = 0;
 	if (!path || !init_i(info))
 		return (free(path), 0);
-	fd = open(file, O_RDONLY);
+	int (fd) = open(file, O_RDONLY);
 	if (fd == -1)
 		return (free(path), 0);
-	line = ft_get_next_line(fd);
+	char *(line) = ft_get_next_line(fd);
 	if (!line)
 		return (close(fd), free(path), 0);
 	while (line)
 	{
 		if (!parse_file(&line, info, &path))
 			return (free(line), close(fd), free(path), 0);
+		nbr_line++;
 		line = ft_get_next_line(fd);
 	}
+	if (nbr_line != 116)
+		return (close(fd), free(path), free(line), exit(0), 0);
 	info->path_texture = ft_split(path, '\n');
 	if (!info->path_texture)
 		return (close(fd), free(path), free(line), exit(0), 0);

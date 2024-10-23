@@ -20,7 +20,7 @@ int	init_distances(t_all *all, t_info *info)
 	all->dist.p_o = ft_calloc(info->ennemies * info->oeil, sizeof(float));
 	if (!all->dist.p_o)
 		return (0);
-	all->dist.p_t = ft_calloc(info->collectible, sizeof(float));
+	all->dist.p_t = ft_calloc(info->trap, sizeof(float));
 	if (!all->dist.p_t)
 		return (0);
 	return (1);

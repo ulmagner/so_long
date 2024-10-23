@@ -37,13 +37,13 @@ static int	get_info(t_info *info)
 		return (0);
 	if (!get_map(info, &line, &column))
 		return (0);
-	info->i_x = -1;
+	info->i_x = 0;
 	info->i_y = 0;
 	info->size_map = ft_strlen(info->map);
 	info->line = line;
+	info->column = column;
 	if (info->map[info->size_map - 1] != '\n')
 		info->size_map++;
-	info->column = column;
 	if (info->column <= 1 || info->line <= 1
 		|| (info->column * info->line != info->size_map - line))
 		return (ft_printf(2, "Error\nInvalid map\n"), 0);

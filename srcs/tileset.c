@@ -51,7 +51,7 @@ static int	free_rest(t_fail *fail, t_all *all, t_image ****t)
 
 static int	free_failedimage(t_fail *fail, t_all *all, t_image ****t)
 {
-	while (--(fail->a) > 0)
+	while (--(fail->a) >= 0)
 		if (mlx_destroy_image(all->window.mlx, \
 			(*t)[fail->i][fail->j][fail->a].img) < 0)
 			return (0);
@@ -66,6 +66,8 @@ static int	free_failedimage(t_fail *fail, t_all *all, t_image ****t)
 				return (0);
 		free((*t)[fail->i][fail->j]);
 	}
+	if ((*t)[fail->i])
+		free((*t)[fail->i]);
 	return (free_rest(fail, all, t));
 }
 

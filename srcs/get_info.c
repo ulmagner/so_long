@@ -50,11 +50,12 @@ int	check_ep_doubles(t_info *info)
 
 int	get_map(t_info *info, int *l, int *c)
 {
-	char	*line;
 	char	*tmp;
 	int		i;
 
-	line = ft_get_next_line(info->fd);
+	char *(line) = ft_get_next_line(info->fd);
+	if (!line)
+		return (ft_printf(2, "Error\nplan empty\n"), 0);
 	*c = ft_strlen(line) - 1;
 	while (line != NULL)
 	{

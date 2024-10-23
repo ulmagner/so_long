@@ -60,7 +60,7 @@ A_MLX		= $(addprefix $(DIRS_MLX)/,$(MLX_NAME))
 A_MA		= $(addprefix $(DIRS_MA)/,$(MA_NAME))
 
 CC			= cc -O3 -ggdb
-MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
+MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes #-lasound
 CFLAGS		= -Wall -Wextra -Werror -std=c99
 OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX) -I$(IDIRS_MA)
 MAKEFLAGS 	+= -s
@@ -83,8 +83,8 @@ $(A_MLX):
 $(A_MA):
 	$(MAKE) -C $(DIRS_MA)
 
-$(NAME): $(OFILES) $(A_LFT) $(A_MLX) $(A_MA)
-	$(CC) -o $(NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(A_MA) $(MLX_FLAGS)
+$(NAME): $(OFILES) $(A_LFT) $(A_MLX)
+	$(CC) -o $(NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
 
 bonus:	$(BONUS_NAME)
 
