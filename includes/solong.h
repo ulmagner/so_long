@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 19:36:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:39:41 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ typedef struct s_all
 	char		**av;
 }	t_all;
 
+int				hook_handling(t_all *all);
 int				launch_lvl(t_all *all, int ac, char **av, int lvl);
 int				set_view_to_ppos(t_view *view, t_player *player, t_all *all);
 int				init_view(t_all *all, t_view *view);
@@ -330,6 +331,7 @@ int				make_list(int *i, t_map **node, t_map **h, t_all *all);
 int				empty_string(t_info *info);
 int				map_handling(t_info *info, t_map **map, t_player *player,
 					t_all *all);
+int				looping(t_all *all);
 int				error_handling(int ac, char **av, t_info *info, int lvl);
 int				main(int ac, char **av);
 #endif //SOLONG_H

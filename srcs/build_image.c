@@ -6,30 +6,14 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:40:12 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 18:49:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:38:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-static void	wall_management(t_all *all, t_map *col)
+static void	corner(t_map *col, t_all *all)
 {
-	if ((col->i == '1' || col->i == 'F') && col->y == 0)
-	{
-		if (col->x == 0)
-			all->wall.anim = 0;
-		else
-			all->wall.anim = (all->wall.anim + 1) % 3;
-		copy_to_ground(&all->tile[1][0][all->wall.anim], &all->ground, col);
-	}
-	else if ((col->i == '1' || col->i == 'F') && col->y == all->info.line - 1)
-		copy_to_ground(&all->tile[1][1][0], &all->ground, col);
-	else if ((col->i == '1' || col->i == 'F') && col->x == 0)
-		copy_to_ground(&all->tile[1][2][0], &all->ground, col);
-	else if ((col->i == '1' || col->i == 'F') && col->x == all->info.column - 1)
-		copy_to_ground(&all->tile[1][3][0], &all->ground, col);
-	else if (col->i == '1' || col->i == 'F')
-		copy_to_ground(&all->tile[2][0][0], &all->ground, col);
 	if (col->i == '1' && col->x == 0 && col->y == 0)
 		copy_to_ground(&all->tile[1][4][0], &all->ground, col);
 	if (col->i == '1' && col->x == 0 && col->y == all->info.line - 1)
@@ -41,6 +25,34 @@ static void	wall_management(t_all *all, t_map *col)
 		copy_to_ground(&all->tile[1][4][3], &all->ground, col);
 }
 
+static void	wall_management(t_all *all, t_map *col, int i)
+{
+	if (col->y == 0 && (col->x > 0 && col->x < all->info.column - 1))
+	{
+		if (col->x == 0)
+			all->wall.anim = 0;
+		else
+			all->wall.anim = (all->wall.anim + 1) % 3;
+		copy_to_ground(&all->tile[1][0][all->wall.anim], &all->ground, col);
+	}
+	else if (col->y == all->info.line - 1
+		&& (col->x > 0 && col->x < all->info.column - 1))
+		copy_to_ground(&all->tile[1][1][0], &all->ground, col);
+	else if (col->x == 0 && (col->y > 0 && col->y < all->info.line - 1))
+		copy_to_ground(&all->tile[1][2][0], &all->ground, col);
+	else if (col->x == all->info.column - 1
+		&& (col->y > 0 && col->y < all->info.line - 1))
+		copy_to_ground(&all->tile[1][3][0], &all->ground, col);
+	else
+	{
+		if (i % 2 == 0)
+			copy_to_ground(&all->tile[2][0][0], &all->ground, col);
+		else
+			copy_to_ground(&all->tile[2][0][1], &all->ground, col);
+	}
+	corner(col, all);
+}
+
 void	build_ground(t_all *all)
 {
 	t_map	*col;
@@ -49,11 +61,21 @@ void	build_ground(t_all *all)
 	col = all->map;
 	while (col)
 	{
-		if (++i % 2 == 0)
-			copy_to_ground(&all->tile[0][0][0], &all->ground, col);
-		else
-			copy_to_ground(&all->tile[0][0][1], &all->ground, col);
-		wall_management(all, col);
+		if ((col->y > 0 && col->y < all->info.line - 1)
+			&& (col->x > 0 && col->x < all->info.column - 1))
+		{
+			i++;
+			if (i % 4 == 0)
+				copy_to_ground(&all->tile[0][0][0], &all->ground, col);
+			else if (i % 6 == 0)
+				copy_to_ground(&all->tile[0][0][2], &all->ground, col);
+			else if (i % 15 == 0)
+				copy_to_ground(&all->tile[0][0][3], &all->ground, col);
+			else
+				copy_to_ground(&all->tile[0][0][1], &all->ground, col);
+		}
+		if ((col->i == '1' || col->i == 'F'))
+			wall_management(all, col, i);
 		if (col->i == 'E' && all->info.exit)
 			copy_to_ground(&all->tile[3][0][0], &all->ground, col);
 		col = col->right;
@@ -75,32 +97,4 @@ void	build_plan(t_all *all)
 		}
 		col = col->right;
 	}
-}
-
-void	build_minimap(t_all *all, t_image ***tile, t_image *game)
-{
-	int	i;
-
-	int (j) = -1;
-	int (mini_x) = tile[8][1][0].w - 46;
-	int (mini_y) = tile[8][1][0].h - 40;
-	copy_to_game(&tile[8][1][0], game, 0, 0);
-	while (++j < all->info.oeil)
-	{
-		i = -1;
-		while (++i < all->info.ennemies && !all->oeil[j][i].is_dead)
-			copy_to_game(&tile[8][2][0], game, \
-				(all->oeil[j][i].x * mini_x / game->w), \
-				(all->oeil[j][i].y * mini_y / game->h));
-	}
-	i = -1;
-	while (++i < all->info.collectible && !all->slime[i].is_free)
-		copy_to_game(&tile[8][3][0], game, (all->slime[i].x * mini_x / game->w),
-			(all->slime[i].y * mini_y / game->h));
-	copy_to_game(&tile[8][5][0], game, \
-		(all->player.x * mini_x / game->w), (all->player.y * mini_y / game->h));
-	if (all->info.exit)
-		copy_to_game(&tile[8][4][0], game, \
-			(all->info.exit_x * mini_x / game->w), \
-			(all->info.exit_y * mini_y / game->h));
 }

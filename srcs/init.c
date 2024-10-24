@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:42:35 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 19:26:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:35:02 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ int	init_game(t_image *game, t_window *window, t_all *all)
 
 int	init_bg(t_image *ground, t_image *plan, t_all *all, t_window *window)
 {
-	int	map_w_in_pixels;
-	int	map_h_in_pixels;
-
-	map_w_in_pixels = all->info.column * TILE_SIZE;
-	map_h_in_pixels = all->info.line * TILE_SIZE;
+	int (map_w_in_pixels) = all->info.column * TILE_SIZE;
+	int (map_h_in_pixels) = all->info.line * TILE_SIZE;
 	ground->w = map_w_in_pixels;
 	ground->h = map_h_in_pixels;
 	plan->w = map_w_in_pixels;
 	plan->h = map_h_in_pixels;
+	if (map_w_in_pixels > 30000 || map_h_in_pixels > 30000)
+		return (0);
 	ground->img = mlx_new_image(window->mlx, map_w_in_pixels, map_h_in_pixels);
 	if (!ground->img)
 		return (0);

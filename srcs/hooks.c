@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:15:06 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 16:56:31 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:40:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,21 @@ int	action_r(int button, int x, int y, t_all *all)
 		all->player.ms = 4;
 	}
 	return (0);
+}
+
+static int	close_window(t_all *all)
+{
+	return (exit((ft_clearall(all), EXIT_FAILURE)), 0);
+}
+
+int	hook_handling(t_all *all)
+{
+	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);
+	mlx_hook(all->window.main, 3, 1L << 1, movement_r, all);
+	mlx_hook(all->window.main, 4, 1L << 2, action_p, all);
+	mlx_hook(all->window.main, 5, 1L << 3, action_r, all);
+	mlx_hook(all->window.main, 17, 1L << 17, close_window, all);
+	mlx_loop_hook(all->window.mlx, looping, all);
+	mlx_loop(all->window.mlx);
+	return (1);
 }

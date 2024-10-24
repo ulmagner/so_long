@@ -75,7 +75,7 @@ int	get_paths(char *file, t_info *info)
 		nbr_line++;
 		line = ft_get_next_line(fd);
 	}
-	if (nbr_line != 116)
+	if (nbr_line != 119)
 		return (close(fd), free(path), free(line), exit(0), 0);
 	info->path_texture = ft_split(path, '\n');
 	if (!info->path_texture)

@@ -12,8 +12,14 @@
 
 #include "solong.h"
 
-static void	ft_freewindow(t_window *window)
+static void	ft_freewindow(t_window *window, t_all *all)
 {
+	if (all->ground.img)
+		mlx_destroy_image(all->window.mlx, all->ground.img);
+	if (all->plan.img)
+		mlx_destroy_image(all->window.mlx, all->plan.img);
+	if (all->game.img)
+		mlx_destroy_image(all->window.mlx, all->game.img);
 	if (window->mlx)
 	{
 		if (window->main)
@@ -27,9 +33,8 @@ static void	ft_freeimage(t_all *all, int i)
 {
 	int	j;
 	int	a;
-	int	b;
 
-	b = 0;
+	int (b) = 0;
 	if (!all->tile || !*all->tile)
 		return ;
 	while (++i < all->info.nbr_image)
@@ -47,9 +52,6 @@ static void	ft_freeimage(t_all *all, int i)
 		free(all->tile[i]);
 	}
 	free(all->tile);
-	mlx_destroy_image(all->window.mlx, all->ground.img);
-	mlx_destroy_image(all->window.mlx, all->plan.img);
-	mlx_destroy_image(all->window.mlx, all->game.img);
 }
 
 void	ft_clearall(t_all *all)
@@ -76,6 +78,6 @@ void	ft_clearall(t_all *all)
 	free(all->dist.p_o);
 	ft_freeimage(all, i);
 	ft_freeinfo(&all->info);
-	ft_freewindow(&all->window);
+	ft_freewindow(&all->window, all);
 	close(all->info.fd);
 }

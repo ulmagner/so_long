@@ -1,5 +1,7 @@
 .textures/floor/floor1.xpm
 +textures/floor/floor2.xpm
++textures/floor/floor3.xpm
++textures/floor/floor4.xpm
 .textures/wall/wall_haut1.xpm
 +textures/wall/wall_haut2.xpm
 +textures/wall/wall_haut3.xpm
@@ -11,6 +13,7 @@
 +textures/wall/wall_corner3.xpm
 +textures/wall/wall_corner4.xpm
 .textures/deco/tree1.xpm
++textures/deco/tree2.xpm
 -textures/deco/loot_indicator.xpm
 .textures/exit/exit1.xpm
 .textures/slime/jar1.xpm
