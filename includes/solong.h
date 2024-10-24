@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:33:56 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/24 14:39:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:16:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_oeil
 	int		reach;
 	bool	focus;
 	t_map	*o;
-	int 	frameoeil;
+	int		frameoeil;
 	int		frameoeill;
 }	t_oeil;
 
