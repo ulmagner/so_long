@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 12:05:17 by ulmagner          #+#    #+#              #
-#    Updated: 2024/10/24 14:32:10 by ulmagner         ###   ########.fr        #
+#    Updated: 2024/10/24 15:05:37 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ action.c direction.c oeil.c slime.c trap.c hitbox.c hooks.c \
 get_textures.c get_textures_bis.c build_image.c fog.c distance.c init.c \
 view.c floodfill.c teleportation.c minimap.c copy.c \
 
-SRCS_B		= main_bonus.c \
+SRCS_B		=
 
 INCS		= solong.h
 INCS_B		= allb.h
@@ -69,7 +69,7 @@ MAKE		= make
 all:	$(NAME)
 
 $(ODIRS):
-	@mkdir -p $(ODIRS)
+	mkdir -p $(ODIRS)
 
 $(ODIRS)/%.o: $(SDIRS)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) $(IFILES_MA) | $(ODIRS)
 	$(CC) -DMANDATORY=1 $(CFLAGS) $(OPTION) -c $< -o $@
@@ -94,8 +94,8 @@ $(ODIRS_B):
 $(ODIRS_B)/%.o: $(SDIRS_B)/%.c $(IFILES) $(IFILES_LFT) $(IFILES_MLX) $(IFILES_MA) | $(ODIRS_B)
 	$(CC) $(CFLAGS) $(OPTION) -c $< -o $@
 
-$(BONUS_NAME): $(OFILES_B) $(A_LFT) $(A_MLX) $(A_MA)
-	$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES_B) $(A_LFT) $(A_MLX) $(A_MA) $(MLX_FLAGS)
+$(BONUS_NAME): $(OFILES) $(A_LFT) $(A_MLX) $(A_MA)
+		$(CC) -o $(BONUS_NAME) $(CFLAGS) $(OPTION) $(OFILES) $(A_LFT) $(A_MLX) $(MLX_FLAGS)
 
 clean:
 	rm -f $(OFILES) $(OFILES_B)
