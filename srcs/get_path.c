@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:53:47 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 14:15:19 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:13:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	get_paths(char *file, t_info *info)
 		line = ft_get_next_line(fd);
 	}
 	if (nbr_line != 119)
-		return (close(fd), free(path), free(line), exit(0), 0);
+		return (close(fd), free(path), free(line), 0);
 	info->path_texture = ft_split(path, '\n');
 	if (!info->path_texture)
-		return (close(fd), free(path), free(line), exit(0), 0);
+		return (close(fd), free(path), free(line), 0);
 	return (free(path), close(fd), 1);
 }
