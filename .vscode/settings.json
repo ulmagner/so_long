@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"mlx.h": "c",
+		"solong.h": "c",
+		"libft.h": "c",
+		"unistd.h": "c",
+		"stdbool.h": "c",
+		"keysym.h": "c"
+	}
+}
