@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:36:03 by ulmagner          #+#    #+#             */
-/*   Updated: 2024/10/22 18:50:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:41:08 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ void	teleportation(t_slime *slime, t_all *all)
 		{
 			all->player.x = slime->x;
 			all->player.y = slime->y;
+			t_map *(curr) = all->map;
+			while (curr != NULL)
+			{
+				if ((all->player.x <= (curr->x * 64) + 64) && (all->player.x >= (curr->x * 64))
+					&& (all->player.y <= (curr->y * 64) + 64) && (all->player.y >= (curr->y * 64)))
+					break ;
+				curr = curr->right;
+			}
+			all->player.h = curr;
 			slime->waiting = 0;
 		}
 	}
